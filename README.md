@@ -1,6 +1,8 @@
 # Cascade CMS Page Builder
 The following scripts are useful for rapidly designing Google AMP websites.
 
+![page builder description](https://raw.githubusercontent.com/doppl3r/page-builder-amp/master/assets/page-builder-description.png)
+
 ## Featured HTML/AMP Elements:
   - h1, h2, h3
   - p
