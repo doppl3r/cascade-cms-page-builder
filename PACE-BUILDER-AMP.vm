@@ -29,6 +29,8 @@
                 #set($layout = $_EscapeTool.xml($elem.getChild('LAYOUT').value))
                 #set($autoplay = $_EscapeTool.xml($elem.getChild('AUTOPLAY').value))
                 #set($loop = $_EscapeTool.xml($elem.getChild('LOOP').value))
+                #set($indicators = $_EscapeTool.xml($elem.getChild('INDICATORS').value))
+                #set($sliderName = $_EscapeTool.xml($elem.getChild('SLIDER-NAME').value))
                 #set($delay = $_EscapeTool.xml($elem.getChild('DELAY').value))
                 #set($sandbox = $_EscapeTool.xml($elem.getChild('SANDBOX').value))
                 #set($view = $_EscapeTool.xml($elem.getChild('VISIBILITY').value))
@@ -121,10 +123,28 @@
                 
                 ## <amp-carousel> element type
                 #elseif($elemType == 'carousel')
-                    <amp-carousel ${viewClass} width="${widthParent}" height="${heightParent}" layout="${layout}" type="slides" ${autoplay} ${loop} delay="${delay}">
-                    
-                    ## loop through each item
                     #set($items = $_XPathTool.selectNodes($elem, 'ITEM'))
+                    #set($slideAttr = '')
+                    #set($onAttr = '')
+                    
+                    <!--#protect
+                    ## include indicators if true, and if the slider has a name, and if there are more than 1 slide
+                    #if($indicators == "true" && $sliderName.length() > 0 && $items.size() > 1)
+                        #set($sliderName = $sliderName.replace('-',''))
+                        #set($slideAttr = '[slide]="'+${sliderName}+'"')
+                        #set($onAttr = 'on="slideChange:AMP.setState({'+${sliderName}+': event.index})"')
+                        <ol class="indicators">
+                            ## loop through each item
+                            #foreach($item in $items)
+                                #set($i = $velocityCount - 1)
+                                <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${sliderName} == ${i} ? 'active' : ''" on="tap:AMP.setState({${sliderName}: ${i}})" tabindex="0"></li>
+                            #end
+                        </ol>
+                    #end
+                    
+                    ## amp carousel
+                    <amp-carousel ${slideAttr} ${onAttr} ${viewClass} width="${widthParent}" height="${heightParent}" layout="${layout}" type="slides" ${autoplay} ${loop} delay="${delay}">
+                    ## loop through each item
                     #foreach($item in $items)
                         ## set item attributes
                         #set($width = $_EscapeTool.xml($item.getChild('WIDTH').value))
@@ -152,7 +172,7 @@
                         </a>
                     #end ## end loop
                     </amp-carousel>
-                
+                    #protect-->
                 
                 ## <amp-video> element type
                 #elseif($elemType == 'video')
