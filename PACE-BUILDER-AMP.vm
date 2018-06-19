@@ -219,50 +219,17 @@
                     ## loop through each item
                     #set($items = $_XPathTool.selectNodes($elem, 'ITEM'))
                     #foreach($item in $items)
-                        #set($format = $_EscapeTool.xml($item.getChild('FORMAT').value))
                         #set($blockType = $_EscapeTool.xml($item.getChild('BLOCK-TYPE').value))
-                        #if(!$format) $format #import($format) #end
-                        ## display each block item
-                        #if($blockType == 'XML' || !$blockType)
+                        #set($format = $_EscapeTool.xml($item.getChild('FORMAT').value))
+                        ## check format URL
+                        #if($format == '')
+                            ## insert raw XML
                             <div ${viewClass}>
                                 $_SerializerTool.serialize($item.getChild('BLOCK').getChild('content'), true)
                             </div>
-                        #elseif($blockType == "FAQ")
-                            ## IMPORTANT: Requires 'amp-bind' library
-                            <!--#protect
-                            #set($faq = $_XPathTool.selectSingleNode($item.getChild('BLOCK').getChild('content'), '//system-data-structure/FAQ'))
-                            #set($tabs = $_XPathTool.selectNodes($faq, 'TAB'))
-                            
-                            <div class="faq">
-                                <ul class="tab-list">
-                                    #foreach($tab in $tabs)
-                                        #set($i = $velocityCount - 1)
-                                        #set($label = $_EscapeTool.xml($tab.getChild('LABEL').value))
-                                        <li class="tab" [class]="currentTab == ${i} ? 'active' : ''" on="tap:AMP.setState({ currentTab: ${i} })" aria-haspopup="true" role="button" tabindex="0">${label}</li>
-                                    #end
-                                </ul>
-                                <div class="container-list">
-                                    #foreach($tab in $tabs)
-                                        #set($i = $velocityCount - 1)
-                                        #if($i == 0) #set($active = "active") #else #set($active = "") #end
-                                        <amp-selector class="${active}" [class]="currentTab == ${i} ? 'active' : ''" layout="container" multiple="">
-                                            <ul class="container" >
-                                                #set($items = $_XPathTool.selectNodes($tab, 'ITEM'))
-                                                #foreach($item in $items)
-                                                    #set($ii = $velocityCount - 1)
-                                                    #set($question = $_EscapeTool.xml($item.getChild('QUESTION').value))
-                                                    #set($answer = $_EscapeTool.xml($item.getChild('ANSWER').value))
-                                                    <li class="item">
-                                                        <h3 class="question" option="${ii}" role="option" aria-haspopup="true" tabindex="0">${question}</h3>
-                                                        <p class="answer">${answer}</p>
-                                                    </li>
-                                                #end
-                                            </ul>
-                                        </amp-selector>
-                                    #end
-                                </div>
-                            </div>
-                            #protect-->
+                        #else
+                            ## insert format script
+                            #import($format) 
                         #end
                     #end ## end loop
                 #end
