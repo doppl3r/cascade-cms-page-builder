@@ -1,0 +1,98 @@
+## The following script requires jQuery to work with any 'Click' events
+#set($facebookID = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/FACEBOOK-ID').value)
+#set($debug = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/DEBUG').value)
+#set($format = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/FORMAT').value)
+#set($events = $_XPathTool.selectNodes($contentRoot, '//system-data-structure/EVENT'))
+
+<!-- GENERATED WITH FORMAT: FACEBOOK-PIXEL -->
+#if($format == 'Web')
+<script type="text/javascript">
+
+$(document).ready(function() {
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '${facebookID}');
+    
+    // Get Page URL
+    var url = document.URL;
+    var debug = '${debug}';
+## Loop through all events
+#foreach($event in $events)
+#set($tag = $_EscapeTool.xml($event.getChild('TAG').value))
+#set($trigger = $_EscapeTool.xml($event.getChild('TRIGGER').value))
+#set($condition = $_EscapeTool.xml($event.getChild('CONDITION').value))
+#set($value = $_EscapeTool.xml($event.getChild('VALUE').value))
+
+## check trigger type (URL or CLICK)
+#if($trigger == 'URL')
+
+## exact URL match
+#if($condition == 'equals')
+    if(url == '${value}'){
+        fbq('track', '${tag}');
+        if (debug == 'true') console.log('FACEBOOK-PIXEL (debug enabled): url is equal to value');
+    }
+## partial URL match
+#elseif($condition == 'contains')
+    if(url.includes('${value}')){
+        fbq('track', '${tag}');
+        if (debug == 'true') console.log('FACEBOOK-PIXEL (debug enabled): url contains value');
+    }
+#end
+## click event
+#elseif ($trigger == 'Click')
+    $('${value}').on('click', function(){
+        fbq('track', '${tag}');
+        if (debug == 'true') console.log('FACEBOOK-PIXEL (debug enabled): trigger clicked');
+    });
+#end
+#end
+});
+</script>
+<noscript><img height="1" width="1" style="display:none;" alt="facebook pixel" src="https://www.facebook.com/tr?id=${facebookID}&amp;ev=PageView&amp;noscript=1" /></noscript>
+
+#elseif($format == 'AMP')
+<amp-analytics type="facebookpixel" id="facebook-pixel">
+    <script type="application/json">
+    {
+        "vars": {
+            "pixelId": "${facebookID}"
+        },
+        "triggers": {
+## Loop through all events
+#foreach($event in $events)
+#set($tag = $_EscapeTool.xml($event.getChild('TAG').value))
+#set($trigger = $_EscapeTool.xml($event.getChild('TRIGGER').value))
+#set($value = $_EscapeTool.xml($event.getChild('VALUE').value))
+## check trigger type (URL or CLICK)
+#if($trigger == 'URL')
+            "${tag}": {
+                "on": "visible",
+                "request": "pageview"
+            }#addComma(${velocityCount} ${events.size()})
+            
+#elseif($trigger == 'Click')
+            "${tag}": {
+                "on": "click",
+                "selector": "${value}",
+                "request": "event"
+            }#addComma(${velocityCount} ${events.size()})
+#end
+#end
+
+        }
+    }
+    </script>
+</amp-analytics>
+#end
+
+## Add comma if the index is less than the list size
+#macro( addComma $index $size )
+#if ($index < $size),#end
+#end

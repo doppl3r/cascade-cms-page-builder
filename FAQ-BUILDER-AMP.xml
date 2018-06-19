@@ -1,0 +1,11 @@
+<system-data-structure>
+    <group identifier="FAQ">
+        <group identifier="TAB" multiple="true">
+            <text identifier="LABEL" label="Tab Label" size="30"/>
+            <group identifier="ITEM" multiple="true">
+                <text identifier="QUESTION" label="Question" size="50"/>
+                <text identifier="ANSWER" label="Answer" size="50"/>
+            </group>
+        </group>
+    </group>
+</system-data-structure>
