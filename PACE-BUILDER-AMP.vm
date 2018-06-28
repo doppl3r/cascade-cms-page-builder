@@ -113,11 +113,15 @@
                         ## call macro located at the bottom
                         #setLinkAttributes()
                     
-                    ## display each element item
-                    <a ${viewClass} ${href} ${target}>
-                        <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
-                        </amp-img>
-                    </a>
+                        ## display each element item
+                        #if($linkType != 'NONE')
+                        <a ${viewClass} ${href} ${target}>
+                        #end
+                            <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
+                            </amp-img>
+                        #if($linkType != 'NONE')
+                        </a>
+                        #end
                     #end ## end loop
                 
                 
@@ -166,10 +170,14 @@
                         #setLinkAttributes()
                         
                         ## display each element item
+                        #if($linkType != 'NONE')
                         <a ${href} ${target}>
+                        #end
                             <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
                             </amp-img>
+                        #if($linkType != 'NONE')
                         </a>
+                        #end
                     #end ## end loop
                     </amp-carousel>
                     #protect-->
@@ -208,7 +216,7 @@
                         
                         ## display each element item
                         <amp-iframe ${viewClass} src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
-                            <amp-img src="[system-asset:id=916663caac10c84609814ef85daf71a3]site://THE-COUNTER-WWW/assets/images/placeholder.png[/system-asset]" placeholder="" width="16" height="16">
+                            <amp-img src="https://apps.kahalamgmt.com/images/placeholder.png" placeholder="" width="16" height="16">
                             </amp-img>
                         </amp-iframe>
                     #end ## end loop

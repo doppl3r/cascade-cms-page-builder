@@ -18,7 +18,7 @@
             </text>
             <text identifier="COLOR" label="Background Color" maxlength="7" size="30" help-text="ex: #cccccc"/>
             <asset type="file" identifier="MEDIA" label="Background Media" help-text="Choose the section background"/>
-            <text identifier="PADDING" label="Padding" default="100px 0 100px 0" size="30" help-text="top right bottom left"/>
+            <text identifier="PADDING" label="Padding" default="64px 12px" size="30" help-text="top right bottom left"/>
         </group>
         <group identifier="ROW" multiple="true">
             <group identifier="COLUMN" multiple="true">
@@ -48,7 +48,7 @@
                     <dropdown-item value="col-11-sm"/>
                     <dropdown-item value="col-12-sm"/>
                 </text>
-                <text type="dropdown" identifier="ELEMENT-TYPE" label="HTML Element" default="p" help-text="Choose inner HTML to use">
+                <text type="dropdown" identifier="ELEMENT-TYPE" label="HTML Element" default="div" help-text="Choose inner HTML to use">
                     <dropdown-item value="h1" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/TEXT"/>
                     <dropdown-item value="h2" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/TEXT"/>
                     <dropdown-item value="h3" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/TEXT"/>
@@ -58,9 +58,9 @@
                     <dropdown-item value="div" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/TEXT"/>
                     <dropdown-item value="img" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK-TYPE, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT"/>
                     <dropdown-item value="video" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/AUTOPLAY, SECTION/ROW/COLUMN/ELEMENT/LOOP, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA, SECTION/ROW/COLUMN/ELEMENT/ITEM/POSTER, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT"/>
-                    <dropdown-item value="carousel" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/WIDTH-PARENT, SECTION/ROW/COLUMN/ELEMENT/HEIGHT-PARENT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/AUTOPLAY, SECTION/ROW/COLUMN/ELEMENT/LOOP, SECTION/ROW/COLUMN/ELEMENT/DELAY, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK-TYPE, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT"/>
+                    <dropdown-item value="carousel" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/WIDTH-PARENT, SECTION/ROW/COLUMN/ELEMENT/HEIGHT-PARENT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/AUTOPLAY, SECTION/ROW/COLUMN/ELEMENT/LOOP, SECTION/ROW/COLUMN/ELEMENT/DELAY, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK-TYPE, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT, SECTION/ROW/COLUMN/ELEMENT/INDICATORS"/>
                     <dropdown-item value="iframe" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/SANDBOX, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT"/>
-                    <dropdown-item value="block" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/BLOCK"/>
+                    <dropdown-item value="block" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/BLOCK, SECTION/ROW/COLUMN/ELEMENT/ITEM/FORMAT"/>
                 </text>
                 <group identifier="ELEMENT">
                     <text identifier="WIDTH-PARENT" label="Width" size="30" help-text="Do not include 'px' or other values"/>
@@ -82,9 +82,14 @@
                         <dropdown-item value="true"/>
                         <dropdown-item value="false"/>
                     </text>
+                    <text type="dropdown" identifier="INDICATORS" label="Indicators" default="false" help-text="Enable indicators. Requires amp-bind library and a unique name">
+                        <dropdown-item value="true" show-fields="SECTION/ROW/COLUMN/ELEMENT/SLIDER-NAME"/>
+                        <dropdown-item value="false"/>
+                    </text>
+                    <text identifier="SLIDER-NAME" label="Slider Name" size="30" help-text="A unique name is required for indicators to work."/>
                     <text identifier="DELAY" label="Delay" default="4000" size="30" help-text="Adjust the frequency of slide changes per milliseconds"/>
                     <text identifier="SANDBOX" label="Sandbox" default="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation" size="30" help-text="Separate each rule with a 'space' value"/>
-                    <text type="checkbox" identifier="VISIBILITY" label="Visibility">
+                    <text type="checkbox" identifier="VISIBILITY" label="Visibility" help-text="Display items for individual devices">
                         <checkbox-item value="Desktop" checked="true"/>
                         <checkbox-item value="Mobile" checked="true"/>
                     </text>
@@ -93,9 +98,10 @@
                         <asset type="file" identifier="MEDIA" label="Media" help-text="Choose a file"/>
                         <asset type="file" identifier="POSTER" label="Poster Image" help-text="Default image while video loads"/>
                         <asset type="block" identifier="BLOCK" label="Block" render-content-depth="unlimited" help-text="Choose a block item from the CMS"/>
+                        <text identifier="FORMAT" label="Format" size="30" help-text="Ex: site://APPS-KAHALA-WWW/+GLOBAL-FORMATS/FAQ-BUILDER-AMP"/>
                         <text identifier="MEDIA-EXTERNAL" label="External Source" size="30" help-text="This can override MEDIA for 'img', 'video' or 'carousel' elements."/>
-                        <text identifier="WIDTH" label="Width" size="30" help-text="Do not include 'px' or other values"/>
-                        <text identifier="HEIGHT" label="Height" size="30" help-text="Do not include 'px' or other values"/>
+                        <text identifier="WIDTH" label="Width" size="30" help-text="Leave empty to inherit parent width. Do not include 'px' or other values"/>
+                        <text identifier="HEIGHT" label="Height" size="30" help-text="Leave empty to inherit parent height. Do not include 'px' or other values"/>
                         <text identifier="ALT-TEXT" label="Alt Text" size="30" help-text="Required for ADA"/>
                         <text type="dropdown" identifier="LINK-TYPE" label="Link Type" default="NONE" help-text="Optional link">
                             <dropdown-item value="NONE"/>
