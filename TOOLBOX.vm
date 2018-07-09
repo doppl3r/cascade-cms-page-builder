@@ -1,0 +1,4 @@
+Useful macros to import
+
+## return occurrences of char within a string
+#macro(count $ch $str)#set($length = $str.length()- 1)#set($count = 0)#foreach($i in [0..$length])#if($ch == $str.charAt($i))#set($count = $count+ 1)#end#end$count#end
