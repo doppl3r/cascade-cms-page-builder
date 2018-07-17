@@ -1,9 +1,5 @@
 <system-data-structure>
     <group identifier="CUSTOM-CSS">
-        <text type="dropdown" identifier="CSS-TYPE" label="CSS Type" default="Block" help-text="Include CSS type for this page only.">
-            <dropdown-item value="Block" show-fields="CUSTOM-CSS/CSS-BLOCK"/>
-            <dropdown-item value="Snippet" show-fields="CUSTOM-CSS/CSS"/>
-        </text>
         <asset type="block" identifier="CSS-BLOCK" label="CSS Block" render-content-depth="unlimited" help-text="Do not include global styling. Block should only apply to this page."/>
         <text multi-line="true" identifier="CSS" label="CSS Snippet" help-text="Optional: @media (max-width: 767px){ ... }" rows="8" cols="60"/>
     </group>
@@ -58,7 +54,7 @@
                     <dropdown-item value="div" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/TEXT"/>
                     <dropdown-item value="img" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK-TYPE, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT"/>
                     <dropdown-item value="video" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/AUTOPLAY, SECTION/ROW/COLUMN/ELEMENT/LOOP, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA, SECTION/ROW/COLUMN/ELEMENT/ITEM/POSTER, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT"/>
-                    <dropdown-item value="carousel" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/WIDTH-PARENT, SECTION/ROW/COLUMN/ELEMENT/HEIGHT-PARENT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/AUTOPLAY, SECTION/ROW/COLUMN/ELEMENT/LOOP, SECTION/ROW/COLUMN/ELEMENT/DELAY, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK-TYPE, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT, SECTION/ROW/COLUMN/ELEMENT/INDICATORS"/>
+                    <dropdown-item value="carousel" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/WIDTH-PARENT, SECTION/ROW/COLUMN/ELEMENT/HEIGHT-PARENT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/AUTOPLAY, SECTION/ROW/COLUMN/ELEMENT/LOOP, SECTION/ROW/COLUMN/ELEMENT/DELAY, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK-TYPE, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT, SECTION/ROW/COLUMN/ELEMENT/INDICATORS, SECTION/ROW/COLUMN/ELEMENT/TYPE"/>
                     <dropdown-item value="iframe" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/WIDTH, SECTION/ROW/COLUMN/ELEMENT/ITEM/HEIGHT, SECTION/ROW/COLUMN/ELEMENT/LAYOUT, SECTION/ROW/COLUMN/ELEMENT/SANDBOX, SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/MEDIA-EXTERNAL, SECTION/ROW/COLUMN/ELEMENT/ITEM/ALT-TEXT"/>
                     <dropdown-item value="block" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/BLOCK, SECTION/ROW/COLUMN/ELEMENT/ITEM/FORMAT"/>
                 </text>
@@ -106,7 +102,7 @@
                         <text type="dropdown" identifier="LINK-TYPE" label="Link Type" default="NONE" help-text="Optional link">
                             <dropdown-item value="NONE"/>
                             <dropdown-item value="PAGE" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK/PAGE, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK/TARGET"/>
-                            <dropdown-item value="URL" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK/URL, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK/TARGET"/>
+                            <dropdown-item value="URL" show-fields="SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK/URL, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK/TARGET, SECTION/ROW/COLUMN/ELEMENT/ITEM/LINK/CUSTOM-ATTRIBUTE"/>
                         </text>
                         <group identifier="LINK">
                             <asset type="page" identifier="PAGE" label="Internal Page" help-text="Select a page from within the CMS"/>
@@ -115,6 +111,7 @@
                                 <dropdown-item value="_self"/>
                                 <dropdown-item value="_blank"/>
                             </text>
+                            <text identifier="CUSTOM-ATTRIBUTE" label="Custom Attribute" size="30" help-text="Ex: download='filename'"/>
                         </group>
                     </group>
                 </group>

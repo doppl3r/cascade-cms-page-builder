@@ -77,7 +77,7 @@
                         #setLinkAttributes()
                     
                     ## display each element item
-                    <a ${viewClass} ${href} ${target}>${text}</a>
+                    <a ${viewClass} ${href} ${target} ${customAttr}>${text}</a>
                     #end ## end loop
                 
                 
@@ -115,7 +115,7 @@
                     
                         ## display each element item
                         #if($linkType != 'NONE')
-                        <a ${viewClass} ${href} ${target}>
+                        <a ${viewClass} ${href} ${target} ${customAttr}>
                         #end
                             <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
                             </amp-img>
@@ -171,7 +171,7 @@
                         
                         ## display each element item
                         #if($linkType != 'NONE')
-                        <a ${href} ${target}>
+                        <a ${href} ${target} ${customAttr}>
                         #end
                             <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
                             </amp-img>
@@ -258,8 +258,10 @@
     #elseif($linkType == 'PAGE')
         #set($href = 'href="'+$_EscapeTool.xml($link.getChild('PAGE').getChild('link').value)+'"')
         #set($target = 'target="'+$link.getChild('TARGET').value+'"')
+        #set($customAttr = $link.getChild('CUSTOM-ATTRIBUTE').value)
     #elseif($linkType == 'URL')
         #set($href = 'href="'+$_EscapeTool.xml($link.getChild('URL').value)+'"')
         #set($target = 'target="'+$link.getChild('TARGET').value+'"')
+        #set($customAttr = $link.getChild('CUSTOM-ATTRIBUTE').value)
     #end
 #end
