@@ -17,7 +17,7 @@ The following scripts are useful for rapidly developing Google AMP websites with
   - amp-video
   - amp-carousel
   - amp-iframe
-  - Cascade CMS block
+  - Cascade CMS block (includes a format link field)
 
 ------------
 
@@ -25,9 +25,14 @@ The following scripts are useful for rapidly developing Google AMP websites with
 
 ### Data Definition:
   - *PAGE-BUILDER-AMP.xml* - Defines all input field for each page.
+  - *FACEBOOK-PIXEL.xml* - Defines Facebook pixel properties for specific blocks.
+  - *FAQ-BUILDER-AMP.xml* - Defines FAQ related input fields for specific blocks.
 
 ### Velocity Script:
-  - *PAGE-BUILDER-AMP.vm* - Conditions the Data Definition input fields into HTML elements.
+  - *PAGE-BUILDER-AMP.vm* - Converts pages that utilize the PAGE-BUILDER-AMP.xml data definition into HTML.
+  - *PAGE-BUILDER-CSS-AMP.vm* - Converts page properties that utilize the PAGE-BUILDER-AMP.xml data definition into CSS.
+  - *FACEBOOK-PIXEL.vm* - Converts Facebook pixel properties that utilize the FACEBOOK-PIXEL.xml data definition into HTML.
+  - *FAQ-BUILDER-AMP.vm* - Converts FAQ blocks that utilize the FAQ-BUILDER-AMP.xml data definition into HTML.
 
 ### Page Template:
   - *PAGE-BUILDER-AMP.xsl* - Combines Cascade CMS blocks with velocity format scripts within an HTML template.
@@ -37,10 +42,11 @@ The following scripts are useful for rapidly developing Google AMP websites with
 ## Libraries
 
 ### CSS Grid:
-The page builder uses any 12-column grid system. Recommend: http://simplegrid.io/
+The page builder works great with most 12-column grid systems. Recommend: http://simplegrid.io/
 
 ### Required AMP Libraries:
   - https://cdn.ampproject.org/v0.js
   - https://cdn.ampproject.org/v0/amp-video-0.1.js
   - https://cdn.ampproject.org/v0/amp-iframe-0.1.js
   - https://cdn.ampproject.org/v0/amp-carousel-0.1.js
+  - https://cdn.ampproject.org/v0/amp-bind-0.1.js
