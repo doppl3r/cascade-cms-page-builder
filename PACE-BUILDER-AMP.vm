@@ -151,9 +151,12 @@
                     ## loop through each item
                     #foreach($item in $items)
                         ## set item attributes
+                        #set($text = $item.getChild('TEXT').value)
                         #set($width = $_EscapeTool.xml($item.getChild('WIDTH').value))
                         #set($height = $_EscapeTool.xml($item.getChild('HEIGHT').value))
-                        #set($src = "[system-asset]" + $_EscapeTool.xml($item.getChild('MEDIA').getChild('link').value) + "[/system-asset]")
+                        #set($noMedia = ! $_EscapeTool.xml($item.getChild('MEDIA').getChild('link').value))
+                        #set($url = $_EscapeTool.xml($item.getChild('MEDIA').getChild('link').value))
+                        #set($src = "[system-asset]" + $url + "[/system-asset]")
                         #set($extSrc = $_EscapeTool.xml($item.getChild('MEDIA-EXTERNAL').value))
                         #set($altText = $_EscapeTool.xml($item.getChild('ALT-TEXT').value))
                         #set($linkType = $_EscapeTool.xml($item.getChild('LINK-TYPE').value))
@@ -173,8 +176,13 @@
                         #if($linkType != 'NONE')
                         <a ${href} ${target} ${customAttr}>
                         #end
-                            <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
-                            </amp-img>
+                            <div class="carousel-item-${velocityCount}">
+                                #if($noMedia == false)
+                                <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
+                                </amp-img>
+                                #end
+                                <div class="caption">${text}</div>
+                            </div>
                         #if($linkType != 'NONE')
                         </a>
                         #end
@@ -239,6 +247,15 @@
                             ## insert format script
                             #import($format) 
                         #end
+                    #end ## end loop
+                
+                ## WYSIWYG type
+                #elseif($elemType == 'WYSIWYG')
+                    ## loop through each item
+                    #set($items = $_XPathTool.selectNodes($elem, 'ITEM'))
+                    #foreach($item in $items)
+                        #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($item, 'WYSIWYG'),true))
+                        ${wysiwyg}
                     #end ## end loop
                 #end
             </div>

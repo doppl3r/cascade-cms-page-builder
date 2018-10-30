@@ -14,6 +14,7 @@
         <system-region name="AMP-VIDEO"/>
         <system-region name="AMP-IFRAME"/>
         <system-region name="AMP-FORM"/>
+        <system-region name="AMP-BIND"/>
         <system-region name="AMP-CAROUSEL"/>
         <system-region name="AMP-ACCORDION"/>
         <system-region name="AMP-SELECTOR"/>
@@ -26,13 +27,19 @@
             <system-region name="CSS-GLOBAL"/>
             <system-region name="CSS-BUILDER"/>
         </style>
+        <system-region name="SCRIPT-JQUERY"/>
+        <system-region name="SCRIPT-ONEOFFS"/>
     </head>
     <body>
-        <system-region name="NAV"/>
-        <system-region name="HEADER"/>
-        <system-region name="DEFAULT"/>
-        <system-region name="FOOTER"/>
-        <system-region name="ADA-BADGE"/>
-        <system-region name="GOOGLE-ANALYTICS"/>
+        <div class="wrapper">
+            <system-region name="NAV"/>
+            <system-region name="HEADER"/>
+            <system-region name="SIDENAV"/>
+            <system-region name="DEFAULT"/>
+            <system-region name="FOOTER"/>
+            <system-region name="ADA-BADGE"/>
+            <system-region name="GOOGLE-ANALYTICS"/>
+            <system-region name="FACEBOOK-PIXEL"/>
+        </div>
     </body>
 </html>
