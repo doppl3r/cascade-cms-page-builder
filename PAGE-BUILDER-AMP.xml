@@ -18,7 +18,8 @@
         </group>
         <group identifier="ROW" multiple="true">
             <group identifier="COLUMN" multiple="true">
-                <text type="dropdown" identifier="SIZE" label="Column Size" default="col-12" help-text="'col-12' = full width, 'col-6' = half width">
+                <text type="dropdown" identifier="SIZE" label="Column Size" default="col" help-text="'col-12' = full width, 'col-6' = half width">
+                    <dropdown-item value="col"/>
                     <dropdown-item value="col-1"/>
                     <dropdown-item value="col-2"/>
                     <dropdown-item value="col-3"/>
@@ -43,7 +44,9 @@
                     <dropdown-item value="col-10-sm"/>
                     <dropdown-item value="col-11-sm"/>
                     <dropdown-item value="col-12-sm"/>
+                    <dropdown-item value="custom" show-fields="SECTION/ROW/COLUMN/CUSTOM-COLUMN"/>
                 </text>
+                <text identifier="CUSTOM-COLUMN" label="Custom Column" default="col-12 col-12-sm" size="30" help-text="Custom class name for column"/>
                 <text type="dropdown" identifier="ELEMENT-TYPE" label="HTML Element" default="div" help-text="Choose inner HTML to use">
                     <dropdown-item value="h1" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/TEXT"/>
                     <dropdown-item value="h2" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/TEXT"/>

@@ -18,6 +18,7 @@ The following scripts are useful for rapidly developing Google AMP websites with
   - amp-carousel
   - amp-iframe
   - Cascade CMS block (includes a format link field)
+  - WYSIWYG
 
 ------------
 
