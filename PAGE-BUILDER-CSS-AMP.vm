@@ -21,8 +21,15 @@
 
 ## Load page-level custom CSS (block & text)
 #set($customCSS = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/CUSTOM-CSS'))
-#set($cssBlock = $customCSS.getChild('CSS-BLOCK').getChild('content'))
-#if($cssBlock) $_SerializerTool.serialize($cssBlock, true) #end
+#set($cssBlocks = $customCSS.getChildren('CSS-BLOCK'))
+
+## Loop through blocks
+#foreach($cssBlock in $cssBlocks)
+    #set($cssBlock = $cssBlock.getChild('content'))
+    #if($cssBlock) $_SerializerTool.serialize($cssBlock, true) #end
+#end
+
+## Output static page CSS
 ${customCSS.getChild('CSS').value}
 
 ## Carousel fixed
