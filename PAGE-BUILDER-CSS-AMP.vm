@@ -21,16 +21,21 @@
 
 ## Load page-level custom CSS (block & text)
 #set($customCSS = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/CUSTOM-CSS'))
-#set($cssBlocks = $customCSS.getChildren('CSS-BLOCK'))
+#set ($cssBlocks = $_XPathTool.selectNodes($customCSS, "CSS-BLOCK[path != '/']"))
 
 ## Loop through blocks
-#foreach($cssBlock in $cssBlocks)
-    #set($cssBlock = $cssBlock.getChild('content'))
-    #if($cssBlock) $_SerializerTool.serialize($cssBlock, true) #end
+#if ($cssBlocks.size() > 0)
+    #foreach($cssBlock in $cssBlocks)
+        #set($cssBlock = $cssBlock.getChild('content'))
+        #if($cssBlock != '<path>/</path>') $_SerializerTool.serialize($cssBlock, true) #end
+    #end
 #end
 
 ## Output static page CSS
 ${customCSS.getChild('CSS').value}
 
-## Carousel fixed
+## Page builder styles
 amp-carousel[layout="responsive"] amp-img { height: initial; }
+.hide-desktop { display: none; }
+.hide-mobile  { display: block; }
+.hide-both  { display: none; }
