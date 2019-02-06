@@ -13,15 +13,16 @@
         ## Loop through each ROW
         #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
         #foreach($row in $rows)
-        
-        <div class="row">
+            #setCustomAttributes($row.getChild('CUSTOM-ATTRIBUTE').value)
+        <div class="row ${classAttr}" ${customAttr}>
             ## Loop through each COLUMN
             #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
             #foreach($column in $columns)
+                #setCustomAttributes($column.getChild('CUSTOM-ATTRIBUTE').value)
                 ## set column size
                 #set($colSize = $_EscapeTool.xml($column.getChild('SIZE').value))
                 #if($colSize == 'custom') #set($colSize = $column.getChild('CUSTOM-COLUMN').value) #end
-            <div class="${colSize}">
+            <div class="${colSize} ${classAttr}" ${customAttr}>
                 ## set element properties
                 #set($elem = $_XPathTool.selectSingleNode($column, 'ELEMENT'))
                 #set($elemType = $_EscapeTool.xml($column.getChild('ELEMENT-TYPE').value))
@@ -41,10 +42,10 @@
                 #if($loop == 'true') #set($loop = 'loop=""') #else #set($loop = '') #end
                 
                 ## check if item is hidden on desktop or mobile
-                #if($view == 'Desktop') #set($viewClass = 'class="hide-mobile"')
-                #elseif($view == 'Mobile') #set($viewClass = 'class="hide-desktop"')
+                #if($view == 'Desktop') #set($viewClass = 'hide-mobile')
+                #elseif($view == 'Mobile') #set($viewClass = 'hide-desktop')
                 #elseif($view == 'DesktopMobile') #set($viewClass = '')
-                #else #set($viewClass = 'class="hide-both"') #end
+                #else #set($viewClass = 'hide-both') #end
                 
                 
                 ## insert HTML by element type
@@ -56,7 +57,7 @@
                         #set($text = $item.getChild('TEXT').value)
                         
                     ## display each element item
-                    <${elemType} ${viewClass}>${text}</${elemType}>
+                    <${elemType} class="${viewClass}">${text}</${elemType}>
                     #end ## end loop
                 
                 
@@ -78,12 +79,12 @@
                         #setLinkAttributes()
                     
                     ## display each element item
-                    <a ${viewClass} ${href} ${target} ${customAttr}>${text}</a>
+                    <a class="${viewClass}" ${href} ${target}>${text}</a>
                     #end ## end loop
                 
                 
                 #elseif($elemType == 'ul')   
-                    <ul ${viewClass}>
+                    <ul class="${viewClass}">
                     ## loop through each item
                     #set($items = $_XPathTool.selectNodes($elem, 'ITEM'))
                     #foreach($item in $items)
@@ -116,7 +117,7 @@
                     
                         ## display each element item
                         #if($linkType != 'NONE')
-                        <a ${viewClass} ${href} ${target} ${customAttr}>
+                        <a class="${viewClass}" ${href} ${target}>
                         #end
                             <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
                             </amp-img>
@@ -148,7 +149,7 @@
                     #end
                     
                     ## amp carousel
-                    <amp-carousel ${slideAttr} ${onAttr} ${viewClass} width="${widthParent}" height="${heightParent}" layout="${layout}" type="slides" ${autoplay} ${loop} delay="${delay}">
+                    <amp-carousel ${slideAttr} ${onAttr} class="${viewClass}" width="${widthParent}" height="${heightParent}" layout="${layout}" type="slides" ${autoplay} ${loop} delay="${delay}">
                     ## loop through each item
                     #foreach($item in $items)
                         ## set item attributes
@@ -175,7 +176,7 @@
                         
                         ## display each element item
                         #if($linkType != 'NONE')
-                        <a ${href} ${target} ${customAttr}>
+                        <a ${href} ${target}>
                         #end
                             <div class="carousel-item-${velocityCount}">
                                 #if($noMedia == false)
@@ -206,7 +207,7 @@
                         #if(${extSrc.length()} > 0) #set($src = $extSrc) #end ## overrides src link
                         
                         ## display each element item
-                        <amp-video ${viewClass} alt="${altText}" width="${width}" height="${height}" src="${src}" poster="${poster}" layout="${layout}" ${autoplay} ${loop}>
+                        <amp-video class="${viewClass}" alt="${altText}" width="${width}" height="${height}" src="${src}" poster="${poster}" layout="${layout}" ${autoplay} ${loop}>
                             <div fallback=""><p>Your browser doesn't support HTML5 video.</p></div>
                         </amp-video>
                     #end ## end loop
@@ -224,7 +225,7 @@
                         #set($altText = $_EscapeTool.xml($item.getChild('ALT-TEXT').value))
                         
                         ## display each element item
-                        <amp-iframe ${viewClass} src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
+                        <amp-iframe class="${viewClass}" src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
                             <amp-img src="https://apps.kahalamgmt.com/images/placeholder.png" placeholder="" width="16" height="16">
                             </amp-img>
                         </amp-iframe>
@@ -241,7 +242,7 @@
                         ## check format URL
                         #if($format == '')
                             ## insert raw XML
-                            <div ${viewClass}>
+                            <div class="${viewClass}">
                                 $_SerializerTool.serialize($item.getChild('BLOCK').getChild('content'), true)
                             </div>
                         #else
@@ -276,10 +277,26 @@
     #elseif($linkType == 'PAGE')
         #set($href = 'href="[system-asset]'+$_EscapeTool.xml($link.getChild('PAGE').getChild('link').value)+'[/system-asset]"')
         #set($target = 'target="'+$link.getChild('TARGET').value+'"')
-        #set($customAttr = $link.getChild('CUSTOM-ATTRIBUTE').value)
     #elseif($linkType == 'URL')
         #set($href = 'href="'+$_EscapeTool.xml($link.getChild('URL').value)+'"')
         #set($target = 'target="'+$link.getChild('TARGET').value+'"')
-        #set($customAttr = $link.getChild('CUSTOM-ATTRIBUTE').value)
+    #end
+#end
+
+## set attributes and build class string for custom attributes
+#macro(setCustomAttributes $attr)
+    #set($customAttr = $attr.replace("'", '"')) ## format to quotation markup
+    #set($classIndex = $customAttr.indexOf('class='))
+    #set($classAttr = '') ##reset value
+    
+    ## set class value for rows or columns
+    #if($classIndex >= 0)
+        #set($a = $classIndex + 7) ## add length of 'class="' to $a
+        #set($classAttr = $customAttr.substring($a))
+        #set($b = $a + $classAttr.indexOf('"'))
+        #set($classAttr = $customAttr.substring($a, $b))
+        ## remove class attribute from custom attribute
+        #set($customAttr = ($customAttr.substring(0, $a) + $customAttr.substring($b)))
+        #set($customAttr = $customAttr.replace('class=""', ''))
     #end
 #end
