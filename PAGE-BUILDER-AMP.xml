@@ -17,9 +17,8 @@
             <text identifier="PADDING" label="Padding" default="64px 12px" size="30" help-text="top right bottom left"/>
         </group>
         <group identifier="ROW" multiple="true">
-            <text identifier="CUSTOM-ATTRIBUTE" label="Custom Attribute(s)" size="30" help-text="Ex: class='main'"/>
+            <text identifier="CUSTOM-ATTRIBUTE" label="Row Attribute(s)" size="30" help-text="Ex: class='main'"/>
             <group identifier="COLUMN" multiple="true">
-                <text identifier="CUSTOM-ATTRIBUTE" label="Custom Attribute(s)" size="30" help-text="Ex: class='main'"/>
                 <text type="dropdown" identifier="SIZE" label="Column Size" default="col" help-text="'col-12' = full width, 'col-6' = half width">
                     <dropdown-item value="col"/>
                     <dropdown-item value="col-1"/>
@@ -64,6 +63,7 @@
                     <dropdown-item value="block" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/BLOCK, SECTION/ROW/COLUMN/ELEMENT/ITEM/FORMAT"/>
                     <dropdown-item value="WYSIWYG" show-fields="SECTION/ROW/COLUMN/ELEMENT/VISIBILITY, SECTION/ROW/COLUMN/ELEMENT/ITEM/WYSIWYG"/>
                 </text>
+                <text identifier="CUSTOM-ATTRIBUTE" label="Column Attribute(s)" size="30" help-text="Ex: class='main'"/>
                 <group identifier="ELEMENT">
                     <text identifier="WIDTH-PARENT" label="Width" size="30" help-text="Do not include 'px' or other values"/>
                     <text identifier="HEIGHT-PARENT" label="Height" size="30" help-text="Do not include 'px' or other values"/>
