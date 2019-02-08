@@ -81,6 +81,7 @@
     #elseif($type == 'ul')
         <ul>
         #foreach($item in $items)
+            #setAttributes($item)
             <li>${text}</li>
         #end
         </ul>
