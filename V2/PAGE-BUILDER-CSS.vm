@@ -2,11 +2,11 @@
 ## Default PAGE-BUILDER CSS
 section { padding: 64px 12px; }
 section .row [class*="col"] { position: relative; }
-.carousel-controls {  position: absolute; bottom: 12px; left: 0; right: 0; width: 100%; text-align: center; z-index: 1; box-sizing: border-box; pointer-events: none; }
-.carousel-controls span { display: inline-block; cursor: pointer; pointer-events: all; vertical-align: top; }
+.carousel-controls {  position: absolute; bottom: 12px; left: 0; right: 0; width: 100%; text-align: right; z-index: 1; box-sizing: border-box; padding: 0 12px; pointer-events: none; }
+.carousel-controls span { display: inline-block; cursor: pointer; pointer-events: all; vertical-align: top; color: #fff; background-color: #000; font-size: 10px; line-height: 16px; padding: 0 8px; }
 .carousel-controls .indicators { display: inline-block; margin: 0; padding: 0; list-style: none; }
-.carousel-controls .indicators li { opacity: 0.25; border-radius: 50%; cursor: pointer; display: inline-block; width: 19px; height: 19px; background-color: #ffffff; margin: 4px; pointer-events: all; }
-.carousel-controls .indicators li.active { opacity: 1; }
+.carousel-controls .indicators li { border-radius: 50%; cursor: pointer; display: inline-block; width: 16px; height: 16px; background-color: #000; pointer-events: all; box-sizing: border-box; }
+.carousel-controls .indicators li.active { background-color: #fff; border: 4px solid #000; }
 
 ## Load each section property class
 #set($page = $_XPathTool.selectNodes($contentRoot, '//system-data-structure/PAGE'))
@@ -14,9 +14,11 @@ section .row [class*="col"] { position: relative; }
 #foreach($section in $sections)
 #set($color = $section.getChild('BACKGROUND-COLOR').value)
 #set($image = $section.getChild('BACKGROUND-IMAGE').getChild("path").value)
+#set($padding = $section.getChild('PADDING').value)
 #set($color = "#if($color.length() > 0)background-color: $color;#{else}#end")
 #set($image = "#if($image.length() > 1)background-image: url('[system-asset]${image}[/system-asset]');#{else}#end")
-section[data-index="${velocityCount}"] { ${color} ${image} }
+#set($padding = "#if($padding.length() > 0)padding: $padding;#{else}#end")
+section[data-index="${velocityCount}"] { ${color} ${image} ${padding} }
 #end
 
 ## Load page-level custom CSS (block & text)

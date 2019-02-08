@@ -25,6 +25,7 @@
     #end
 </main>
 
+## set attributes if data exists
 #macro(setAttributes $elem)
     #set($attributes = $elem.getChild('ATTRIBUTES').value)
     #set($type = $elem.getChild('TYPE').value)
@@ -40,36 +41,29 @@
     #set($internalMedia = $elem.getChild('INTERNAL-MEDIA').getChild('link').value)
     #set($videoPoster = $elem.getChild('VIDEO-POSTER').getChild('link').value)
     #set($block = $_SerializerTool.serialize($elem.getChild('BLOCK').getChild('content'), true))
-    #set($format = $elem.getChild('FORMAT').value)
-    #set($externalMedia = $elem.getChild('EXTERNAL-MEDIA').value)
-    #set($altText = $elem.getChild('ALT-TEXT').value)
+    #set($format = $_EscapeTool.xml($elem.getChild('FORMAT').value))
+    #set($externalMedia = $_EscapeTool.xml($elem.getChild('EXTERNAL-MEDIA').value))
+    #set($altText = $_EscapeTool.xml($elem.getChild('ALT-TEXT').value))
     #set($internalPath = $elem.getChild('INTERNAL-PATH').getChild('link').value)
-    #set($externalPath = $elem.getChild('EXTERNAL-PATH').value)
+    #set($externalPath = $_EscapeTool.xml($elem.getChild('EXTERNAL-PATH').value))
     #set($target = $elem.getChild('TARGET').value)
     #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($elem, 'WYSIWYG'), true))
     
-    ## check link order
+    ## conditionally update unique attributes
     #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #end
     #if($externalPath.length() > 0) #set($link = $externalPath) #end
     #if(!$!internalPath && !$!externalPath) #set($link = '') #end
-    
-    ## check media order
     #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #end
     #if($externalMedia.length() > 0) #set($src = $externalMedia) #end
     #if(!$!internalMedia && !$!externalMedia) #set($src = '') #end
-    
-    ## check poster media
     #if($posterVideo.length() > 0) #set($poster = 'poster="[system-asset]' + $posterVideo + '[/system-asset]"') #end
     #if(!$!posterVideo) #set($poster = '') #end
-    
-    ## check video behavior
     #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
     #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
-    
-    ## increment content id
     #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
 #end
 
+## output HTML by content type
 #macro(setContent $content)
     #set($items = $_XPathTool.selectNodes($content, 'ITEM'))
     #if($type == 'h1' || $type == 'h2' || $type == 'h3' || $type == 'p' || $type == 'div')
@@ -139,5 +133,24 @@
         #end
         </amp-carousel>
         #protect-->
+    #elseif($type == 'amp-iframe')
+        #foreach($item in $items)
+            #setAttributes($item)
+            <amp-iframe ${attributes} src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
+                <amp-img src="https://apps.kahalamgmt.com/images/placeholder.png" placeholder="" width="16" height="16">
+                </amp-img>
+            </amp-iframe>
+        #end
+    #elseif($type == 'block')
+        #foreach($item in $items)
+            #setAttributes($item)
+            #if($format == '')<div ${attributes}>${block}</div>
+            #else #import($format) #end
+        #end
+    #elseif($type == 'WYSIWYG')
+        #foreach($item in $items)
+            #setAttributes($item)
+            <div ${attributes}>${wysiwyg}</div>
+        #end
     #end
 #end
