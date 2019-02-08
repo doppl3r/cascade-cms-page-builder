@@ -1,7 +1,7 @@
 <system-data-structure>
     <group identifier="PAGE">
-        <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" help-text="Attach custom CSS into page header"/>
-        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Page-level CSS snippet"/>
+        <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach custom CSS into page header"/>
+        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Page-level CSS snippet" rows="4" cols="30"/>
         <group identifier="SECTION" multiple="true">
             <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='section'" size="30" help-text="Ex: class='section'"/>
             <text identifier="BACKGROUND-COLOR" label="Background Color" default="#ffffff" size="30" help-text="#ffffff"/>
@@ -21,7 +21,7 @@
                             <dropdown-item value="div" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TEXT, PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES"/>
                             <dropdown-item value="amp-img" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-PATH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-PATH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TARGET"/>
                             <dropdown-item value="amp-video" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/AUTOPLAY, PAGE/SECTION/ROW/COLUMN/CONTENT/LOOP, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/VIDEO-POSTER, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT"/>
-                            <dropdown-item value="amp-carousel" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/AUTOPLAY, PAGE/SECTION/ROW/COLUMN/CONTENT/LOOP, PAGE/SECTION/ROW/COLUMN/CONTENT/INDICATORS, PAGE/SECTION/ROW/COLUMN/CONTENT/DELAY, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TEXT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-PATH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-PATH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TARGET"/>
+                            <dropdown-item value="amp-carousel" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/AUTOPLAY, PAGE/SECTION/ROW/COLUMN/CONTENT/LOOP, PAGE/SECTION/ROW/COLUMN/CONTENT/INDICATORS, PAGE/SECTION/ROW/COLUMN/CONTENT/DELAY, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TEXT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-PATH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-PATH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TARGET"/>
                             <dropdown-item value="amp-iframe" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/SANDBOX, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT"/>
                             <dropdown-item value="block" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/BLOCK, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/FORMAT"/>
                             <dropdown-item value="WYSIWYG" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WYSIWYG"/>
@@ -38,7 +38,7 @@
                             <dropdown-item value="container"/>
                             <dropdown-item value="flex-item"/>
                         </text>
-                        <text type="dropdown" identifier="AUTOPLAY" label="Autoplay" default="false" help-text="Carousel auto loop">
+                        <text type="dropdown" identifier="AUTOPLAY" label="Autoplay" default="true" help-text="Carousel auto loop">
                             <dropdown-item value="true"/>
                             <dropdown-item value="false"/>
                         </text>
@@ -46,7 +46,7 @@
                             <dropdown-item value="true"/>
                             <dropdown-item value="false"/>
                         </text>
-                        <text type="dropdown" identifier="INDICATORS" label="Indicators" default="false" help-text="Carousel indicators">
+                        <text type="dropdown" identifier="INDICATORS" label="Indicators" default="true" help-text="Carousel indicators">
                             <dropdown-item value="true"/>
                             <dropdown-item value="false"/>
                         </text>

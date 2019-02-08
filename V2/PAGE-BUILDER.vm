@@ -1,0 +1,143 @@
+#set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
+<main id="mainwrap">
+    #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
+    #foreach($section in $sections)
+        #setAttributes($section)
+        <section ${attributes} data-index="${velocityCount}">
+            #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
+            #foreach($row in $rows)
+                #setAttributes($row)
+                <div ${attributes}>
+                    #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
+                    #foreach($column in $columns)
+                        #setAttributes($column)
+                        <div ${attributes}>
+                            #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
+                            #foreach($content in $contents)
+                                #setAttributes($content)
+                                #setContent($content)
+                            #end
+                        </div>
+                    #end
+                </div>
+            #end
+        </section>
+    #end
+</main>
+
+#macro(setAttributes $elem)
+    #set($attributes = $elem.getChild('ATTRIBUTES').value)
+    #set($type = $elem.getChild('TYPE').value)
+    #set($width = $elem.getChild('WIDTH').value)
+    #set($height = $elem.getChild('HEIGHT').value)
+    #set($layout = $elem.getChild('LAYOUT').value)
+    #set($autoplay = $elem.getChild('AUTOPLAY').value)
+    #set($loop = $elem.getChild('LOOP').value)
+    #set($indicators = $elem.getChild('INDICATORS').value)
+    #set($delay = $elem.getChild('DELAY').value)
+    #set($sandbox = $elem.getChild('SANDBOX').value)
+    #set($text = $elem.getChild('TEXT').value)
+    #set($internalMedia = $elem.getChild('INTERNAL-MEDIA').getChild('link').value)
+    #set($videoPoster = $elem.getChild('VIDEO-POSTER').getChild('link').value)
+    #set($block = $_SerializerTool.serialize($elem.getChild('BLOCK').getChild('content'), true))
+    #set($format = $elem.getChild('FORMAT').value)
+    #set($externalMedia = $elem.getChild('EXTERNAL-MEDIA').value)
+    #set($altText = $elem.getChild('ALT-TEXT').value)
+    #set($internalPath = $elem.getChild('INTERNAL-PATH').getChild('link').value)
+    #set($externalPath = $elem.getChild('EXTERNAL-PATH').value)
+    #set($target = $elem.getChild('TARGET').value)
+    #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($elem, 'WYSIWYG'), true))
+    
+    ## check link order
+    #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #end
+    #if($externalPath.length() > 0) #set($link = $externalPath) #end
+    #if(!$!internalPath && !$!externalPath) #set($link = '') #end
+    
+    ## check media order
+    #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #end
+    #if($externalMedia.length() > 0) #set($src = $externalMedia) #end
+    #if(!$!internalMedia && !$!externalMedia) #set($src = '') #end
+    
+    ## check poster media
+    #if($posterVideo.length() > 0) #set($poster = 'poster="[system-asset]' + $posterVideo + '[/system-asset]"') #end
+    #if(!$!posterVideo) #set($poster = '') #end
+    
+    ## check video behavior
+    #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
+    #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
+    
+    ## increment content id
+    #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
+#end
+
+#macro(setContent $content)
+    #set($items = $_XPathTool.selectNodes($content, 'ITEM'))
+    #if($type == 'h1' || $type == 'h2' || $type == 'h3' || $type == 'p' || $type == 'div')
+        #foreach($item in $items)
+            #setAttributes($item)
+            <${type} ${attributes}>${text}</${type}>
+        #end
+    #elseif($type == 'a')
+        #foreach($item in $items)
+            #setAttributes($item)
+            <a href="${link}" ${attributes} target="${target}">${text}</a>
+        #end
+    #elseif($type == 'ul')
+        #setAttributes($content)
+        <ul ${attributes}>
+        #foreach($item in $items)
+            <li>${text}</li>
+        #end
+        </ul>
+    #elseif($type == 'amp-img')
+        #foreach($item in $items)
+            #setAttributes($item)
+            #if($link != '')<a href="${link}" target="${target}">#end
+                <amp-img ${attributes} src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
+                </amp-img>
+            #if($link != '')</a>#end
+        #end
+    #elseif($type == 'amp-video')
+        #foreach($item in $items)
+            #setAttributes($item)
+            <amp-video id="video_${contentId}" ${attributes} alt="${altText}" width="${width}" height="${height}" src="${src}" ${poster} layout="${layout}" ${autoplayAttr} ${loopAttr} on="tap:video_${contentId}.play">
+                <div fallback=""><p>Your browser doesn't support HTML5 video.</p></div>
+            </amp-video>
+        #end
+    #elseif($type == 'amp-carousel')
+        #setAttributes($content)
+        #set($parentWidth = $width)
+        #set($parentHeight = $height)
+        #set($parentLayout = $layout)
+        #set($pause = "#if($autoplay == 'true')pause#{else}play#end")
+        #set($play = "#if($autoplay == 'true')play#{else}pause#end")
+        #set($carousel = "carousel_${contentId}")
+        #set($slide = "slide_${contentId}")
+        <!--#protect
+        #if($indicators == "true" && $items.size() > 1)
+            <div class="carousel-controls">
+                <span [text]="pause_${contentId} == -1 ? '$play' : '$pause'" role="button" tabindex="0" on="tap:AMP.setState({pause_${contentId}: (pause_${contentId} + 1) * -1 }), ${carousel}.toggleAutoplay()">$pause</span>
+                <ol class="indicators">
+                    ## loop through each item
+                    #foreach($item in $items)
+                        #set($i = $velocityCount - 1)
+                        <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${slide} == ${i} || (${slide} == null && ${i} == 0) ? 'active' : ''" on="tap:AMP.setState({${slide}: ${i}})" tabindex="0"></li>
+                    #end
+                </ol>
+            </div>
+        #end
+        <amp-carousel id="${carousel}" [slide]="${slide}" on="slideChange:AMP.setState({ ${slide}: event.index })" width="${width}" height="${height}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}">
+        #foreach($item in $items)
+            #setAttributes($item)
+            #if($link != '')<a href="${link}" target="${target}">#end
+                <div class="carousel-item-${velocityCount}">
+                    <amp-img src="${src}" width="${parentWidth}" height="${parentHeight}" layout="${parentLayout}" alt="${altText}">
+                    </amp-img>
+                    <div class="caption">${text}</div>
+                </div>
+            #if($link != '')</a>#end
+        #end
+        </amp-carousel>
+        #protect-->
+    #end
+#end

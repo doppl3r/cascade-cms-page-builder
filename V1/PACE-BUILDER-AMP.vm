@@ -38,14 +38,14 @@
                 #set($view = $_EscapeTool.xml($elem.getChild('VISIBILITY').value))
                 
                 ## update autoplay string value for AMP video/carousel attributes
-                #if($autoplay == 'true') #set($autoplay = 'autoplay=""') #else #set($autoplay = '') #end
-                #if($loop == 'true') #set($loop = 'loop=""') #else #set($loop = '') #end
+                #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
+                #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
                 
                 ## check if item is hidden on desktop or mobile
-                #if($view == 'Desktop') #set($viewClass = 'hide-mobile')
-                #elseif($view == 'Mobile') #set($viewClass = 'hide-desktop')
+                #if($view == 'Desktop') #set($viewClass = 'class="hide-mobile"')
+                #elseif($view == 'Mobile') #set($viewClass = 'class="hide-desktop"')
                 #elseif($view == 'DesktopMobile') #set($viewClass = '')
-                #else #set($viewClass = 'hide-both') #end
+                #else #set($viewClass = 'class="hide-both"') #end
                 
                 
                 ## insert HTML by element type
@@ -57,7 +57,7 @@
                         #set($text = $item.getChild('TEXT').value)
                         
                     ## display each element item
-                    <${elemType} class="${viewClass}">${text}</${elemType}>
+                    <${elemType} ${viewClass}>${text}</${elemType}>
                     #end ## end loop
                 
                 
@@ -79,12 +79,12 @@
                         #setLinkAttributes()
                     
                     ## display each element item
-                    <a class="${viewClass}" ${href} ${target}>${text}</a>
+                    <a ${viewClass} ${href} ${target}>${text}</a>
                     #end ## end loop
                 
                 
                 #elseif($elemType == 'ul')   
-                    <ul class="${viewClass}">
+                    <ul ${viewClass}>
                     ## loop through each item
                     #set($items = $_XPathTool.selectNodes($elem, 'ITEM'))
                     #foreach($item in $items)
@@ -117,7 +117,7 @@
                     
                         ## display each element item
                         #if($linkType != 'NONE')
-                        <a class="${viewClass}" ${href} ${target}>
+                        <a ${viewClass} ${href} ${target}>
                         #end
                             <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
                             </amp-img>
@@ -132,6 +132,8 @@
                     #set($items = $_XPathTool.selectNodes($elem, 'ITEM'))
                     #set($slideAttr = '')
                     #set($onAttr = '')
+                    #set($pause = "#if($autoplay == 'true')pause#{else}play#end")
+                    #set($play = "#if($autoplay == 'true')play#{else}pause#end")
                     
                     <!--#protect
                     ## include indicators if true, and if the slider has a name, and if there are more than 1 slide
@@ -139,17 +141,20 @@
                         #set($sliderName = $sliderName.replace('-',''))
                         #set($slideAttr = '[slide]="'+${sliderName}+'"')
                         #set($onAttr = 'on="slideChange:AMP.setState({'+${sliderName}+': event.index})"')
-                        <ol class="indicators">
-                            ## loop through each item
-                            #foreach($item in $items)
-                                #set($i = $velocityCount - 1)
-                                <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${sliderName} == ${i} ? 'active' : ''" on="tap:AMP.setState({${sliderName}: ${i}})" tabindex="0"></li>
-                            #end
-                        </ol>
+                        <div class="carousel-controls">
+                            <span [text]="pause_${sliderName} == -1 ? '$play' : '$pause'" role="button" tabindex="0" on="tap:AMP.setState({pause_${sliderName}: (pause_${sliderName} + 1) * -1 }), ${sliderName}.toggleAutoplay()">$pause</span>
+                            <ol class="indicators">
+                                ## loop through each item
+                                #foreach($item in $items)
+                                    #set($i = $velocityCount - 1)
+                                    <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${sliderName} == ${i} || (${sliderName} == null && ${i} == 0) ? 'active' : ''" on="tap:AMP.setState({${sliderName}: ${i}})" tabindex="0"></li>
+                                #end
+                            </ol>
+                        </div>
                     #end
                     
                     ## amp carousel
-                    <amp-carousel ${slideAttr} ${onAttr} class="${viewClass}" width="${widthParent}" height="${heightParent}" layout="${layout}" type="slides" ${autoplay} ${loop} delay="${delay}">
+                    <amp-carousel id="${sliderName}" ${slideAttr} ${onAttr} ${viewClass} width="${widthParent}" height="${heightParent}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}">
                     ## loop through each item
                     #foreach($item in $items)
                         ## set item attributes
@@ -207,7 +212,7 @@
                         #if(${extSrc.length()} > 0) #set($src = $extSrc) #end ## overrides src link
                         
                         ## display each element item
-                        <amp-video class="${viewClass}" alt="${altText}" width="${width}" height="${height}" src="${src}" poster="${poster}" layout="${layout}" ${autoplay} ${loop}>
+                        <amp-video ${viewClass} alt="${altText}" width="${width}" height="${height}" src="${src}" poster="${poster}" layout="${layout}" ${autoplayAttr} ${loopAttr}>
                             <div fallback=""><p>Your browser doesn't support HTML5 video.</p></div>
                         </amp-video>
                     #end ## end loop
@@ -225,7 +230,7 @@
                         #set($altText = $_EscapeTool.xml($item.getChild('ALT-TEXT').value))
                         
                         ## display each element item
-                        <amp-iframe class="${viewClass}" src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
+                        <amp-iframe ${viewClass} src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
                             <amp-img src="https://apps.kahalamgmt.com/images/placeholder.png" placeholder="" width="16" height="16">
                             </amp-img>
                         </amp-iframe>
@@ -242,7 +247,7 @@
                         ## check format URL
                         #if($format == '')
                             ## insert raw XML
-                            <div class="${viewClass}">
+                            <div ${viewClass}>
                                 $_SerializerTool.serialize($item.getChild('BLOCK').getChild('content'), true)
                             </div>
                         #else
