@@ -67,15 +67,21 @@
 #macro(setContent $content)
     #set($items = $_XPathTool.selectNodes($content, 'ITEM'))
     #if($type == 'h1' || $type == 'h2' || $type == 'h3' || $type == 'p' || $type == 'div')
+        #setAttributes($item)
+        <${type} ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
-            <${type} ${attributes}>${text}</${type}>
+            ${text}
         #end
+        </${type}>
     #elseif($type == 'a')
+        #setAttributes($item)
+        <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
-            <a href="${link}" ${attributes} target="${target}">${text}</a>
+            <a href="${link}" target="${target}">${text}</a>
         #end
+        </div>
     #elseif($type == 'ul')
         #setAttributes($content)
         <ul ${attributes}>
@@ -84,20 +90,26 @@
         #end
         </ul>
     #elseif($type == 'amp-img')
+        #setAttributes($item)
+        <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
             #if($link != '')<a href="${link}" target="${target}">#end
-                <amp-img ${attributes} src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
+                <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
                 </amp-img>
             #if($link != '')</a>#end
         #end
+        </div>
     #elseif($type == 'amp-video')
+        #setAttributes($item)
+        <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
-            <amp-video id="video_${contentId}" ${attributes} alt="${altText}" width="${width}" height="${height}" src="${src}" ${poster} layout="${layout}" ${autoplayAttr} ${loopAttr} on="tap:video_${contentId}.play">
+            <amp-video id="video_${contentId}" alt="${altText}" width="${width}" height="${height}" src="${src}" ${poster} layout="${layout}" ${autoplayAttr} ${loopAttr} on="tap:video_${contentId}.play">
                 <div fallback=""><p>Your browser doesn't support HTML5 video.</p></div>
             </amp-video>
         #end
+        </div>
     #elseif($type == 'amp-carousel')
         #setAttributes($content)
         #set($parentWidth = $width)
@@ -134,23 +146,32 @@
         </amp-carousel>
         #protect-->
     #elseif($type == 'amp-iframe')
+        #setAttributes($item)
+        <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
-            <amp-iframe ${attributes} src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
+            <amp-iframe src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
                 <amp-img src="https://apps.kahalamgmt.com/images/placeholder.png" placeholder="" width="16" height="16">
                 </amp-img>
             </amp-iframe>
         #end
+        </div>
     #elseif($type == 'block')
+        #setAttributes($item)
+        <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
-            #if($format == '')<div ${attributes}>${block}</div>
+            #if($format == '')<div>${block}</div>
             #else #import($format) #end
         #end
+        </div>
     #elseif($type == 'WYSIWYG')
+        #setAttributes($item)
+        <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
-            <div ${attributes}>${wysiwyg}</div>
+            ${wysiwyg}
         #end
+        </div>
     #end
 #end
