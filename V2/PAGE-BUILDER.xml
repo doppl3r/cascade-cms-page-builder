@@ -1,7 +1,7 @@
 <system-data-structure>
     <group identifier="PAGE">
         <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach custom CSS into page header"/>
-        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Page-level CSS snippet" rows="4" cols="30"/>
+        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Page-level CSS snippet" rows="1" cols="30"/>
         <group identifier="SECTION" multiple="true">
             <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='section'" size="30" help-text="Ex: class='section'"/>
             <text identifier="BACKGROUND-COLOR" label="Background Color" default="#ffffff" size="30" help-text="#ffffff"/>
