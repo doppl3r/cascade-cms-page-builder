@@ -1,9 +1,11 @@
 # Cascade CMS Page Builder
 The following scripts are useful for rapidly developing Google AMP websites within the [Hannon Hill's Cascade CMS](https://www.hannonhill.com/products/cascade-cms/index.html). The following scripts have been tested using [v7.12.4](https://www.hannonhill.com/cascadeserver/releases/7.12.4/index.html?utm_medium=rss).
 
+**UPDATE:** V1 is fully functional and is currently being used on over 7 websites. V2 is now entering experimental development.
+
 ------------
 
-## Features
+## Features (V1)
 
 ![page builder description](https://raw.githubusercontent.com/doppl3r/page-builder-amp/master/assets/page-builder-description.png)
 
