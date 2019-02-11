@@ -5,9 +5,9 @@ The following scripts are useful for rapidly developing Google AMP websites with
 
 ------------
 
-## Features (V1)
+## Features (V2)
 
-![page builder description](https://raw.githubusercontent.com/doppl3r/page-builder-amp/master/assets/page-builder-description.png)
+![page builder description](https://raw.githubusercontent.com/doppl3r/cascade-cms-page-builder/master/assets/page-builder-description.png)
 
 ### Custom HTML/AMP Elements
   - h1, h2, h3
@@ -27,33 +27,20 @@ The following scripts are useful for rapidly developing Google AMP websites with
 ## Scripts
 
 ### Data Definition
-  - *PAGE-BUILDER-AMP.xml* - Defines all input field for each page.
+  - *PAGE-BUILDER.xml* - Defines all input field for each page.
 
 ### Velocity Script
-  - *PAGE-BUILDER-AMP.vm* - Converts pages that utilize the PAGE-BUILDER-AMP.xml data definition into HTML.
-  - *PAGE-BUILDER-CSS-AMP.vm* - Converts page properties that utilize the PAGE-BUILDER-AMP.xml data definition into CSS.
+  - *PAGE-BUILDER.vm* - Converts pages that utilize the PAGE-BUILDER-AMP.xml data definition into HTML. Attach to the template 'DEFAULT' system-region
+  - *PAGE-BUILDER-CSS.vm* - Converts page properties that utilize the PAGE-BUILDER-AMP.xml data definition into CSS. Attach to the template 'CSS-BUILDER' system-region (must include index block with 'Pages' enabled for index type)
 
 ### Page Template
-  - *PAGE-BUILDER-AMP.xsl* - Combines Cascade CMS blocks with velocity format scripts within an HTML template.
+  - *TEMPLATE.xsl* - Combines Cascade CMS blocks with velocity format scripts within an HTML template.
 
 ------------
 
 ## Libraries
 
-### CSS Grid
-The page builder works great with most 12-column grid systems.
-  - https://github.com/doppl3r/grix
-  - http://simplegrid.io
-
-### Recommended AMP Libraries
-  - https://cdn.ampproject.org/v0.js
-  - https://cdn.ampproject.org/v0/amp-analytics-0.1.js
-  - https://cdn.ampproject.org/v0/amp-video-0.1.js
-  - https://cdn.ampproject.org/v0/amp-iframe-0.1.js
-  - https://cdn.ampproject.org/v0/amp-form-0.1.js
-  - https://cdn.ampproject.org/v0/amp-bind-0.1.js
-  - https://cdn.ampproject.org/v0/amp-list-0.1.js
-  - https://cdn.ampproject.org/v0/amp-mustache-0.2.js
-  - https://cdn.ampproject.org/v0/amp-carousel-0.1.js
-  - https://cdn.ampproject.org/v0/amp-accordion-0.1.js
-  - https://cdn.ampproject.org/v0/amp-selector-0.1.js
+### CSS
+The page builder (V2) includes the following CSS libraries:
+  - GRIX (CSS 12-column grid) - https://github.com/doppl3r/grix
+  - Normalize - https://github.com/necolas/normalize.css

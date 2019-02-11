@@ -1,3 +1,4 @@
+## Page template with custom attributes
 #set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
 <main id="mainwrap">
     #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
@@ -27,7 +28,7 @@
     #end
 </main>
 
-## set attributes if data exists
+## Set attributes if data exists
 #macro(setAttributes $elem)
     #set($attributes = $elem.getChild('ATTRIBUTES').value)
     #set($type = $elem.getChild('TYPE').value)
@@ -51,7 +52,7 @@
     #set($target = $elem.getChild('TARGET').value)
     #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($elem, 'WYSIWYG'), true))
     
-    ## conditionally update unique attributes
+    ## Conditionally update unique attributes
     #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #end
     #if($externalPath.length() > 0) #set($link = $externalPath) #end
     #if(!$!internalPath && !$!externalPath) #set($link = '') #end
@@ -65,7 +66,7 @@
     #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
 #end
 
-## output HTML by content type
+## Output HTML by content type
 #macro(setContent $content)
     #set($items = $_XPathTool.selectNodes($content, 'ITEM'))
     #if($type == 'h1' || $type == 'h2' || $type == 'h3' || $type == 'p' || $type == 'div')
