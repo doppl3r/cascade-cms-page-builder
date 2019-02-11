@@ -24,8 +24,8 @@
         <noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
         <link href="/assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
         <style amp-custom="" type="text/css">
-            <system-region name="CSS-GLOBAL"/>
             <system-region name="CSS-BUILDER"/>
+            <system-region name="CSS-GLOBAL"/>
         </style>
     </head>
     <body>
