@@ -54,7 +54,7 @@
                         <text identifier="DELAY" label="Delay" default="4000" size="30" help-text="Carousel rate"/>
                         <text identifier="SANDBOX" label="Sandbox" default="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation" size="30" help-text="iframe sandbox rules"/>
                         <group identifier="ITEM" multiple="true">
-                            <text identifier="TEXT" label="Text" size="30" help-text="Basic HTML text"/>
+                            <text multi-line="true" identifier="TEXT" label="Text" help-text="Basic HTML text" rows="3" cols="30"/>
                             <asset type="file" identifier="INTERNAL-MEDIA" label="Internal Media" help-text="Choose a file"/>
                             <asset type="file" identifier="VIDEO-POSTER" label="Video Poster" help-text="Default image while video loads"/>
                             <asset type="block" identifier="BLOCK" label="Block" render-content-depth="unlimited" help-text="Choose a block item from the CMS"/>
