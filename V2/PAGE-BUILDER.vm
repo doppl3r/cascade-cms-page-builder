@@ -4,7 +4,7 @@
     #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
     #foreach($section in $sections)
         #setAttributes($section)
-        <section ${attributes} data-index="${velocityCount}">
+        <section ${attributes} data-name="section-${velocityCount}">
             #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
             #foreach($row in $rows)
                 #setAttributes($row)
@@ -16,9 +16,7 @@
                             #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
                             #foreach($content in $contents)
                                 #setAttributes($content)
-                                <div ${attributes}>
-                                    #setContent($content)
-                                </div>
+                                #setContent($content)
                             #end
                         </div>
                     #end
@@ -72,15 +70,15 @@
     #if($type == 'h1' || $type == 'h2' || $type == 'h3' || $type == 'p' || $type == 'div')
         #foreach($item in $items)
             #setAttributes($item)
-            <${type}>${text}</${type}>
+            <${type} ${attributes}>${text}</${type}>
         #end
     #elseif($type == 'a')
         #foreach($item in $items)
             #setAttributes($item)
-            <a href="${link}" target="${target}">${text}</a>
+            <a href="${link}" target="${target}" ${attributes}>${text}</a>
         #end
     #elseif($type == 'ul')
-        <ul>
+        <ul ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
             <li>${text}</li>
@@ -89,15 +87,15 @@
     #elseif($type == 'amp-img')
         #foreach($item in $items)
             #setAttributes($item)
-            #if($link != '')<a href="${link}" target="${target}">#end
-                <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}">
+            #if($link != '')<a href="${link}" target="${target}" ${attributes}>#set($attributes = '')#end
+                <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}" ${attributes}>
                 </amp-img>
             #if($link != '')</a>#end
         #end
     #elseif($type == 'amp-video')
         #foreach($item in $items)
             #setAttributes($item)
-            <amp-video id="video_${contentId}" alt="${altText}" width="${width}" height="${height}" src="${src}" ${poster} layout="${layout}" ${autoplayAttr} ${loopAttr} on="tap:video_${contentId}.play">
+            <amp-video id="video_${contentId}" alt="${altText}" width="${width}" height="${height}" src="${src}" ${poster} layout="${layout}" ${autoplayAttr} ${loopAttr} on="tap:video_${contentId}.play" ${attributes}>
                 <div fallback=""><p>Your browser doesn't support HTML5 video.</p></div>
             </amp-video>
         #end
@@ -122,7 +120,7 @@
                 </ol>
             </div>
         #end
-        <amp-carousel id="${carousel}" [slide]="${slide}" on="slideChange:AMP.setState({ ${slide}: event.index })" width="${width}" height="${height}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}">
+        <amp-carousel id="${carousel}" [slide]="${slide}" on="slideChange:AMP.setState({ ${slide}: event.index })" width="${width}" height="${height}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}" ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
             #if($link != '')<a href="${link}" target="${target}">#end
@@ -138,7 +136,7 @@
     #elseif($type == 'amp-iframe')
         #foreach($item in $items)
             #setAttributes($item)
-            <amp-iframe src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0">
+            <amp-iframe src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0" ${attributes}>
                 <amp-img src="https://apps.kahalamgmt.com/images/placeholder.png" placeholder="" width="16" height="16">
                 </amp-img>
             </amp-iframe>
@@ -146,13 +144,13 @@
     #elseif($type == 'block')
         #foreach($item in $items)
             #setAttributes($item)
-            #if($format == '')<div>${block}</div>
+            #if($format == '')<div ${attributes}>${block}</div>
             #else #import($format) #end
         #end
     #elseif($type == 'WYSIWYG')
         #foreach($item in $items)
             #setAttributes($item)
-            ${wysiwyg}
+            <div ${attributes}>${wysiwyg}</div>
         #end
     #end
 #end

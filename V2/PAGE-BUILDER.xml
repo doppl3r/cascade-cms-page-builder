@@ -1,12 +1,12 @@
 <system-data-structure>
     <group identifier="PAGE">
         <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach raw CSS into page header"/>
-        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" default="section { width: 100%; }" help-text="Include raw CSS into page header" rows="3" cols="30"/>
+        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Include raw CSS into page header" rows="3" cols="30"/>
         <group identifier="SECTION" multiple="true">
             <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='section'" size="30" help-text="Ex: class='section'"/>
-            <text identifier="BACKGROUND-COLOR" label="Background Color" default="#ffffff" size="30" help-text="#ffffff"/>
+            <text identifier="BACKGROUND-COLOR" label="Background Color" size="30" help-text="#ffffff"/>
             <asset type="file" identifier="BACKGROUND-IMAGE" label="Background Image" help-text="CSS background image"/>
-            <text identifier="PADDING" label="Padding" default="64px 12px" size="30" help-text="Ex: 64px 12px"/>
+            <text identifier="PADDING" label="Padding" default="0px 0px 0px 0px" size="30" help-text="Ex: 64px 12px 64px 12px"/>
             <group identifier="ROW" multiple="true">
                 <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='row'" size="30" help-text="Ex: class='row'"/>
                 <group identifier="COLUMN" multiple="true">

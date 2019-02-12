@@ -7,13 +7,12 @@ html { line-height: 1.15; -webkit-text-size-adjust: 100%; } body { margin: 0; } 
 .row{display:flex;flex-wrap:wrap}[class*="col-"]{box-sizing:border-box;padding:0 12px;flex-grow:0}.col{box-sizing:border-box;-ms-flex-preferred-size:0;-ms-flex-positive:1;flex:1 0 0;padding:0 12px;width:100%}.col-1-m{width:8.3334%}.col-2-m{width:16.6667%}.col-3-m{width:25%}.col-4-m{width:33.3334%}.col-5-m{width:41.6667%}.col-6-m{width:50%}.col-7-m{width:58.3334%}.col-8-m{width:66.6667%}.col-9-m{width:75%}.col-10-m{width:83.3334%}.col-11-m{width:91.6667%}.col-12-m{width:100%}.col-1{width:8.3334%}.col-2{width:16.6667%}.col-3{width:25%}.col-4{width:33.3334%}.col-5{width:41.6667%}.col-6{width:50%}.col-7{width:58.3334%}.col-8{width:66.6667%}.col-9{width:75%}.col-10{width:83.3334%}.col-11{width:91.6667%}.col-12{width:100%}@media (max-width: 768px){[class*="col-"].col-1-m{width:8.3334%}[class*="col-"].col-2-m{width:16.6667%}[class*="col-"].col-3-m{width:25%}[class*="col-"].col-4-m{width:33.3334%}[class*="col-"].col-5-m{width:41.6667%}[class*="col-"].col-6-m{width:50%}[class*="col-"].col-7-m{width:58.3334%}[class*="col-"].col-8-m{width:66.6667%}[class*="col-"].col-9-m{width:75%}[class*="col-"].col-10-m{width:83.3334%}[class*="col-"].col-11-m{width:91.6667%}[class*="col-"].col-12-m{width:100%}.col-1{width:100%}.col-2{width:100%}.col-3{width:100%}.col-4{width:100%}.col-5{width:100%}.col-6{width:100%}.col-7{width:100%}.col-8{width:100%}.col-9{width:100%}.col-10{width:100%}.col-11{width:100%}.col-12{width:100%}}
 
 ## Default PAGE-BUILDER CSS
-section { padding: 64px 12px; }
-section .row [class*="col"] { position: relative; }
-.carousel-controls {  position: absolute; bottom: 12px; left: 0; right: 0; width: 100%; text-align: right; z-index: 1; box-sizing: border-box; padding: 0 12px; pointer-events: none; }
-.carousel-controls span { display: inline-block; cursor: pointer; pointer-events: all; vertical-align: top; color: #fff; background-color: #000; font-size: 10px; line-height: 16px; padding: 0 8px; }
-.carousel-controls .indicators { display: inline-block; margin: 0; padding: 0; list-style: none; }
-.carousel-controls .indicators li { border-radius: 50%; cursor: pointer; display: inline-block; width: 16px; height: 16px; background-color: #000; pointer-events: all; box-sizing: border-box; }
-.carousel-controls .indicators li.active { background-color: #fff; border: 4px solid #000; }
+section { position: relative; }
+section .carousel-controls {  position: absolute; bottom: 12px; left: 0; right: 0; width: 100%; text-align: right; z-index: 1; box-sizing: border-box; padding: 0 12px; pointer-events: none; }
+section .carousel-controls span { display: inline-block; cursor: pointer; pointer-events: all; vertical-align: top; color: #fff; background-color: #000; font-size: 10px; line-height: 16px; padding: 0 8px; }
+section .carousel-controls .indicators { display: inline-block; margin: 0; padding: 0; list-style: none; }
+section .carousel-controls .indicators li { border-radius: 50%; cursor: pointer; display: inline-block; width: 16px; height: 16px; background-color: #000; pointer-events: all; box-sizing: border-box; }
+section .carousel-controls .indicators li.active { background-color: #fff; border: 4px solid #000; }
 
 ## Load each section property class
 #set($page = $_XPathTool.selectNodes($contentRoot, '//system-data-structure/PAGE'))
@@ -25,7 +24,7 @@ section .row [class*="col"] { position: relative; }
 #set($color = "#if($color.length() > 0)background-color: $color;#{else}#end")
 #set($image = "#if($image.length() > 1)background-image: url('[system-asset]${image}[/system-asset]');#{else}#end")
 #set($padding = "#if($padding.length() > 0)padding: $padding;#{else}#end")
-section[data-index="${velocityCount}"] { ${color} ${image} ${padding} }
+section[data-name="section-${velocityCount}"] { ${color} ${image} ${padding} }
 #end
 
 ## Load page-level custom CSS (block & text)
