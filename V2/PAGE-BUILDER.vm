@@ -87,7 +87,7 @@
     #elseif($type == 'amp-img')
         #foreach($item in $items)
             #setAttributes($item)
-            #if($link != '')<a href="${link}" target="${target}" ${attributes}>#set($attributes = '')#end
+            #if($link != '')<a href="${link}" target="${target}">#end
                 <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}" ${attributes}>
                 </amp-img>
             #if($link != '')</a>#end
