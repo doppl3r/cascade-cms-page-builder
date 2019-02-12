@@ -59,7 +59,7 @@
                             <asset type="file" identifier="VIDEO-POSTER" label="Video Poster" help-text="Default image while video loads"/>
                             <asset type="block" identifier="BLOCK" label="Block" render-content-depth="unlimited" help-text="Choose a block item from the CMS"/>
                             <text identifier="FORMAT" label="Format" size="30" help-text="Ex: site://APPS-KAHALA-WWW/+GLOBAL-FORMATS/FAQ-BUILDER-AMP"/>
-                            <text identifier="EXTERNAL-MEDIA" label="External Media" size="30" help-text="This can override MEDIA for 'img', 'video' or 'carousel' elements."/>
+                            <text identifier="EXTERNAL-MEDIA" label="External Media" size="30" help-text="This will set or override internal media"/>
                             <text identifier="WIDTH" label="Width" size="30" help-text="Leave empty to inherit parent width. Do not include 'px' or other values"/>
                             <text identifier="HEIGHT" label="Height" size="30" help-text="Leave empty to inherit parent height. Do not include 'px' or other values"/>
                             <text type="dropdown" identifier="LAYOUT" label="Layout" default="responsive" help-text="AMP element behavior">

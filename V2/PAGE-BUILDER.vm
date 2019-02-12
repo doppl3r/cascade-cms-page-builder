@@ -26,38 +26,38 @@
     #end
 </main>
 
-## Set attributes if data exists
+## declare attributes - update to empty string if null
 #macro(setAttributes $elem)
     #set($attributes = $elem.getChild('ATTRIBUTES').value)
-    #set($type = $elem.getChild('TYPE').value)
-    #set($width = $elem.getChild('WIDTH').value)
-    #set($height = $elem.getChild('HEIGHT').value)
-    #set($layout = $elem.getChild('LAYOUT').value)
-    #set($autoplay = $elem.getChild('AUTOPLAY').value)
-    #set($loop = $elem.getChild('LOOP').value)
-    #set($indicators = $elem.getChild('INDICATORS').value)
-    #set($delay = $elem.getChild('DELAY').value)
-    #set($sandbox = $elem.getChild('SANDBOX').value)
-    #set($text = $elem.getChild('TEXT').value)
-    #set($internalMedia = $elem.getChild('INTERNAL-MEDIA').getChild('link').value)
-    #set($videoPoster = $elem.getChild('VIDEO-POSTER').getChild('link').value)
-    #set($block = $_SerializerTool.serialize($elem.getChild('BLOCK').getChild('content'), true))
-    #set($format = $_EscapeTool.xml($elem.getChild('FORMAT').value))
-    #set($externalMedia = $_EscapeTool.xml($elem.getChild('EXTERNAL-MEDIA').value))
-    #set($altText = $_EscapeTool.xml($elem.getChild('ALT-TEXT').value))
-    #set($internalPath = $elem.getChild('INTERNAL-PATH').getChild('link').value)
-    #set($externalPath = $_EscapeTool.xml($elem.getChild('EXTERNAL-PATH').value))
-    #set($target = $elem.getChild('TARGET').value)
-    #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($elem, 'WYSIWYG'), true))
+    #set($type = '') #set($type = $elem.getChild('TYPE').value)
+    #set($width = '') #set($width = $elem.getChild('WIDTH').value)
+    #set($height = '') #set($height = $elem.getChild('HEIGHT').value)
+    #set($layout = '') #set($layout = $elem.getChild('LAYOUT').value)
+    #set($autoplay = '') #set($autoplay = $elem.getChild('AUTOPLAY').value)
+    #set($loop = '') #set($loop = $elem.getChild('LOOP').value)
+    #set($indicators = '') #set($indicators = $elem.getChild('INDICATORS').value)
+    #set($delay = '') #set($delay = $elem.getChild('DELAY').value)
+    #set($sandbox = '') #set($sandbox = $elem.getChild('SANDBOX').value)
+    #set($text = '') #set($text = $elem.getChild('TEXT').value)
+    #set($internalMedia = '') #set($internalMedia = $elem.getChild('INTERNAL-MEDIA').getChild('link').value)
+    #set($videoPoster = '') #set($videoPoster = $elem.getChild('VIDEO-POSTER').getChild('link').value)
+    #set($block = '') #set($block = $_SerializerTool.serialize($elem.getChild('BLOCK').getChild('content'), true))
+    #set($format = '') #set($format = $_EscapeTool.xml($elem.getChild('FORMAT').value))
+    #set($externalMedia = '') #set($externalMedia = $_EscapeTool.xml($elem.getChild('EXTERNAL-MEDIA').value))
+    #set($altText = '') #set($altText = $_EscapeTool.xml($elem.getChild('ALT-TEXT').value))
+    #set($internalPath = '') #set($internalPath = $elem.getChild('INTERNAL-PATH').getChild('link').value)
+    #set($externalPath = '') #set($externalPath = $_EscapeTool.xml($elem.getChild('EXTERNAL-PATH').value))
+    #set($target = '') #set($target = $elem.getChild('TARGET').value)
+    #set($wysiwyg = '') #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($elem, 'WYSIWYG'), true))
+    #set($link = '')
+    #set($src = '')
     
     ## Conditionally update unique attributes
-    #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #end
-    #if($externalPath.length() > 0) #set($link = $externalPath) #end
-    #if(!$!internalPath && !$!externalPath) #set($link = '') #end
-    #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #end
-    #if($externalMedia.length() > 0) #set($src = $externalMedia) #end
-    #if(!$!internalMedia && !$!externalMedia) #set($src = '') #end
-    #if($posterVideo.length() > 0) #set($poster = 'poster="[system-asset]' + $posterVideo + '[/system-asset]"') #end
+    #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #else #set($link = '') #end
+    #if($externalPath.length() > 0) #set($link = $externalPath) #else #set($link = '') #end
+    #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #else #set($link = '') #end
+    #if($externalMedia.length() > 0) #set($src = $externalMedia) #else #set($link = '') #end
+    #if($posterVideo.length() > 0) #set($poster = 'poster="[system-asset]' + $posterVideo + '[/system-asset]"') #else #set($link = '') #end
     #if(!$!posterVideo) #set($poster = '') #end
     #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
     #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
@@ -125,9 +125,8 @@
             #setAttributes($item)
             #if($link != '')<a href="${link}" target="${target}">#end
                 <div class="carousel-item-${velocityCount}">
-                    <amp-img src="${src}" width="${parentWidth}" height="${parentHeight}" layout="${parentLayout}" alt="${altText}">
-                    </amp-img>
-                    <div class="caption">${text}</div>
+                    #if($src != '')<amp-img src="${src}" width="${parentWidth}" height="${parentHeight}" layout="${parentLayout}" alt="${altText}"> </amp-img>#if($text.length() > 0)<div class="caption">${text}</div>#end
+                    #else${text}#end
                 </div>
             #if($link != '')</a>#end
         #end
