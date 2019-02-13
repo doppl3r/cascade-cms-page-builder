@@ -1,4 +1,4 @@
-## Page template with custom attributes
+## Render page content with custom attributes for each node
 #set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
 <main id="mainwrap">
     #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
@@ -26,7 +26,7 @@
     #end
 </main>
 
-## declare attributes - update to empty string if null
+## Clear and/or declare variables. If needed, set values to '' to avoid parent-to-child inheritance.
 #macro(setAttributes $elem)
     #set($attributes = $elem.getChild('ATTRIBUTES').value)
     #set($type = '') #set($type = $elem.getChild('TYPE').value)
