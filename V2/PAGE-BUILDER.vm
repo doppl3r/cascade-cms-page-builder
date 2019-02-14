@@ -26,18 +26,22 @@
     #end
 </main>
 
-## Clear and/or declare variables. Do not set values to '' for $attributes and $type.
+## set attributes for elements with visible data definitions.
 #macro(setAttributes $elem)
     #set($attributes = $elem.getChild('ATTRIBUTES').value)
+    
+    ## $content attributes (may be inherited by $item attributes)
     #set($type = $elem.getChild('TYPE').value)
-    #set($width = '') #set($width = $elem.getChild('WIDTH').value)
-    #set($height = '') #set($height = $elem.getChild('HEIGHT').value)
-    #set($layout = '') #set($layout = $elem.getChild('LAYOUT').value)
-    #set($autoplay = '') #set($autoplay = $elem.getChild('AUTOPLAY').value)
-    #set($loop = '') #set($loop = $elem.getChild('LOOP').value)
-    #set($indicators = '') #set($indicators = $elem.getChild('INDICATORS').value)
-    #set($delay = '') #set($delay = $elem.getChild('DELAY').value)
-    #set($sandbox = '') #set($sandbox = $elem.getChild('SANDBOX').value)
+    #set($width = $elem.getChild('WIDTH').value)
+    #set($height = $elem.getChild('HEIGHT').value)
+    #set($layout = $elem.getChild('LAYOUT').value)
+    #set($autoplay = $elem.getChild('AUTOPLAY').value)
+    #set($loop = $elem.getChild('LOOP').value)
+    #set($indicators = $elem.getChild('INDICATORS').value)
+    #set($delay = $elem.getChild('DELAY').value)
+    #set($sandbox = $elem.getChild('SANDBOX').value)
+    
+    ## $item attributes
     #set($text = '') #set($text = $elem.getChild('TEXT').value)
     #set($internalMedia = '') #set($internalMedia = $elem.getChild('INTERNAL-MEDIA').getChild('link').value)
     #set($videoPoster = '') #set($videoPoster = $elem.getChild('VIDEO-POSTER').getChild('link').value)
@@ -51,14 +55,14 @@
     #set($wysiwyg = '') #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($elem, 'WYSIWYG'), true))
     #set($link = '')
     #set($src = '')
+    #set($poster = '')
     
-    ## Conditionally update unique attributes
+    ## Conditionally modify attributes
     #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #else #set($link = '') #end
     #if($externalPath.length() > 0) #set($link = $externalPath) #else #set($link = '') #end
     #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #else #set($link = '') #end
     #if($externalMedia.length() > 0) #set($src = $externalMedia) #else #set($link = '') #end
-    #if($posterVideo.length() > 0) #set($poster = 'poster="[system-asset]' + $posterVideo + '[/system-asset]"') #else #set($link = '') #end
-    #if(!$!posterVideo) #set($poster = '') #end
+    #if($videoPoster.length() > 0) #set($poster = 'poster="[system-asset]' + $videoPoster + '[/system-asset]"') #else #set($link = '') #end
     #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
     #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
     #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
