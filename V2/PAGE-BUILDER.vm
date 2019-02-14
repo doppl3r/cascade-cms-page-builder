@@ -26,10 +26,10 @@
     #end
 </main>
 
-## Clear and/or declare variables. If needed, set values to '' to avoid parent-to-child inheritance.
+## Clear and/or declare variables. Do not set values to '' for $attributes and $type.
 #macro(setAttributes $elem)
     #set($attributes = $elem.getChild('ATTRIBUTES').value)
-    #set($type = '') #set($type = $elem.getChild('TYPE').value)
+    #set($type = $elem.getChild('TYPE').value)
     #set($width = '') #set($width = $elem.getChild('WIDTH').value)
     #set($height = '') #set($height = $elem.getChild('HEIGHT').value)
     #set($layout = '') #set($layout = $elem.getChild('LAYOUT').value)
