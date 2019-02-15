@@ -1,30 +1,28 @@
 ## Render page content with custom attributes for each node
 #set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
-<main id="mainwrap">
-    #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
-    #foreach($section in $sections)
-        #setAttributes($section)
-        <section ${attributes} data-name="section-${velocityCount}">
-            #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
-            #foreach($row in $rows)
-                #setAttributes($row)
-                <div ${attributes}>
-                    #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
-                    #foreach($column in $columns)
-                        #setAttributes($column)
-                        <div ${attributes}>
-                            #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
-                            #foreach($content in $contents)
-                                #setAttributes($content)
-                                #setContent($content)
-                            #end
-                        </div>
-                    #end
-                </div>
-            #end
-        </section>
-    #end
-</main>
+#set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
+#foreach($section in $sections)
+    #setAttributes($section)
+    <section ${attributes} data-name="section-${velocityCount}">
+        #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
+        #foreach($row in $rows)
+            #setAttributes($row)
+            <div ${attributes}>
+                #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
+                #foreach($column in $columns)
+                    #setAttributes($column)
+                    <div ${attributes}>
+                        #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
+                        #foreach($content in $contents)
+                            #setAttributes($content)
+                            #setContent($content)
+                        #end
+                    </div>
+                #end
+            </div>
+        #end
+    </section>
+#end
 
 ## set attributes for elements with visible data definitions.
 #macro(setAttributes $elem)

@@ -31,8 +31,10 @@
     <body>
         <div class="wrapper">
             <system-region name="NAV"/>
-            <system-region name="DEFAULT"/>
-            <system-region name="DEFAULT-EXTRA"/>
+            <main id="mainwrap">
+                <system-region name="DEFAULT"/>
+                <system-region name="DEFAULT-EXTRA"/>
+            </main>
             <system-region name="FOOTER"/>
             <system-region name="ADA-BADGE"/>
             <system-region name="ANALYTICS"/>
