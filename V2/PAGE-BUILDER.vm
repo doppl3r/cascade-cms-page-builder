@@ -56,11 +56,11 @@
     #set($poster = '')
     
     ## Conditionally modify attributes
-    #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #else #set($link = '') #end
-    #if($externalPath.length() > 0) #set($link = $externalPath) #else #set($link = '') #end
-    #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #else #set($link = '') #end
-    #if($externalMedia.length() > 0) #set($src = $externalMedia) #else #set($link = '') #end
-    #if($videoPoster.length() > 0) #set($poster = 'poster="[system-asset]' + $videoPoster + '[/system-asset]"') #else #set($link = '') #end
+    #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #end
+    #if($externalPath.length() > 0) #set($link = $externalPath) #end
+    #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #end
+    #if($externalMedia.length() > 0) #set($src = $externalMedia) #end
+    #if($videoPoster.length() > 0) #set($poster = 'poster="[system-asset]' + $videoPoster + '[/system-asset]"') #end
     #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
     #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
     #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
