@@ -8,6 +8,7 @@ html { line-height: 1.15; -webkit-text-size-adjust: 100%; } body { margin: 0; } 
 
 ## Default PAGE-BUILDER CSS
 section { position: relative; }
+section amp-carousel [class*="carousel-item"] { background-size: cover; background-position: center; }
 section .carousel-controls {  position: absolute; bottom: 12px; left: 0; right: 0; width: 100%; text-align: right; z-index: 1; box-sizing: border-box; padding: 0 12px; pointer-events: none; }
 section .carousel-controls span { display: inline-block; cursor: pointer; pointer-events: all; vertical-align: top; color: #fff; background-color: #000; font-size: 10px; line-height: 16px; padding: 0 8px; }
 section .carousel-controls .indicators { display: inline-block; margin: 0; padding: 0; list-style: none; }
@@ -17,14 +18,55 @@ section .carousel-controls .indicators li.active { background-color: #fff; borde
 ## Load each section property class
 #set($page = $_XPathTool.selectNodes($contentRoot, '//system-data-structure/PAGE'))
 #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
+## Loop through each section
 #foreach($section in $sections)
-#set($color = $section.getChild('BACKGROUND-COLOR').value)
-#set($image = $section.getChild('BACKGROUND-IMAGE').getChild("path").value)
-#set($padding = $section.getChild('PADDING').value)
-#set($color = "#if($color.length() > 0)background-color: $color;#{else}#end")
-#set($image = "#if($image.length() > 1)background-image: url('[system-asset]${image}[/system-asset]');#{else}#end")
-#set($padding = "#if($padding.length() > 0)padding: $padding;#{else}#end")
-section[data-name="section-${velocityCount}"] { ${color} ${image} ${padding} }
+    #set($contentId = 0)
+    #set($sectionId = $contentId)
+    #set($sectionIndex = $velocityCount)
+    #set($color = $section.getChild('BACKGROUND-COLOR').value)
+    #set($image = $section.getChild('BACKGROUND-IMAGE').getChild("path").value)
+    #set($padding = $section.getChild('PADDING').value)
+    #set($color = "#if($color.length() > 0)background-color: $color;#{else}#end")
+    #set($image = "#if($image.length() > 1)background-image: url('[system-asset]${image}[/system-asset]');#{else}#end")
+    #set($padding = "#if($padding.length() > 0)padding: $padding;#{else}#end")
+    #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
+    ## loop through each row
+    #foreach($row in $rows)
+        #set($contentId = $contentId + 1)
+        #set($rowId = $contentId)
+        #set($rowIndex = $velocityCount)
+        #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
+        ## loop through each column
+        #foreach($column in $columns)
+            #set($contentId = $contentId + 1)
+            #set($columnId = $contentId)
+            #set($columnIndex = $velocityCount)
+            #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
+            ## loop through each content
+            #foreach($content in $contents)
+                #set($contentId = $contentId + 1)
+                #set($contId = $contentId)
+                #set($contentIndex = $velocityCount)
+                #set($layout = $content.getChild('LAYOUT').value)
+                #set($items = $_XPathTool.selectNodes($content, 'ITEM'))
+                ## loop through each item
+                #foreach($item in $items)
+                    #set($contentId = $contentId + 1)
+                    #set($itemId = $contentId)
+                    #set($src = '')
+                    #set($internalMedia = '') #set($internalMedia = $item.getChild('INTERNAL-MEDIA').getChild('link').value)
+                    #set($externalMedia = '') #set($externalMedia = $_EscapeTool.xml($item.getChild('EXTERNAL-MEDIA').value))
+                    #if($internalMedia.length() > 0) #set($src = 'background-image: url("[system-asset]' + $internalMedia + '[/system-asset]");') #end
+                    #if($externalMedia.length() > 0) #set($src = 'background-image: url("'+$externalMedia+'");') #end
+                    #if($src.length() > 0 && $layout == 'fixed-height')
+                        #carousel_id_$contId .carousel-item-${velocityCount} { $src }
+                        #carousel_id_$contId .carousel-item-${velocityCount} amp-img { display: none; }
+                    #end
+                #end
+            #end
+        #end
+    #end
+[data-name="section-${velocityCount}"] { ${color} ${image} ${padding} }
 #end
 
 ## Load page-level custom CSS (block & text)
@@ -33,12 +75,12 @@ section[data-name="section-${velocityCount}"] { ${color} ${image} ${padding} }
 
 ## Loop through blocks
 #if ($cssBlocks.size() > 0)
-#foreach($cssBlock in $cssBlocks)
-#set($cssBlock = $cssBlock.getChild('content'))
-#if($cssBlock != '<path>/</path>')
-$_SerializerTool.serialize($cssBlock, true)
-#end
-#end
+    #foreach($cssBlock in $cssBlocks)
+        #set($cssBlock = $cssBlock.getChild('content'))
+        #if($cssBlock != '<path>/</path>')
+            $_SerializerTool.serialize($cssBlock, true)
+        #end
+    #end
 #end
 
 ## Output page CSS snippet

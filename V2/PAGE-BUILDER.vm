@@ -107,22 +107,22 @@
         #set($parentLayout = $layout)
         #set($pause = "#if($autoplay == 'true')pause#{else}play#end")
         #set($play = "#if($autoplay == 'true')play#{else}pause#end")
-        #set($carousel = "carousel_${contentId}")
-        #set($slide = "slide_${contentId}")
+        #set($carousel_id = "carousel_id_${contentId}")
+        #set($pause_id = "pause_carousel_id_${contentId}")
         <!--#protect
         #if($indicators == "true" && $items.size() > 1)
             <div class="carousel-controls">
-                <span [text]="pause_${contentId} == -1 ? '$play' : '$pause'" role="button" tabindex="0" on="tap:AMP.setState({pause_${contentId}: (pause_${contentId} + 1) * -1 }), ${carousel}.toggleAutoplay()">$pause</span>
+                <span [text]="${pause_id} == -1 ? '$play' : '$pause'" role="button" tabindex="0" on="tap:AMP.setState({${pause_id}: (${pause_id} + 1) * -1 }), ${carousel_id}.toggleAutoplay()">$pause</span>
                 <ol class="indicators">
                     ## loop through each item
                     #foreach($item in $items)
                         #set($i = $velocityCount - 1)
-                        <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${slide} == ${i} || (${slide} == null && ${i} == 0) ? 'active' : ''" on="tap:AMP.setState({${slide}: ${i}})" tabindex="0"></li>
+                        <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${carousel_id} == ${i} || (${carousel_id} == null && ${i} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${i}})" tabindex="0"></li>
                     #end
                 </ol>
             </div>
         #end
-        <amp-carousel id="${carousel}" [slide]="${slide}" on="slideChange:AMP.setState({ ${slide}: event.index })" width="${width}" height="${height}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}" ${attributes}>
+        <amp-carousel id="${carousel_id}" [slide]="${carousel_id}" on="slideChange:AMP.setState({ ${carousel_id}: event.index })" width="${width}" height="${height}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}" ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
             #if($link != '')<a href="${link}" target="${target}">#end
