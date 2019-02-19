@@ -155,3 +155,22 @@
         #end
     #end
 #end
+
+## create a map of keys and values from a string
+#macro(setAttributeMap $attr)
+    ## initialize attribute variables
+    #set($attrMap = {})
+    #set($attr = $attr.replace("'", '"')) ## format to quotation markup
+    #set($attrList = $attr.split('"'))
+    
+    ## put key and values into a map variable
+    #foreach($item in $attrList)
+        #set($switch = ($velocityCount - 1) % 2) ## switch between '0' and '1'
+        #if($switch == 0)  ## set key when the switch is '0'
+            #set($listAttr = $item.replace(' ', '').replace('=', ''))
+        #else ## set value for matching key when switch is '1'
+            #set($listValue = $item)
+            #set($print = $attrMap.put($listAttr, $listValue))
+        #end
+    #end
+#end
