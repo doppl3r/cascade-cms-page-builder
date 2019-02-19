@@ -77,6 +77,8 @@
                             <text type="dropdown" identifier="TARGET" label="Target" default="_self" help-text="Choose to redirect user to a new page, or open a new tab">
                                 <dropdown-item value="_self"/>
                                 <dropdown-item value="_blank"/>
+                                <dropdown-item value="_parent"/>
+                                <dropdown-item value="_top"/>
                             </text>
                             <text wysiwyg="true" identifier="WYSIWYG" label="WYSIWYG" help-text="Avoid using inline styling to prevent AMP conflicts" wysiwyg-toolbar-remove="font formatting,font assignment,text formatting,insert image,insert table,"/>
                         </group>
