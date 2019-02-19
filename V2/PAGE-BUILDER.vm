@@ -108,11 +108,11 @@
         #set($pause = "#if($autoplay == 'true')pause#{else}play#end")
         #set($play = "#if($autoplay == 'true')play#{else}pause#end")
         #set($carousel_id = "carousel_id_${contentId}")
-        #set($pause_id = "pause_carousel_id_${contentId}")
+        #set($pause_carousel_id = "pause_carousel_id_${contentId}")
         <!--#protect
         #if($indicators == "true" && $items.size() > 1)
             <div class="carousel-controls">
-                <span [text]="${pause_id} == -1 ? '$play' : '$pause'" [class]="${pause_id} == -1 ? 'paused' : ''" role="button" tabindex="0" on="tap:AMP.setState({${pause_id}: (${pause_id} + 1) * -1 }), ${carousel_id}.toggleAutoplay()">$pause</span>
+                <span [text]="${pause_carousel_id} ? '$play' : '$pause'" [class]="${pause_carousel_id} ? 'paused' : ''" role="button" tabindex="0" on="tap:AMP.setState({${pause_carousel_id}: !${pause_carousel_id} }), ${carousel_id}.toggleAutoplay()">$pause</span>
                 <ol class="indicators">
                     ## loop through each item
                     #foreach($item in $items)
