@@ -27,6 +27,7 @@
 ## set attributes for elements with visible data definitions.
 #macro(setAttributes $elem)
     #set($attributes = $elem.getChild('ATTRIBUTES').value)
+    #setAttributeMap($attributes)
     
     ## $content attributes (may be inherited by $item attributes)
     #set($type = $elem.getChild('TYPE').value)
@@ -83,7 +84,7 @@
         <ul ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
-            <li>${text}</li>
+            <li ${attributes}>${text}</li>
         #end
         </ul>
     #elseif($type == 'amp-img')
@@ -108,7 +109,8 @@
         #set($pause = "#if($autoplay == 'true')pause#{else}play#end")
         #set($play = "#if($autoplay == 'true')play#{else}pause#end")
         #set($carousel_id = "carousel_id_${contentId}")
-        #set($pause_carousel_id = "pause_carousel_id_${contentId}")
+        #set($pause_carousel_id = "pause_carousel_id_${contentId}")     
+        
         <!--#protect
         #if($indicators == "true" && $items.size() > 1)
             <div class="carousel-controls">
@@ -116,17 +118,18 @@
                 <ol class="indicators">
                     ## loop through each item
                     #foreach($item in $items)
+                        #setAttributes($item)
                         #set($i = $velocityCount - 1)
                         <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${carousel_id} == ${i} || (${carousel_id} == null && ${i} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${i}})" tabindex="0"></li>
                     #end
                 </ol>
             </div>
         #end
-        <amp-carousel id="${carousel_id}" [slide]="${carousel_id}" on="slideChange:AMP.setState({ ${carousel_id}: event.index })" width="${width}" height="${height}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}" ${attributes}>
+        <amp-carousel id="${carousel_id}" [slide]="${carousel_id}" on="slideChange:AMP.setState({ ${carousel_id}: event.index })" width="${parentWidth}" height="${parentHeight}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}" ${attributes}>
         #foreach($item in $items)
             #setAttributes($item)
-            #if($link != '')<a href="${link}" target="${target}">#end
-                <div class="carousel-item-${velocityCount}">
+            #if($link != '')<a href="${link}" target="${target}" ${attributes}>#set($attributes = '')#end
+                <div class="carousel-item-${velocityCount}" ${attributes}>
                     #if($src != '')<amp-img src="${src}" width="${parentWidth}" height="${parentHeight}" layout="${parentLayout}" alt="${altText}"> </amp-img>#if($text.length() > 0)<div class="caption">${text}</div>#end
                     #else${text}#end
                 </div>
@@ -162,6 +165,7 @@
     #set($attrMap = {})
     #set($attr = $attr.replace("'", '"')) ## format to quotation markup
     #set($attrList = $attr.split('"'))
+    #set($attr = '') ## clear attribute
     
     ## put key and values into a map variable
     #foreach($item in $attrList)
@@ -172,5 +176,19 @@
             #set($listValue = $item)
             #set($print = $attrMap.put($listAttr, $listValue))
         #end
+    #end
+#end
+
+## add php 'start' and 'end' tags for scheduled items. Ex: data-end="01/01/2020"
+#macro(addTimeFrame $tag)
+    #set($dataStart = '')
+    #set($dataEnd = '')
+    #set($dataStart = $attrMap['data-start'])
+    #set($dataEnd = $attrMap['data-end'])
+    #if($dataStart.length() > 0 || $dataEnd.length() > 0)
+        #if($dataStart.length() <= 0) #set($dataStart = '01/01/2000') #end
+        #if($dataEnd.length() <= 0) #set($dataEnd = '01/01/9999') #end
+        #if($tag == 'start')<?php $today = date('Y-m-d'); $today = date('Y-m-d', strtotime($today)); $startDate = date('Y-m-d', strtotime('${dataStart}')); $endDate = date('Y-m-d', strtotime('${dataEnd}')); if (($today >= $startDate) && ($today < $endDate)) : ?>
+        #elseif($tag == 'end')<?php endif; ?>#end
     #end
 #end
