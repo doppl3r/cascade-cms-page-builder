@@ -2,78 +2,84 @@
 #set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
 #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
 #foreach($section in $sections)
-    #setAttributes($section)
+    #setAttributes($section 'section' 'start')
     #if($dateStatus != 'inactive')
         <section ${attributes} data-name="section-${velocityCount}">
             #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
             #foreach($row in $rows)
-                #setAttributes($row)
+                #setAttributes($row 'row' 'start')
                 #if($dateStatus != 'inactive')
                     <div ${attributes}>
                         #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
                         #foreach($column in $columns)
-                            #setAttributes($column)
+                            #setAttributes($column 'column' 'start')
                             #if($dateStatus != 'inactive')
                                 <div ${attributes}>
                                     #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
                                     #foreach($content in $contents)
-                                        #setAttributes($content)
+                                        #setAttributes($content 'content' 'start')
                                         #if($dateStatus != 'inactive')
                                             #setContent($content)
                                         #end
+                                        #setAttributes($content 'content' 'end')
                                     #end
                                 </div>
                             #end
+                            #setAttributes($column 'column' 'end')
                         #end
                     </div>
                 #end
+                #setAttributes($row 'row' 'end')
             #end
         </section>
     #end
+    #setAttributes($section 'section' 'end')
 #end
 
-## set attributes for elements with visible data definitions.
-#macro(setAttributes $elem)
-    #set($attributes = $elem.getChild('ATTRIBUTES').value)
-    #setAttributeMap($attributes)
-    #checkDate()
-    
-    ## $content attributes (may be inherited by $item attributes)
-    #set($type = $elem.getChild('TYPE').value)
-    #set($width = $elem.getChild('WIDTH').value)
-    #set($height = $elem.getChild('HEIGHT').value)
-    #set($layout = $elem.getChild('LAYOUT').value)
-    #set($autoplay = $elem.getChild('AUTOPLAY').value)
-    #set($loop = $elem.getChild('LOOP').value)
-    #set($indicators = $elem.getChild('INDICATORS').value)
-    #set($delay = $elem.getChild('DELAY').value)
-    #set($sandbox = $elem.getChild('SANDBOX').value)
-    
-    ## $item attributes
-    #set($text = '') #set($text = $elem.getChild('TEXT').value)
-    #set($internalMedia = '') #set($internalMedia = $elem.getChild('INTERNAL-MEDIA').getChild('link').value)
-    #set($videoPoster = '') #set($videoPoster = $elem.getChild('VIDEO-POSTER').getChild('link').value)
-    #set($block = '') #set($block = $_SerializerTool.serialize($elem.getChild('BLOCK').getChild('content'), true))
-    #set($format = '') #set($format = $_EscapeTool.xml($elem.getChild('FORMAT').value))
-    #set($externalMedia = '') #set($externalMedia = $_EscapeTool.xml($elem.getChild('EXTERNAL-MEDIA').value))
-    #set($altText = '') #set($altText = $_EscapeTool.xml($elem.getChild('ALT-TEXT').value))
-    #set($internalPath = '') #set($internalPath = $elem.getChild('INTERNAL-PATH').getChild('link').value)
-    #set($externalPath = '') #set($externalPath = $_EscapeTool.xml($elem.getChild('EXTERNAL-PATH').value))
-    #set($target = '') #set($target = $elem.getChild('TARGET').value)
-    #set($wysiwyg = '') #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($elem, 'WYSIWYG'), true))
-    #set($link = '')
-    #set($src = '')
-    #set($poster = '')
-    
-    ## Conditionally modify attributes
-    #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #end
-    #if($externalPath.length() > 0) #set($link = $externalPath) #end
-    #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #end
-    #if($externalMedia.length() > 0) #set($src = $externalMedia) #end
-    #if($videoPoster.length() > 0) #set($poster = 'poster="[system-asset]' + $videoPoster + '[/system-asset]"') #end
-    #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
-    #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
-    #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
+## Set attributes for elements with visible data definitions.
+#macro(setAttributes $elem $name $order)
+    #if($order == 'start')
+        #set($attributes = $elem.getChild('ATTRIBUTES').value)
+        #setAttributeMap($attributes)
+        
+        ## $content attributes (may be inherited by $item attributes)
+        #set($type = $elem.getChild('TYPE').value)
+        #set($width = $elem.getChild('WIDTH').value)
+        #set($height = $elem.getChild('HEIGHT').value)
+        #set($layout = $elem.getChild('LAYOUT').value)
+        #set($autoplay = $elem.getChild('AUTOPLAY').value)
+        #set($loop = $elem.getChild('LOOP').value)
+        #set($indicators = $elem.getChild('INDICATORS').value)
+        #set($delay = $elem.getChild('DELAY').value)
+        #set($sandbox = $elem.getChild('SANDBOX').value)
+        
+        ## $item attributes
+        #set($text = '') #set($text = $elem.getChild('TEXT').value)
+        #set($internalMedia = '') #set($internalMedia = $elem.getChild('INTERNAL-MEDIA').getChild('link').value)
+        #set($videoPoster = '') #set($videoPoster = $elem.getChild('VIDEO-POSTER').getChild('link').value)
+        #set($block = '') #set($block = $_SerializerTool.serialize($elem.getChild('BLOCK').getChild('content'), true))
+        #set($format = '') #set($format = $_EscapeTool.xml($elem.getChild('FORMAT').value))
+        #set($externalMedia = '') #set($externalMedia = $_EscapeTool.xml($elem.getChild('EXTERNAL-MEDIA').value))
+        #set($altText = '') #set($altText = $_EscapeTool.xml($elem.getChild('ALT-TEXT').value))
+        #set($internalPath = '') #set($internalPath = $elem.getChild('INTERNAL-PATH').getChild('link').value)
+        #set($externalPath = '') #set($externalPath = $_EscapeTool.xml($elem.getChild('EXTERNAL-PATH').value))
+        #set($target = '') #set($target = $elem.getChild('TARGET').value)
+        #set($wysiwyg = '') #set($wysiwyg = $_SerializerTool.serialize($_XPathTool.selectSingleNode($elem, 'WYSIWYG'), true))
+        #set($link = '')
+        #set($src = '')
+        #set($poster = '')
+        
+        ## Conditionally modify attributes
+        #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #end
+        #if($externalPath.length() > 0) #set($link = $externalPath) #end
+        #if($internalMedia.length() > 0) #set($src = '[system-asset]' + $internalMedia + '[/system-asset]') #end
+        #if($externalMedia.length() > 0) #set($src = $externalMedia) #end
+        #if($videoPoster.length() > 0) #set($poster = 'poster="[system-asset]' + $videoPoster + '[/system-asset]"') #end
+        #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
+        #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
+        #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
+    #end
+    #checkDate($name $order)
 #end
 
 ## Output HTML by content type
@@ -81,43 +87,48 @@
     #set($items = $_XPathTool.selectNodes($content, 'ITEM'))
     #if($type == 'h1' || $type == 'h2' || $type == 'h3' || $type == 'p' || $type == 'div')
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             #if($dateStatus != 'inactive')
                 <${type} ${attributes}>${text}</${type}>
             #end
+            #setAttributes($item 'item' 'end')
         #end
     #elseif($type == 'a')
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             #if($dateStatus != 'inactive')
                 <a href="${link}" target="${target}" ${attributes}>${text}</a>
             #end
+            #setAttributes($item 'item' 'end')
         #end
     #elseif($type == 'ul')
         <ul ${attributes}>
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             #if($dateStatus != 'inactive')
                 <li ${attributes}>${text}</li>
             #end
+            #setAttributes($item 'item' 'end')
         #end
         </ul>
     #elseif($type == 'amp-img')
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             #if($dateStatus != 'inactive')
                 #if($link != '')<a href="${link}" target="${target}">#end
                     <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}" ${attributes}>
                     </amp-img>
                 #if($link != '')</a>#end
             #end
+            #setAttributes($item 'item' 'end')
         #end
     #elseif($type == 'amp-video')
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             <amp-video id="video_${contentId}" alt="${altText}" width="${width}" height="${height}" src="${src}" ${poster} layout="${layout}" ${autoplayAttr} ${loopAttr} on="tap:video_${contentId}.play" ${attributes}>
                 <div fallback=""><p>Your browser doesn't support HTML5 video.</p></div>
             </amp-video>
+            #setAttributes($item 'item' 'end')
         #end
     #elseif($type == 'amp-carousel')
         #set($parentWidth = $width)
@@ -136,18 +147,19 @@
                     ## loop through each item
                     #set($i = 0)
                     #foreach($item in $items)
-                        #setAttributes($item)
+                        #setAttributes($item 'item' 'start')
                         #if($dateStatus != 'inactive')
                             <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${carousel_id} == ${i} || (${carousel_id} == null && ${i} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${i}})" tabindex="0"></li>
                             #set($i = $i + 1)
                         #end
+                        #setAttributes($item 'item' 'end')
                     #end
                 </ol>
             </div>
         #end
         <amp-carousel id="${carousel_id}" [slide]="${carousel_id}" on="slideChange:AMP.setState({ ${carousel_id}: event.index })" width="${parentWidth}" height="${parentHeight}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}" ${attributes}>
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             #if($dateStatus != 'inactive')
                 #if($link != '')<a href="${link}" target="${target}" ${attributes}>#set($attributes = '')#end
                     <div class="carousel-item-${velocityCount}" ${attributes}>
@@ -156,46 +168,51 @@
                     </div>
                 #if($link != '')</a>#end
             #end
+            #setAttributes($item 'item' 'end')
         #end
         </amp-carousel>
         #protect-->
     #elseif($type == 'amp-iframe')
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             #if($dateStatus != 'inactive')
                 <amp-iframe src="${src}" width="${width}" height="${height}" title="${altText}" layout="${layout}" sandbox="${sandbox}" allowfullscreen="" frameborder="0" ${attributes}>
                     <amp-img src="https://apps.kahalamgmt.com/images/placeholder.png" placeholder="" width="16" height="16">
                     </amp-img>
                 </amp-iframe>
             #end
+            #setAttributes($item 'item' 'end')
         #end
     #elseif($type == 'block')
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             #if($dateStatus != 'inactive')
                 #if($format == '')<div ${attributes}>${block}</div>
                 #else #import($format) #end
             #end
+            #setAttributes($item 'item' 'end')
         #end
     #elseif($type == 'WYSIWYG')
         #foreach($item in $items)
-            #setAttributes($item)
+            #setAttributes($item 'item' 'start')
             #if($dateStatus != 'inactive')
                 <div ${attributes}>${wysiwyg}</div>
             #end
+            #setAttributes($item 'item' 'end')
+            ##checkDate('end' 'item')
         #end
     #end
 #end
 
 ## create a map of keys and values from a string
 #macro(setAttributeMap $attr)
-    ## initialize attribute variables
+    ## Initialize attribute variables
     #set($attributeMap = {})
     #set($attr = $attr.replace("'", '"')) ## format to quotation markup
     #set($attrList = $attr.split('"'))
     #set($attr = '') ## clear attribute
     
-    ## put key and values into a map variable
+    ## Put key and values into a map variable
     #foreach($item in $attrList)
         #set($switch = ($velocityCount - 1) % 2) ## switch between '0' and '1'
         #if($switch == 0)  ## set key when the switch is '0'
@@ -207,8 +224,8 @@
     #end
 #end
 
-## set dateStatus if the data attributes exist or not
-#macro(checkDate $tag)
+## Set dateStatus if the data attributes exist or not
+#macro(checkDate $name $order)
     #set($dateStatus = '')
     #set($dataStart = '')
     #set($dataEnd = '')
@@ -217,9 +234,20 @@
     #if($dataStart.length() > 0 || $dataEnd.length() > 0)
         #if($dataStart.length() <= 0) #set($dataStart = '01-01-2000') #end
         #if($dataEnd.length() <= 0) #set($dataEnd = '01-01-9999') #end
-        #set($today = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.getDate())))
-        #set($startDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataStart))))
-        #set($endDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataEnd))))
-        #if($today >= $startDate && $today < $endDate)#set($dateStatus = 'active')#{else}#set($dateStatus = 'inactive')#end
+        
+        ## Use PHP to schedule $items dynamically. Exceptions: $section, $row, $col, or $content
+        #if($order == 'start' || $order == 'end')
+            #set($dataStart = $dataStart.replaceAll('-', '/'))
+            #set($dataEnd = $dataStart.replaceAll('-', '/'))
+            #if($order == 'start')<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); if (($s <= $t) && ($t < $e)) : ?>
+            #elseif($order == 'end')<?php endif; ?>#end
+            
+        ## Use Velocity to schedule all content statically. Requires a 'Publish Set' for automation.
+        #else
+            #set($today = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.getDate())))
+            #set($startDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataStart))))
+            #set($endDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataEnd))))
+            #if($today >= $startDate && $today < $endDate)#set($dateStatus = 'active')#{else}#set($dateStatus = 'inactive')#end
+        #end
     #end
 #end
