@@ -1,9 +1,0 @@
-## Include PHP wrapper for real-time checks
-#macro(checkDatePHP)
-    #if($attributeMap['data-php'] == 'true')
-        #set($dataStart = $dataStart.replaceAll('-', '/'))
-        #set($dataEnd = $dataStart.replaceAll('-', '/'))
-        #if($tag == 'start')<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); if (($t >= $s) && ($t < $e)) : ?>
-        #elseif($tag == 'end')<?php endif; ?>#end
-    #end
-#end
