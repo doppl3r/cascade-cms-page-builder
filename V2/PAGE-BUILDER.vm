@@ -243,6 +243,7 @@
 #end
 ## Check if data attributes exist and add logical PHP wrappers
 #macro(checkDate $name $order)
+    #set($dataFlag = '')
     #set($dataStart = '')
     #set($dataEnd = '')
     #set($dataStart = $attributeMap['data-start'])
@@ -270,13 +271,13 @@
             #set($today = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.getDate())))
             #set($startDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataStart))))
             #set($endDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataEnd))))
-            #if($today < $startDate)#set($dateFlag = ' data-flag="pending"')
-            #elseif($today >= $startDate && $today < $endDate)#set($dateFlag = ' data-flag="live"')
-            #elseif($today > $endDate)#set($dateFlag = ' data-flag="expired"')#end
+            #if($today < $startDate)#set($dataFlag = ' data-flag="pending"')
+            #elseif($today >= $startDate && $today < $endDate)#set($dataFlag = ' data-flag="live"')
+            #elseif($today >= $endDate)#set($dataFlag = ' data-flag="expired"')#end
             ## Format data and include Velocity variables with PHP
             #set($dataStart = $dataStart.replaceAll('-', '/'))
             #set($dataEnd = $dataEnd.replaceAll('-', '/'))
-            #if($order == 'before')#set($attributes = $attributes + $dateFlag)<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); if (($s <= $t) && ($t < $e)) : ?>
+            #if($order == 'before')#set($attributes = $attributes + $dataFlag)<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); if (($s <= $t) && ($t < $e)) : ?>
             #elseif($order == 'after')<?php endif; ?>#end
         #end
     #end
