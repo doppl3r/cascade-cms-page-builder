@@ -1,39 +1,42 @@
+#set($html = "#renderPage()")
+#set($html = $html.replaceAll('  ', ''))
+<!--#protect${html}#protect-->
 ## Render page content with custom attributes for each node
-#set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
-#set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
-#foreach($section in $sections)
-    #setAttributes($section 'section' 'before')
-    <section ${attributes} data-name="section-${velocityCount}">
-        #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
-        #foreach($row in $rows)
-            #setAttributes($row 'row' 'before')
-            <div ${attributes}>
-                #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
-                #foreach($column in $columns)
-                    #setAttributes($column 'column' 'before')
-                    <div ${attributes}>
-                        #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
-                        #foreach($content in $contents)
-                            #setAttributes($content 'content' 'before')
-                            #setContent($content)
-                            #setAttributes($content 'content' 'after')
-                        #end
-                    </div>
-                    #setAttributes($column 'column' 'after')
-                #end
-            </div>
-            #setAttributes($row 'row' 'after')
-        #end
-    </section>
-    #setAttributes($section 'section' 'after')
+#macro(renderPage)
+    #set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
+    #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
+    #foreach($section in $sections)
+        #setAttributes($section 'section' 'before')
+        <section ${attributes} data-name="section-${velocityCount}">
+            #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
+            #foreach($row in $rows)
+                #setAttributes($row 'row' 'before')
+                <div ${attributes}>
+                    #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
+                    #foreach($column in $columns)
+                        #setAttributes($column 'column' 'before')
+                        <div ${attributes}>
+                            #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
+                            #foreach($content in $contents)
+                                #setAttributes($content 'content' 'before')
+                                #setContent($content)
+                                #setAttributes($content 'content' 'after')
+                            #end
+                        </div>
+                        #setAttributes($column 'column' 'after')
+                    #end
+                </div>
+                #setAttributes($row 'row' 'after')
+            #end
+        </section>
+        #setAttributes($section 'section' 'after')
+    #end
 #end
-
 ## Set attributes for elements with visible data definitions.
 #macro(setAttributes $elem $name $order)
     #if($order == 'before')
         #set($attributes = $elem.getChild('ATTRIBUTES').value)
         #setAttributeMap($attributes)
-        
         ## $content attributes (may be inherited by $item attributes)
         #set($type = $elem.getChild('TYPE').value)
         #set($width = $elem.getChild('WIDTH').value)
@@ -44,7 +47,6 @@
         #set($indicators = $elem.getChild('INDICATORS').value)
         #set($delay = $elem.getChild('DELAY').value)
         #set($sandbox = $elem.getChild('SANDBOX').value)
-        
         ## $item attributes
         #set($text = '') #set($text = $elem.getChild('TEXT').value)
         #set($internalMedia = '') #set($internalMedia = $elem.getChild('INTERNAL-MEDIA').getChild('link').value)
@@ -60,7 +62,6 @@
         #set($link = '')
         #set($src = '')
         #set($poster = '')
-        
         ## Conditionally modify attributes
         #if($internalPath.length() > 0) #set($link = '[system-asset]' + $internalPath + '[/system-asset]') #end
         #if($externalPath.length() > 0) #set($link = $externalPath) #end
@@ -73,7 +74,6 @@
     #end
     #checkDate($name $order)
 #end
-
 ## Output HTML by content type
 #macro(setContent $content)
     #set($items = $_XPathTool.selectNodes($content, 'ITEM'))
@@ -130,8 +130,6 @@
         #set($play = "#if($autoplay == 'true')play#{else}pause#end")
         #set($carousel_id = "carousel_id_${contentId}")
         #set($pause_carousel_id = "pause_carousel_id_${contentId}")     
-        
-        <!--#protect
         #if($indicators == "true")
             <div class="carousel-controls">
                 <span [text]="${pause_carousel_id} ? '$play' : '$pause'" [class]="${pause_carousel_id} ? 'paused' : ''" role="button" tabindex="0" on="tap:AMP.setState({${pause_carousel_id}: !${pause_carousel_id} }), ${carousel_id}.toggleAutoplay()">$pause</span>
@@ -159,7 +157,6 @@
             #setAttributes($item 'item' 'after')
         #end
         </amp-carousel>
-        #protect-->
     #elseif($type == 'amp-iframe')
         <div ${attributes}>
         #foreach($item in $items)
@@ -190,7 +187,6 @@
         </div>
     #end
 #end
-
 ## Create a map of keys and values from a string
 #macro(setAttributeMap $attr)
     ## Initialize attribute variables
@@ -198,7 +194,6 @@
     #set($attr = $attr.replace("'", '"')) ## format to quotation markup
     #set($attrList = $attr.split('"'))
     #set($attr = '') ## clear attribute
-    
     ## Put key and values into a map variable
     #foreach($item in $attrList)
         #set($switch = ($velocityCount - 1) % 2) ## Switch between '0' and '1'
@@ -210,14 +205,12 @@
         #end
     #end
 #end
-
 ## Check if data attributes exist and add logical PHP wrappers
 #macro(checkDate $name $order)
     #set($dataStart = '')
     #set($dataEnd = '')
     #set($dataStart = $attributeMap['data-start'])
     #set($dataEnd = $attributeMap['data-end'])
-    
     ## Set the start and end date if order is 'before' or 'after'
     #if($order == 'before')
         #if($name == 'section')#set($sectionStartDate = '')#set($sectionEndDate = '')#set($sectionStartDate = $dataStart)#set($sectionEndDate = $dataEnd)#end
@@ -232,7 +225,6 @@
         #if($name == 'content')#set($dataStart = $contentStartDate)#set($dataEnd = $contentEndDate)#end
         #if($name == 'item')#set($dataStart = $itemStartDate)#set($dataEnd = $itemEndDate)#end
     #end
-    
     ## Add PHP if any date attributes exist
     #if($dataStart.length() > 0 || $dataEnd.length() > 0)
         #if($dataStart.length() <= 0) #set($dataStart = '01-01-2000') #end
@@ -245,7 +237,6 @@
             #if($today < $startDate)#set($dateFlag = ' data-flag="pending"')
             #elseif($today >= $startDate && $today < $endDate)#set($dateFlag = ' data-flag="live"')
             #elseif($today > $endDate)#set($dateFlag = ' data-flag="expired"')#end
-            
             ## Format data and include Velocity variables with PHP
             #set($dataStart = $dataStart.replaceAll('-', '/'))
             #set($dataEnd = $dataEnd.replaceAll('-', '/'))
