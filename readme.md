@@ -4,28 +4,34 @@ The following scripts are useful for rapidly developing Google AMP websites with
 ------------
 
 ## Features (V2)
-![page builder description](https://raw.githubusercontent.com/doppl3r/cascade-cms-page-builder/master/assets/page-builder-description.png)
 
 ### Custom HTML/AMP Elements
-Customize your page with unique AMP-ready HTML.
+Customize your page with common HTML tags or unique **AMP-ready** features.
 
   - h1, h2, h3
   - p
   - a
   - ul
   - div
-  - amp-img
-  - amp-video
-  - amp-carousel
-  - amp-iframe
+  - **amp-img**
+  - **amp-video**
+  - **amp-carousel**
+  - **amp-iframe**
   - Cascade CMS block (includes a format link field)
   - WYSIWYG
 
 ### Custom Attributes
-Custom attributes allow you to add an extra layer of functionality to any element. For example, to schedule content dynamically without [Publish Sets](https://www.hannonhill.com/cascadecms/latest/content-authoring/publishing/publish-sets.html), simply specify a **start** and/or **end** date using the data format. Cascade CMS will automatically display the content with flags for content that is unpublished.
+Custom attributes allow you to add an extra layer of functionality to any element. For example, to schedule content dynamically without a [Publish Sets](https://www.hannonhill.com/cascadecms/latest/content-authoring/publishing/publish-sets.html), simply specify a **start** and/or **end** date using the data format. Cascade CMS will display warn you if an element is unpublished.
 
   - data-start="mm-dd-yyyy"
   - data-end="mm-dd-yyyy"
+  - class="row"
+  - id="myElement" (etc.)
+
+------------
+
+## Preview
+![page builder description](https://raw.githubusercontent.com/doppl3r/cascade-cms-page-builder/master/assets/page-builder-description.png)
 
 ------------
 
