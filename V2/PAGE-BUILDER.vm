@@ -71,6 +71,9 @@
         #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
         #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
         #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
+    #elseif($order == 'after')
+        #set($attributes = '')
+        #setAttributeMap($attributes)
     #end
     #checkLink($name $order)
     #checkDate($name $order)
