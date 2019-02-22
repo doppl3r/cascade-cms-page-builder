@@ -23,10 +23,12 @@ Customize your page with common HTML tags or unique **AMP-ready** features.
 ### Custom Attributes
 Custom attributes allow you to add an extra layer of functionality to any element. For example, to schedule content dynamically without a [Publish Sets](https://www.hannonhill.com/cascadecms/latest/content-authoring/publishing/publish-sets.html), simply specify a **start** and/or **end** date using the data format. Cascade CMS will display warn you if an element is unpublished.
 
-  - data-start="mm-dd-yyyy"
-  - data-end="mm-dd-yyyy"
-  - class="row"
-  - id="myElement" (etc.)
+  - data-start="mm-dd-yyyy" - Schedule publish date
+  - data-end="mm-dd-yyyy" - Schedule unpublish date
+  - href="https://dopplercreative.com" - Wrap content with a link
+  - target="_blank" - Specify link behavior (if applicable)
+  - class="row" - Add custom class attribute
+  - id="myElement" - Add custom id attribute (etc.)
 
 ------------
 
