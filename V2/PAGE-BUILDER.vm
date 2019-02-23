@@ -137,11 +137,20 @@
                 <span [text]="${pause_carousel_id} ? '$play' : '$pause'" [class]="${pause_carousel_id} ? 'paused' : ''" role="button" tabindex="0" on="tap:AMP.setState({${pause_carousel_id}: !${pause_carousel_id} }), ${carousel_id}.toggleAutoplay()">$pause</span>
                 <ol class="indicators">
                     ## loop through each item
-                    #set($i = 0)
+                    #set($internalIndex = 0)
+                    #set($externalIndex = 0)
+                    #set($subtractIndex = 0)
                     #foreach($item in $items)
                         #setAttributes($item 'item' 'before')
-                        <li aria-label="slide ${velocityCount}" role="button" class="#if($i == 0)active#end" [class]="${carousel_id} == ${i} || (${carousel_id} == null && ${i} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${i}})" tabindex="0"></li>
-                        #set($i = $i + 1)
+                        #if($dataFlag.indexOf('pending') <= 0 && $dataFlag.indexOf('expired') <= 0)
+                            #set($externalIndex = $externalIndex + 1)
+                            #if($externalIndex == 1 && !$phpActive)#set($phpActive = true)#{else}#set($phpActive = false)#end
+                        #else#set($subtractIndex = $subtractIndex + 1)#end
+                        #set($internalClass = "[system-view:internal]class='#if(${internalIndex} == 0)active#end'[/system-view:internal]")
+                        #set($externalClass = "[system-view:external]class='#if(${phpActive} == true)active#end'[/system-view:external]")
+                        #set($sub = "[system-view:external]- ${subtractIndex}[/system-view:external]")
+                        <li aria-label="slide ${velocityCount}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${sub} || (${carousel_id} == null && ${internalIndex}${sub} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${sub}})" tabindex="0"></li>
+                        #set($internalIndex = $internalIndex + 1)
                         #setAttributes($item 'item' 'after')
                     #end
                 </ol>
