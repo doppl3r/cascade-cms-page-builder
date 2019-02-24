@@ -137,20 +137,17 @@
                 <span [text]="${pause_carousel_id} ? '$play' : '$pause'" [class]="${pause_carousel_id} ? 'paused' : ''" role="button" tabindex="0" on="tap:AMP.setState({${pause_carousel_id}: !${pause_carousel_id} }), ${carousel_id}.toggleAutoplay()">$pause</span>
                 <ol class="indicators">
                     ## loop through each item
-                    #set($internalIndex = 0)
-                    #set($externalIndex = 0)
-                    #set($subtractIndex = 0)
+                    [system-view:external]<?php $count = 0; ?>[/system-view:external]
                     #foreach($item in $items)
+                        [system-view:external]<?php $active = true; ?>[/system-view:external]
                         #setAttributes($item 'item' 'before')
-                        #if($dataFlag.indexOf('pending') <= 0 && $dataFlag.indexOf('expired') <= 0)
-                            #set($externalIndex = $externalIndex + 1)
-                            #if($externalIndex == 1 && !$phpActive)#set($phpActive = true)#{else}#set($phpActive = false)#end
-                        #else#set($subtractIndex = $subtractIndex + 1)#end
-                        #set($internalClass = "[system-view:internal]class='#if(${internalIndex} == 0)active#end'[/system-view:internal]")
-                        #set($externalClass = "[system-view:external]class='#if(${phpActive} == true)active#end'[/system-view:external]")
-                        #set($sub = "[system-view:external]- ${subtractIndex}[/system-view:external]")
-                        <li aria-label="slide ${velocityCount}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${sub} || (${carousel_id} == null && ${internalIndex}${sub} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${sub}})" tabindex="0"></li>
-                        #set($internalIndex = $internalIndex + 1)
+                        #set($i = $velocityCount - 1)
+                        #set($internalClass = "[system-view:internal]class='#if(${i} == 0)active#end'[/system-view:internal]")
+                        #set($externalClass = "[system-view:external]class='<?php echo $count == 0 ? active : ''; ?>'[/system-view:external]")
+                        #set($ini = "[system-view:internal]${i}[/system-view:internal]")
+                        #set($exi = "[system-view:external]<?php echo $count; ?>[/system-view:external]")
+                        <li aria-label="slide ${velocityCount}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${ini}${exi} || (${carousel_id} == null && ${ini}${exi} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${ini}${exi}})" tabindex="0"></li>
+                        [system-view:external]<?php $count += ($active) ? 1 : 0; ?>[/system-view:external]
                         #setAttributes($item 'item' 'after')
                     #end
                 </ol>
@@ -289,8 +286,8 @@
             ## Format data and include Velocity variables with PHP
             #set($dataStart = $dataStart.replaceAll('-', '/'))
             #set($dataEnd = $dataEnd.replaceAll('-', '/'))
-            #if($order == 'before')#set($attributes = $attributes + $dataFlag)<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); if (($s <= $t) && ($t < $e)) : ?>
-            #elseif($order == 'after')<?php endif; ?>#end
+            #if($order == 'before')#set($attributes = $attributes + $dataFlag)[system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $active = (($s <= $t) && ($t < $e)); if($active) : ?>[/system-view:external]
+            #elseif($order == 'after')[system-view:external]<?php endif; ?>[/system-view:external]#end
         #end
     #end
 #end
