@@ -1,3 +1,6 @@
+## Developed by Jacob DeBenedetto
+## Documentation: https://github.com/doppl3r/cascade-cms-page-builder
+
 #set($html = "#renderPage()")
 #set($html = $html.replaceAll('  ', ''))
 <!--#protect${html}#protect-->
