@@ -136,18 +136,19 @@
             <div class="carousel-controls">
                 <span [text]="${pause_carousel_id} ? '$play' : '$pause'" [class]="${pause_carousel_id} ? 'paused' : ''" role="button" tabindex="0" on="tap:AMP.setState({${pause_carousel_id}: !${pause_carousel_id} }), ${carousel_id}.toggleAutoplay()">$pause</span>
                 <ol class="indicators">
-                    ## loop through each item
-                    [system-view:external]<?php $count = 0; ?>[/system-view:external]
+                    ## Loop through each item - $phpIndex starts at 0
+                    [system-view:external]<?php $phpIndex = 0; ?>[/system-view:external]
                     #foreach($item in $items)
+                        ## PHP - set default value for $active to 'true' for $items without data start/end attributes
                         [system-view:external]<?php $active = true; ?>[/system-view:external]
                         #setAttributes($item 'item' 'before')
-                        #set($i = $velocityCount - 1)
-                        #set($internalClass = "[system-view:internal]class='#if(${i} == 0)active#end'[/system-view:internal]")
-                        #set($externalClass = "[system-view:external]class='<?php echo $count == 0 ? active : ''; ?>'[/system-view:external]")
-                        #set($ini = "[system-view:internal]${i}[/system-view:internal]")
-                        #set($exi = "[system-view:external]<?php echo $count; ?>[/system-view:external]")
-                        <li aria-label="slide ${velocityCount}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${ini}${exi} || (${carousel_id} == null && ${ini}${exi} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${ini}${exi}})" tabindex="0"></li>
-                        [system-view:external]<?php $count += ($active) ? 1 : 0; ?>[/system-view:external]
+                        #set($velocityIndex = $velocityCount - 1)
+                        #set($internalIndex = "[system-view:internal]${velocityIndex}[/system-view:internal]")
+                        #set($externalIndex = "[system-view:external]<?php echo $phpIndex; ?>[/system-view:external]")
+                        #set($internalClass = "[system-view:internal]class='#if(${velocityIndex} == 0)active#end'[/system-view:internal]")
+                        #set($externalClass = "[system-view:external]class='<?php echo $phpIndex == 0 ? active : ''; ?>'[/system-view:external]")
+                        <li aria-label="slide index ${internalIndex}${externalIndex}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${externalIndex} || (${carousel_id} == null && ${internalIndex}${externalIndex} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${externalIndex}})" tabindex="0"></li>
+                        [system-view:external]<?php $phpIndex += ($active) ? 1 : 0; ?>[/system-view:external]
                         #setAttributes($item 'item' 'after')
                     #end
                 </ol>
