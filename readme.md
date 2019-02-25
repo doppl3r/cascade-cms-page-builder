@@ -13,30 +13,30 @@ Customize your page with common HTML tags or unique ***AMP-ready*** features.
   - a
   - ul
   - div
-  - ***amp-img***
-  - ***amp-video***
+  - amp-img
+  - amp-video
     - Options:
       - Autoplay
       - Loop
-  - ***amp-carousel***
+  - amp-carousel
     - Options:
       - Indicators (***NOTE***: PHP must be installed ***OR*** disabled with data-php="false" in the first attribute field)
       - Autoplay
       - Loop
-  - ***amp-iframe***
+  - amp-iframe
   - Cascade CMS block (includes a format link field)
   - WYSIWYG
 
 ### Custom Attributes
 Custom attributes allow you to add an extra layer of functionality or styling to any element. For example, to schedule content dynamically without a [Publish Sets](https://www.hannonhill.com/cascadecms/latest/content-authoring/publishing/publish-sets.html), simply specify a ***start*** and/or ***end*** date using the data format. Cascade CMS will warn you if an element is unpublished.
 
-  - data-start="mm-dd-yyyy" - Schedule publish date ***(requires PHP)***
-  - data-end="mm-dd-yyyy" - Schedule unpublish date ***(requires PHP)***
-  - data-php="false" - Disable PHP if not supported
-  - href="https://dopplercreative.com" - Wrap content with a link
-  - target="_blank" - Specify link behavior (if applicable)
-  - class="row" - Add custom class attribute
-  - id="myElement" - Add custom id attribute (etc.)
+  - ***data-start="mm-dd-yyyy"*** - Schedule publish date ***(requires PHP)***
+  - ***data-end="mm-dd-yyyy"*** - Schedule unpublish date ***(requires PHP)***
+  - ***data-php="false"*** - Disable PHP if not supported
+  - ***href="https://dopplercreative.com"*** - Wrap content with a link
+  - ***target="_blank"*** - Specify link behavior (if applicable)
+  - ***class="row"*** - Add custom class attribute
+  - ***id="myElement"*** - Add custom id attribute (etc.)
 
 ------------
 
