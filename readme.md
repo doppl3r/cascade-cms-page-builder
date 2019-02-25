@@ -1,5 +1,5 @@
 # Cascade CMS Page Builder
-The following scripts are useful for rapidly developing Google AMP websites within the [Hannon Hill's Cascade CMS](https://www.hannonhill.com/products/cascade-cms/index.html). The following scripts have been tested using [v7.12.4](https://www.hannonhill.com/cascadeserver/releases/7.12.4/index.html?utm_medium=rss).
+The **Cascade CMS Page Builder** is useful for rapidly developing Google AMP websites within the [Hannon Hill's Cascade CMS](https://www.hannonhill.com/products/cascade-cms/index.html). The following scripts have been tested using [v7.12.4](https://www.hannonhill.com/cascadeserver/releases/7.12.4/index.html?utm_medium=rss).
 
 ------------
 
@@ -15,16 +15,24 @@ Customize your page with common HTML tags or unique **AMP-ready** features.
   - div
   - **amp-img**
   - **amp-video**
+    - Options:
+      - Autoplay
+      - Loop
   - **amp-carousel**
+    - Options:
+      - Custom indicators *(requires PHP)*
+      - Pause Button
+      - Autoplay
+      - Loop
   - **amp-iframe**
   - Cascade CMS block (includes a format link field)
   - WYSIWYG
 
 ### Custom Attributes
-Custom attributes allow you to add an extra layer of functionality to any element. For example, to schedule content dynamically without a [Publish Sets](https://www.hannonhill.com/cascadecms/latest/content-authoring/publishing/publish-sets.html), simply specify a **start** and/or **end** date using the data format. Cascade CMS will display warn you if an element is unpublished.
+Custom attributes allow you to add an extra layer of functionality or styling to any element. For example, to schedule content dynamically without a [Publish Sets](https://www.hannonhill.com/cascadecms/latest/content-authoring/publishing/publish-sets.html), simply specify a **start** and/or **end** date using the data format. Cascade CMS will warn you if an element is unpublished.
 
-  - data-start="mm-dd-yyyy" - Schedule publish date
-  - data-end="mm-dd-yyyy" - Schedule unpublish date
+  - data-start="mm-dd-yyyy" - Schedule publish date *(requires PHP)*
+  - data-end="mm-dd-yyyy" - Schedule unpublish date *(requires PHP)*
   - href="https://dopplercreative.com" - Wrap content with a link
   - target="_blank" - Specify link behavior (if applicable)
   - class="row" - Add custom class attribute
@@ -43,8 +51,8 @@ Custom attributes allow you to add an extra layer of functionality to any elemen
   - *PAGE-BUILDER.xml* - Defines all input field for each page.
 
 ### Velocity Script
-  - *PAGE-BUILDER.vm* - Converts pages that utilize the PAGE-BUILDER-AMP.xml data definition into HTML. Attach to the template 'DEFAULT' system-region
-  - *PAGE-BUILDER-CSS.vm* - Converts page properties that utilize the PAGE-BUILDER-AMP.xml data definition into CSS. Attach to the template 'CSS-BUILDER' system-region (must include index block with 'Pages' enabled for index type)
+  - *PAGE-BUILDER.vm* - Converts pages that utilize the PAGE-BUILDER.xml data definition into HTML. Attach to the template 'DEFAULT' system-region
+  - *PAGE-BUILDER-CSS.vm* - Converts page properties that utilize the PAGE-BUILDER.xml data definition into CSS. Attach to the template 'CSS-BUILDER' system-region (must include index block with 'Pages' enabled for index type)
 
 ### Page Template
   - *TEMPLATE.xsl* - Combines Cascade CMS blocks with velocity format scripts within an HTML template.
