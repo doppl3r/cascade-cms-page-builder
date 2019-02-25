@@ -20,7 +20,7 @@ Customize your page with common HTML tags or unique **AMP-ready** features.
       - Loop
   - **amp-carousel**
     - Options:
-      - Custom indicators ***(requires PHP)***
+      - Custom indicators
       - Pause/Play Button ***(included with indicators)***
       - Autoplay
       - Loop
@@ -33,6 +33,7 @@ Custom attributes allow you to add an extra layer of functionality or styling to
 
   - data-start="mm-dd-yyyy" - Schedule publish date ***(requires PHP)***
   - data-end="mm-dd-yyyy" - Schedule unpublish date ***(requires PHP)***
+  - data-php="false" - Disable PHP if not supported
   - href="https://dopplercreative.com" - Wrap content with a link
   - target="_blank" - Specify link behavior (if applicable)
   - class="row" - Add custom class attribute

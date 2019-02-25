@@ -75,6 +75,7 @@
         #set($attributes = '')
         #setAttributeMap($attributes)
     #end
+    #checkPHP()
     #checkLink($name $order)
     #checkDate($name $order)
 #end
@@ -137,18 +138,26 @@
                 <span [text]="${pause_carousel_id} ? '$play' : '$pause'" [class]="${pause_carousel_id} ? 'paused' : ''" role="button" tabindex="0" on="tap:AMP.setState({${pause_carousel_id}: !${pause_carousel_id} }), ${carousel_id}.toggleAutoplay()">$pause</span>
                 <ol class="indicators">
                     ## Loop through each item - $phpIndex starts at 0
-                    [system-view:external]<?php $phpIndex = 0; ?>[/system-view:external]
+                    #if($dataPHP)[system-view:external]<?php $phpIndex = 0; ?>[/system-view:external]#end
                     #foreach($item in $items)
                         ## PHP - set default value for $active to 'true' for $items without data start/end attributes
-                        [system-view:external]<?php $active = true; ?>[/system-view:external]
+                        #if($dataPHP)[system-view:external]<?php $active = true; ?>[/system-view:external]#end
                         #setAttributes($item 'item' 'before')
-                        #set($velocityIndex = $velocityCount - 1)
-                        #set($internalIndex = "[system-view:internal]${velocityIndex}[/system-view:internal]")
-                        #set($externalIndex = "[system-view:external]<?php echo $phpIndex; ?>[/system-view:external]")
-                        #set($internalClass = "[system-view:internal]class='#if(${velocityIndex} == 0)active#end'[/system-view:internal]")
-                        #set($externalClass = "[system-view:external]class='<?php echo $phpIndex == 0 ? active : ''; ?>'[/system-view:external]")
+                        #if($dataPHP)
+                            #set($velocityIndex = $velocityCount - 1)
+                            #set($internalIndex = "[system-view:internal]${velocityIndex}[/system-view:internal]")
+                            #set($externalIndex = "[system-view:external]<?php echo $phpIndex; ?>[/system-view:external]")
+                            #set($internalClass = "[system-view:internal]class='#if(${velocityIndex} == 0)active#end'[/system-view:internal]")
+                            #set($externalClass = "[system-view:external]class='<?php echo $phpIndex == 0 ? active : ''; ?>'[/system-view:external]")
+                        #else
+                            #set($velocityIndex = $velocityCount - 1)
+                            #set($internalIndex = $velocityIndex)
+                            #set($externalIndex = '')
+                            #set($internalClass = "class='#if(${velocityIndex} == 0)active#end'")
+                            #set($externalClass = "")
+                        #end
                         <li aria-label="slide index ${internalIndex}${externalIndex}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${externalIndex} || (${carousel_id} == null && ${internalIndex}${externalIndex} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${externalIndex}})" tabindex="0"></li>
-                        [system-view:external]<?php $phpIndex += ($active) ? 1 : 0; ?>[/system-view:external]
+                        #if($dataPHP)[system-view:external]<?php $phpIndex += ($active) ? 1 : 0; ?>[/system-view:external]#end
                         #setAttributes($item 'item' 'after')
                     #end
                 </ol>
@@ -253,42 +262,49 @@
 #end
 ## Check if data attributes exist and add logical PHP wrappers
 #macro(checkDate $name $order)
-    #set($dataFlag = '')
-    #set($dataStart = '')
-    #set($dataEnd = '')
-    #set($dataStart = $attributeMap['data-start'])
-    #set($dataEnd = $attributeMap['data-end'])
-    ## Set the start and end date if order is 'before' or 'after'
-    #if($order == 'before')
-        #if($name == 'section')#set($sectionStartDate = '')#set($sectionEndDate = '')#set($sectionStartDate = $dataStart)#set($sectionEndDate = $dataEnd)#end
-        #if($name == 'row')#set($rowStartDate = '')#set($rowEndDate = '')#set($rowStartDate = $dataStart)#set($rowEndDate = $dataEnd)#end
-        #if($name == 'column')#set($columnStartDate = '')#set($columnEndDate = '')#set($columnStartDate = $dataStart)#set($columnEndDate = $dataEnd)#end
-        #if($name == 'content')#set($contentStartDate = '')#set($contentEndDate = '')#set($contentStartDate = $dataStart)#set($contentEndDate = $dataEnd)#end
-        #if($name == 'item')#set($itemStartDate = '')#set($itemEndDate = '')#set($itemStartDate = $dataStart)#set($itemEndDate = $dataEnd)#end
-    #elseif($order == 'after')
-        #if($name == 'section')#set($dataStart = $sectionStartDate)#set($dataEnd = $sectionEndDate)#end
-        #if($name == 'row')#set($dataStart = $rowStartDate)#set($dataEnd = $rowEndDate)#end
-        #if($name == 'column')#set($dataStart = $columnStartDate)#set($dataEnd = $columnEndDate)#end
-        #if($name == 'content')#set($dataStart = $contentStartDate)#set($dataEnd = $contentEndDate)#end
-        #if($name == 'item')#set($dataStart = $itemStartDate)#set($dataEnd = $itemEndDate)#end
-    #end
-    ## Add PHP if any date attributes exist
-    #if($dataStart.length() > 0 || $dataEnd.length() > 0)
-        #if($dataStart.length() <= 0) #set($dataStart = '01-01-2000') #end
-        #if($dataEnd.length() <= 0) #set($dataEnd = '01-01-9999') #end
-        #if($order == 'before' || $order == 'after')
-            ## Add data-flag attribute for current scheduled status
-            #set($today = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.getDate())))
-            #set($startDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataStart))))
-            #set($endDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataEnd))))
-            #if($today < $startDate)#set($dataFlag = ' data-flag="pending"')
-            #elseif($today >= $startDate && $today < $endDate)#set($dataFlag = ' data-flag="live"')
-            #elseif($today >= $endDate)#set($dataFlag = ' data-flag="expired"')#end
-            ## Format data and include Velocity variables with PHP
-            #set($dataStart = $dataStart.replaceAll('-', '/'))
-            #set($dataEnd = $dataEnd.replaceAll('-', '/'))
-            #if($order == 'before')#set($attributes = $attributes + $dataFlag)[system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $active = (($s <= $t) && ($t < $e)); if($active) : ?>[/system-view:external]
-            #elseif($order == 'after')[system-view:external]<?php endif; ?>[/system-view:external]#end
+    #if($dataPHP)
+        #set($dataFlag = '')
+        #set($dataStart = '')
+        #set($dataEnd = '')
+        #set($dataStart = $attributeMap['data-start'])
+        #set($dataEnd = $attributeMap['data-end'])
+        ## Set the start and end date if order is 'before' or 'after'
+        #if($order == 'before')
+            #if($name == 'section')#set($sectionStartDate = '')#set($sectionEndDate = '')#set($sectionStartDate = $dataStart)#set($sectionEndDate = $dataEnd)#end
+            #if($name == 'row')#set($rowStartDate = '')#set($rowEndDate = '')#set($rowStartDate = $dataStart)#set($rowEndDate = $dataEnd)#end
+            #if($name == 'column')#set($columnStartDate = '')#set($columnEndDate = '')#set($columnStartDate = $dataStart)#set($columnEndDate = $dataEnd)#end
+            #if($name == 'content')#set($contentStartDate = '')#set($contentEndDate = '')#set($contentStartDate = $dataStart)#set($contentEndDate = $dataEnd)#end
+            #if($name == 'item')#set($itemStartDate = '')#set($itemEndDate = '')#set($itemStartDate = $dataStart)#set($itemEndDate = $dataEnd)#end
+        #elseif($order == 'after')
+            #if($name == 'section')#set($dataStart = $sectionStartDate)#set($dataEnd = $sectionEndDate)#end
+            #if($name == 'row')#set($dataStart = $rowStartDate)#set($dataEnd = $rowEndDate)#end
+            #if($name == 'column')#set($dataStart = $columnStartDate)#set($dataEnd = $columnEndDate)#end
+            #if($name == 'content')#set($dataStart = $contentStartDate)#set($dataEnd = $contentEndDate)#end
+            #if($name == 'item')#set($dataStart = $itemStartDate)#set($dataEnd = $itemEndDate)#end
+        #end
+        ## Add PHP if any date attributes exist
+        #if($dataStart.length() > 0 || $dataEnd.length() > 0)
+            #if($dataStart.length() <= 0) #set($dataStart = '01-01-2000') #end
+            #if($dataEnd.length() <= 0) #set($dataEnd = '01-01-9999') #end
+            #if($order == 'before' || $order == 'after')
+                ## Add data-flag attribute for current scheduled status
+                #set($today = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.getDate())))
+                #set($startDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataStart))))
+                #set($endDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataEnd))))
+                #if($today < $startDate)#set($dataFlag = ' data-flag="pending"')
+                #elseif($today >= $startDate && $today < $endDate)#set($dataFlag = ' data-flag="live"')
+                #elseif($today >= $endDate)#set($dataFlag = ' data-flag="expired"')#end
+                ## Format data and include Velocity variables with PHP
+                #set($dataStart = $dataStart.replaceAll('-', '/'))
+                #set($dataEnd = $dataEnd.replaceAll('-', '/'))
+                #if($order == 'before')#set($attributes = $attributes + $dataFlag)[system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $active = (($s <= $t) && ($t < $e)); if($active) : ?>[/system-view:external]
+                #elseif($order == 'after')[system-view:external]<?php endif; ?>[/system-view:external]#end
+            #end
         #end
     #end
+#end
+#macro(checkPHP)
+    ## Enable PHP by default. To disable PHP, add data-php="false" to the first attribute field
+    #if("$!dataPHP" == "")#set($dataPHP = true)#end
+    #if("$!attributeMap['data-php']" == "false")#set($dataPHP = false)#end
 #end
