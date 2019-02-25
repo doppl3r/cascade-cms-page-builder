@@ -20,8 +20,7 @@ Customize your page with common HTML tags or unique **AMP-ready** features.
       - Loop
   - **amp-carousel**
     - Options:
-      - Custom indicators
-      - Pause/Play Button ***(included with indicators)***
+      - Controls (pause/play/indicators. **NOTE**: PHP must be installed **OR** disabled with data-php="false" in the first attribute field)
       - Autoplay
       - Loop
   - **amp-iframe**
