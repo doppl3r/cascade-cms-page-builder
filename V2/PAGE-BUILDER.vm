@@ -154,7 +154,7 @@
                 </ol>
             </div>
         #end
-        <amp-carousel id="${carousel_id}" [slide]="${carousel_id}" on="slideChange:AMP.setState({ ${carousel_id}: event.index })" width="${parentWidth}" height="${parentHeight}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}" ${attributes}>
+        <amp-carousel id="${carousel_id}" [slide]="${carousel_id}" on="slideChange:AMP.setState({ ${carousel_id}: event.index })" width="${parentWidth}" height="${parentHeight}" layout="${parentLayout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}" ${attributes}>
         #foreach($item in $items)
             #setAttributes($item 'item' 'before')
             <div class="carousel-item-${velocityCount}" ${attributes}>
