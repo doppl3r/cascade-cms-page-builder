@@ -32,8 +32,8 @@
                             <dropdown-item value="WYSIWYG" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WYSIWYG"/>
                         </text>
                         <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='content'" size="30" help-text="Ex: data-end='12-31-1999'"/>
-                        <text identifier="WIDTH" label="Width" default="1920" size="30" help-text="AMP element width"/>
-                        <text identifier="HEIGHT" label="Height" default="1080" size="30" help-text="AMP element height"/>
+                        <text identifier="WIDTH" label="Width" default="640" size="30" help-text="AMP element width"/>
+                        <text identifier="HEIGHT" label="Height" default="640" size="30" help-text="AMP element height"/>
                         <text type="dropdown" identifier="LAYOUT" label="Layout" default="responsive" help-text="AMP element behavior">
                             <dropdown-item value="nodisplay"/>
                             <dropdown-item value="responsive"/>
@@ -65,8 +65,8 @@
                             <asset type="block" identifier="BLOCK" label="Block" render-content-depth="unlimited" help-text="Choose a block item from the CMS"/>
                             <text identifier="FORMAT" label="Format" size="30" help-text="Ex: site://APPS-KAHALA-WWW/+GLOBAL-FORMATS/FAQ-BUILDER-AMP"/>
                             <text identifier="EXTERNAL-MEDIA" label="External Media" size="30" help-text="This will set or override internal media"/>
-                            <text identifier="WIDTH" label="Width" default="1920" size="30" help-text="Leave empty to inherit parent width. Do not include 'px' or other values"/>
-                            <text identifier="HEIGHT" label="Height" default="1080" size="30" help-text="Leave empty to inherit parent height. Do not include 'px' or other values"/>
+                            <text identifier="WIDTH" label="Width" default="640" size="30" help-text="Leave empty to inherit parent width. Do not include 'px' or other values"/>
+                            <text identifier="HEIGHT" label="Height" default="640" size="30" help-text="Leave empty to inherit parent height. Do not include 'px' or other values"/>
                             <text type="dropdown" identifier="LAYOUT" label="Layout" default="responsive" help-text="AMP element behavior">
                                 <dropdown-item value="nodisplay"/>
                                 <dropdown-item value="responsive"/>
