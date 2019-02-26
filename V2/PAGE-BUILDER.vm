@@ -113,6 +113,18 @@
         <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item 'item' 'before')
+            ## Use PHP to set width or height of undefined fields
+            #if($dataPHP)
+                #if("$!src" != "")
+                    #if("$!width" == "" || "$!height" == "")
+                        [system-view:external]<?php list($phpWidth, $phpHeight) = getimagesize('${src}'); ?>[/system-view:external]
+                        #set($width = "[system-view:external]<?php echo $phpWidth; ?>[/system-view:external][system-view:internal]640[/system-view:internal]")
+                        #set($height = "[system-view:external]<?php echo $phpHeight; ?>[/system-view:external][system-view:internal]640[/system-view:internal]")
+                        #set($dataFlag = ' data-flag="missing-dimensions"')
+                        #set($attributes = $attributes + '[system-view:internal]' + $dataFlag + '[/system-view:internal]')
+                    #end
+                #end
+            #end
             <amp-img src="${src}" width="${width}" height="${height}" layout="${layout}" alt="${altText}" ${attributes}>
             </amp-img>
             #setAttributes($item 'item' 'after')
@@ -299,7 +311,7 @@
                 ## Format data and include Velocity variables with PHP
                 #set($dataStart = $dataStart.replaceAll('-', '/'))
                 #set($dataEnd = $dataEnd.replaceAll('-', '/'))
-                #if($order == 'before')#set($attributes = $attributes + $dataFlag)[system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $active = (($s <= $t) && ($t < $e)); if($active) : ?>[/system-view:external]
+                #if($order == 'before')[system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $active = (($s <= $t) && ($t < $e)); if($active) : ?>[/system-view:external]#set($attributes = $attributes + '[system-view:internal]' + $dataFlag + '[/system-view:internal]')
                 #elseif($order == 'after')[system-view:external]<?php endif; ?>[/system-view:external]#end
             #end
         #end
