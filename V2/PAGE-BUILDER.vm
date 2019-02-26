@@ -146,16 +146,15 @@
                         ## PHP - set default value for $active to 'true' for $items without data start/end attributes
                         #if($dataPHP)[system-view:external]<?php $active = true; ?>[/system-view:external]#end
                         #setAttributes($item 'item' 'before')
+                        #set($velocityIndex = $velocityCount - 1)
                         #if($dataPHP)
-                            #set($velocityIndex = $velocityCount - 1)
                             #set($internalIndex = "[system-view:internal]${velocityIndex}[/system-view:internal]")
                             #set($externalIndex = "[system-view:external]<?php echo $phpIndex; ?>[/system-view:external]")
                             #set($internalClass = "[system-view:internal]class='#if(${velocityIndex} == 0)active#end'[/system-view:internal]")
                             #set($externalClass = "[system-view:external]class='<?php echo $phpIndex == 0 ? active : ''; ?>'[/system-view:external]")
                         #else
-                            #set($velocityIndex = $velocityCount - 1)
                             #set($internalIndex = $velocityIndex)
-                            #set($externalIndex = '')
+                            #set($externalIndex = "")
                             #set($internalClass = "class='#if(${velocityIndex} == 0)active#end'")
                             #set($externalClass = "")
                         #end
