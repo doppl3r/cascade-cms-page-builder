@@ -157,7 +157,7 @@
                     #foreach($item in $items)
                         ## PHP - set default value for $active to 'true' for $items without data start/end attributes
                         #if($dataPHP)[system-view:external]<?php $active = true; ?>[/system-view:external]#end
-                        #setAttributes($item 'item' 'before')
+                        #setAttributes($item '' 'before')
                         #set($velocityIndex = $velocityCount - 1)
                         #if($dataPHP)
                             #set($internalIndex = "[system-view:internal]${velocityIndex}[/system-view:internal]")
@@ -172,7 +172,7 @@
                         #end
                         <li aria-label="slide index ${internalIndex}${externalIndex}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${externalIndex} || (${carousel_id} == null && ${internalIndex}${externalIndex} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${externalIndex}})" tabindex="0"></li>
                         #if($dataPHP)[system-view:external]<?php $phpIndex += ($active) ? 1 : 0; ?>[/system-view:external]#end
-                        #setAttributes($item 'item' 'after')
+                        #setAttributes($item '' 'after')
                     #end
                 </ol>
             </div>
@@ -260,6 +260,7 @@
         #if($name == 'column')#set($columnHREF = '')#set($columnHREF = $dataHREF)#end
         #if($name == 'content')#set($contentHREF = '')#set($contentHREF = $dataHREF)#end
         #if($name == 'item')#set($itemHREF = '')#set($itemHREF = $dataHREF)#end
+        #if($name == '')#set($dataHREF = '')#end
     #elseif($order == 'after')
         #if($name == 'section')#set($dataHREF = $sectionHREF)#end
         #if($name == 'row')#set($dataHREF = $rowHREF)#end
