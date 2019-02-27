@@ -1,11 +1,11 @@
 <system-data-structure>
     <group identifier="PAGE">
-        <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach raw CSS into page header"/>
-        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Include raw CSS into page header" rows="3" cols="30"/>
-        <text type="radiobutton" identifier="SHOW" label="Show" default="All">
+        <text type="radiobutton" identifier="SHOW" label="Show Attributes" default="All" help-text="Show all or less attribute fields for this page">
             <radio-item value="All" show-fields="PAGE/SECTION/ATTRIBUTES, PAGE/SECTION/BACKGROUND-COLOR, PAGE/SECTION/BACKGROUND-IMAGE, PAGE/SECTION/PADDING, PAGE/SECTION/ROW/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ATTRIBUTES"/>
             <radio-item value="Less"/>
         </text>
+        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Include raw CSS into page header" rows="3" cols="30"/>
+        <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach raw CSS into page header"/>
         <group identifier="SECTION" multiple="true">
             <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='section'" size="30" help-text="Ex: data-end='12-31-1999'"/>
             <text identifier="BACKGROUND-COLOR" label="Background Color" size="30" help-text="#ffffff"/>
