@@ -1,7 +1,7 @@
 <system-data-structure>
     <group identifier="PAGE">
-        <text type="radiobutton" identifier="SHOW" label="Show Attributes" default="All" help-text="Show all or less attribute fields for this page">
-            <radio-item value="All" show-fields="PAGE/SECTION/ATTRIBUTES, PAGE/SECTION/BACKGROUND-COLOR, PAGE/SECTION/BACKGROUND-IMAGE, PAGE/SECTION/PADDING, PAGE/SECTION/ROW/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ATTRIBUTES"/>
+        <text type="radiobutton" identifier="SHOW" label="Show Settings" default="All" help-text="Show all or less fields for this page">
+            <radio-item value="All" show-fields="PAGE/CSS-SNIPPET, PAGE/CSS-BLOCK, PAGE/SECTION/ATTRIBUTES, PAGE/SECTION/BACKGROUND-COLOR, PAGE/SECTION/BACKGROUND-IMAGE, PAGE/SECTION/PADDING, PAGE/SECTION/ROW/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ATTRIBUTES"/>
             <radio-item value="Less"/>
         </text>
         <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Include raw CSS into page header" rows="3" cols="30"/>
