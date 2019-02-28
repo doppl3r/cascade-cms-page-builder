@@ -140,6 +140,15 @@
             #setAttributes($item 'item' 'after')
         #end
         </div>
+    #elseif($type == 'amp-youtube')
+        <div ${attributes}>
+        #foreach($item in $items)
+            #setAttributes($item 'item' 'before')
+            <amp-youtube data-videoid="${link}" width="${width}" height="${height}" layout="${layout}" ${autoplayAttr} ${attributes}>
+            </amp-youtube>
+            #setAttributes($item 'item' 'after')
+        #end
+        </div>
     #elseif($type == 'amp-carousel')
         #set($parentWidth = $width)
         #set($parentHeight = $height)

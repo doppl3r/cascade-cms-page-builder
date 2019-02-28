@@ -26,6 +26,7 @@
                             <dropdown-item value="div" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TEXT"/>
                             <dropdown-item value="amp-img" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT"/>
                             <dropdown-item value="amp-video" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/AUTOPLAY, PAGE/SECTION/ROW/COLUMN/CONTENT/LOOP, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/VIDEO-POSTER, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT"/>
+                            <dropdown-item value="amp-youtube" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/AUTOPLAY, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-PATH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/LAYOUT"/>
                             <dropdown-item value="amp-carousel" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/AUTOPLAY, PAGE/SECTION/ROW/COLUMN/CONTENT/LOOP, PAGE/SECTION/ROW/COLUMN/CONTENT/INDICATORS, PAGE/SECTION/ROW/COLUMN/CONTENT/DELAY, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TEXT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/INTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT"/>
                             <dropdown-item value="amp-iframe" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/SANDBOX, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/EXTERNAL-MEDIA, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WIDTH, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/HEIGHT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/LAYOUT, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ALT-TEXT"/>
                             <dropdown-item value="block" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/BLOCK, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/FORMAT"/>
@@ -78,7 +79,7 @@
                             </text>
                             <text identifier="ALT-TEXT" label="Alt Text" size="30" help-text="Required for ADA"/>
                             <asset type="page" identifier="INTERNAL-PATH" label="Internal Link" help-text="Select a page from within the CMS"/>
-                            <text identifier="EXTERNAL-PATH" label="External Link" size="30" help-text="Choose a link from outside the CMS"/>
+                            <text identifier="EXTERNAL-PATH" label="External Link" size="30" help-text="Choose an external link. YouTube must only use the video id. Ex: RTyvkiftn_M"/>
                             <text type="dropdown" identifier="TARGET" label="Target" default="_self" help-text="Choose to redirect user to a new page, or open a new tab">
                                 <dropdown-item value="_self"/>
                                 <dropdown-item value="_blank"/>
