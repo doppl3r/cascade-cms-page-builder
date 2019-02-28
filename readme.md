@@ -18,6 +18,9 @@ Customize your page with common HTML tags or unique  ***Google AMP*** libraries.
     - Options:
       - Autoplay
       - Loop
+  - amp-youtube
+    - Options:
+      - Autoplay
   - amp-carousel
     - Options:
       - Indicators (***NOTE***: PHP must be installed ***OR*** disabled with data-php="false" in the first attribute field)
