@@ -166,7 +166,7 @@
                     #foreach($item in $items)
                         ## PHP - set default value for $active to 'true' for $items without data start/end attributes
                         #if($dataPHP)[system-view:external]<?php $active = true; ?>[/system-view:external]#end
-                        #setAttributes($item '' 'before')
+                        #setAttributes($item 'item nolink' 'before')
                         #set($velocityIndex = $velocityCount - 1)
                         #if($dataPHP)
                             #set($internalIndex = "[system-view:internal]${velocityIndex}[/system-view:internal]")
@@ -181,7 +181,7 @@
                         #end
                         <li aria-label="slide index ${internalIndex}${externalIndex}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${externalIndex} || (${carousel_id} == null && ${internalIndex}${externalIndex} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${externalIndex}})" tabindex="0"></li>
                         #if($dataPHP)[system-view:external]<?php $phpIndex += ($active) ? 1 : 0; ?>[/system-view:external]#end
-                        #setAttributes($item '' 'after')
+                        #setAttributes($item 'item nolink' 'after')
                     #end
                 </ol>
             </div>
@@ -264,19 +264,22 @@
     #set($dataHREF = '')
     #set($dataHREF = $attributeMap['href'])
     #if($order == 'before')
-        #if($name == 'section')#set($sectionHREF = '')#set($sectionHREF = $dataHREF)#end
-        #if($name == 'row')#set($rowHREF = '')#set($rowHREF = $dataHREF)#end
-        #if($name == 'column')#set($columnHREF = '')#set($columnHREF = $dataHREF)#end
-        #if($name == 'content')#set($contentHREF = '')#set($contentHREF = $dataHREF)#end
-        #if($name == 'item')#set($itemHREF = '')#set($itemHREF = $dataHREF)#end
-        #if($name == '')#set($dataHREF = '')#end
+        #if($name.indexOf('section') >= 0)#set($sectionHREF = '')#set($sectionHREF = $dataHREF)#end
+        #if($name.indexOf('row') >= 0)#set($rowHREF = '')#set($rowHREF = $dataHREF)#end
+        #if($name.indexOf('column') >= 0)#set($columnHREF = '')#set($columnHREF = $dataHREF)#end
+        #if($name.indexOf('content') >= 0)#set($contentHREF = '')#set($contentHREF = $dataHREF)#end
+        #if($name.indexOf('item') >= 0)#set($itemHREF = '')#set($itemHREF = $dataHREF)#end
     #elseif($order == 'after')
-        #if($name == 'section')#set($dataHREF = $sectionHREF)#end
-        #if($name == 'row')#set($dataHREF = $rowHREF)#end
-        #if($name == 'column')#set($dataHREF = $columnHREF)#end
-        #if($name == 'content')#set($dataHREF = $contentHREF)#end
-        #if($name == 'item')#set($dataHREF = $itemHREF)#end
+        #if($name.indexOf('section') >= 0)#set($dataHREF = $sectionHREF)#end
+        #if($name.indexOf('row') >= 0)#set($dataHREF = $rowHREF)#end
+        #if($name.indexOf('column') >= 0)#set($dataHREF = $columnHREF)#end
+        #if($name.indexOf('content') >= 0)#set($dataHREF = $contentHREF)#end
+        #if($name.indexOf('item') >= 0)#set($dataHREF = $itemHREF)#end
+        
     #end
+    ## Disable links if specified in $name value (useful for removing links around carousel indicators)
+    #if($name.indexOf('nolink') >= 0)#set($dataHREF = '')#end
+    ## Check if dataHREF value is set
     #if($dataHREF.length() > 0)
         #if($order == 'before')
             #if($attributeMap['target'])#set($mapTarget='target="'+$attributeMap['target']+'"')#removeAttribute('target')#end
@@ -294,17 +297,17 @@
         #set($dataEnd = $attributeMap['data-end'])
         ## Set the start and end date if order is 'before' or 'after'
         #if($order == 'before')
-            #if($name == 'section')#set($sectionStartDate = '')#set($sectionEndDate = '')#set($sectionStartDate = $dataStart)#set($sectionEndDate = $dataEnd)#end
-            #if($name == 'row')#set($rowStartDate = '')#set($rowEndDate = '')#set($rowStartDate = $dataStart)#set($rowEndDate = $dataEnd)#end
-            #if($name == 'column')#set($columnStartDate = '')#set($columnEndDate = '')#set($columnStartDate = $dataStart)#set($columnEndDate = $dataEnd)#end
-            #if($name == 'content')#set($contentStartDate = '')#set($contentEndDate = '')#set($contentStartDate = $dataStart)#set($contentEndDate = $dataEnd)#end
-            #if($name == 'item')#set($itemStartDate = '')#set($itemEndDate = '')#set($itemStartDate = $dataStart)#set($itemEndDate = $dataEnd)#end
+            #if($name.indexOf('section') >= 0)#set($sectionStartDate = '')#set($sectionEndDate = '')#set($sectionStartDate = $dataStart)#set($sectionEndDate = $dataEnd)#end
+            #if($name.indexOf('row') >= 0)#set($rowStartDate = '')#set($rowEndDate = '')#set($rowStartDate = $dataStart)#set($rowEndDate = $dataEnd)#end
+            #if($name.indexOf('column') >= 0)#set($columnStartDate = '')#set($columnEndDate = '')#set($columnStartDate = $dataStart)#set($columnEndDate = $dataEnd)#end
+            #if($name.indexOf('content') >= 0)#set($contentStartDate = '')#set($contentEndDate = '')#set($contentStartDate = $dataStart)#set($contentEndDate = $dataEnd)#end
+            #if($name.indexOf('item') >= 0)#set($itemStartDate = '')#set($itemEndDate = '')#set($itemStartDate = $dataStart)#set($itemEndDate = $dataEnd)#end
         #elseif($order == 'after')
-            #if($name == 'section')#set($dataStart = $sectionStartDate)#set($dataEnd = $sectionEndDate)#end
-            #if($name == 'row')#set($dataStart = $rowStartDate)#set($dataEnd = $rowEndDate)#end
-            #if($name == 'column')#set($dataStart = $columnStartDate)#set($dataEnd = $columnEndDate)#end
-            #if($name == 'content')#set($dataStart = $contentStartDate)#set($dataEnd = $contentEndDate)#end
-            #if($name == 'item')#set($dataStart = $itemStartDate)#set($dataEnd = $itemEndDate)#end
+            #if($name.indexOf('section') >= 0)#set($dataStart = $sectionStartDate)#set($dataEnd = $sectionEndDate)#end
+            #if($name.indexOf('row') >= 0)#set($dataStart = $rowStartDate)#set($dataEnd = $rowEndDate)#end
+            #if($name.indexOf('column') >= 0)#set($dataStart = $columnStartDate)#set($dataEnd = $columnEndDate)#end
+            #if($name.indexOf('content') >= 0)#set($dataStart = $contentStartDate)#set($dataEnd = $contentEndDate)#end
+            #if($name.indexOf('item') >= 0)#set($dataStart = $itemStartDate)#set($dataEnd = $itemEndDate)#end
         #end
         ## Add PHP if any date attributes exist
         #if($dataStart.length() > 0 || $dataEnd.length() > 0)
