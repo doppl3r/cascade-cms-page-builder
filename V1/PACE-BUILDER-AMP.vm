@@ -154,7 +154,7 @@
                     #end
                     
                     ## amp carousel
-                    <amp-carousel id="${sliderName}" ${slideAttr} ${onAttr} ${viewClass} width="${widthParent}" height="${heightParent}" layout="${layout}" type="slides" ${autoplayAttr} ${loopAttr} delay="${delay}">
+                    <amp-carousel id="${sliderName}" ${slideAttr} ${onAttr} ${viewClass} width="${widthParent}" height="${heightParent}" layout="${layout}" type="slides" controls="" ${autoplayAttr} ${loopAttr} delay="${delay}">
                     ## loop through each item
                     #foreach($item in $items)
                         ## set item attributes
