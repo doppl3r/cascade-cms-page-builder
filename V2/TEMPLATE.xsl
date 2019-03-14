@@ -38,7 +38,9 @@
             </main>
             <system-region name="FOOTER"/>
             <system-region name="ADA-BADGE"/>
-            <system-region name="ANALYTICS"/>
+            <system-region name="FACEBOOK"/>
+            <system-region name="GOOGLE-ANALYTICS"/>
+            <system-region name="GOOGLE-TAGMANAGER"/>
         </div>
     </body>
 </html>
