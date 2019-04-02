@@ -1,9 +1,5 @@
 ## Developed by Jacob DeBenedetto
 ## Documentation: https://github.com/doppl3r/cascade-cms-page-builder
-
-#set($html = "#renderPage()")
-#set($html = $html.replaceAll('  ', ''))
-<!--#protect${html}#protect-->
 ## Render page content with custom attributes for each node
 #macro(renderPage)
     #set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
@@ -335,3 +331,6 @@
     #if("$!dataPHP" == "")#set($dataPHP = true)#end
     #if("$!attributeMap['data-php']" == "false")#set($dataPHP = false)#end
 #end
+#set($html = "#renderPage()")
+#set($html = $html.replaceAll('    ', ''))
+<![CDATA[#protect${html}#protect]]>
