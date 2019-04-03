@@ -69,13 +69,14 @@
                             <text identifier="WIDTH" label="Width" default="640" size="30" help-text="Leave empty to inherit parent width. Do not include 'px' or other values"/>
                             <text identifier="HEIGHT" label="Height" default="640" size="30" help-text="Leave empty to inherit parent height. Do not include 'px' or other values"/>
                             <text type="dropdown" identifier="LAYOUT" label="Layout" default="responsive" help-text="AMP element behavior">
-                                <dropdown-item value="nodisplay"/>
                                 <dropdown-item value="responsive"/>
+                                <dropdown-item value="intrinsic"/>
+                                <dropdown-item value="container"/>
                                 <dropdown-item value="fixed"/>
                                 <dropdown-item value="fixed-height"/>
                                 <dropdown-item value="fill"/>
-                                <dropdown-item value="container"/>
                                 <dropdown-item value="flex-item"/>
+                                <dropdown-item value="nodisplay"/>
                             </text>
                             <text identifier="ALT-TEXT" label="Alt Text" size="30" help-text="Required for ADA"/>
                             <asset type="page" identifier="INTERNAL-PATH" label="Internal Link" help-text="Select a page from within the CMS"/>
