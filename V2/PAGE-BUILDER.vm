@@ -155,7 +155,7 @@
         #set($pause_carousel_id = "pause_carousel_id_${contentId}")     
         #if($indicators == "true")
             <div class="carousel-controls">
-                <span [text]="${pause_carousel_id} ? '$play' : '$pause'" [class]="${pause_carousel_id} ? 'paused' : ''" role="button" tabindex="0" on="tap:AMP.setState({${pause_carousel_id}: !${pause_carousel_id} }), ${carousel_id}.toggleAutoplay()">$pause</span>
+                <span class="${pause}" [class]="${pause_carousel_id} ? '${play}' : '${pause}'" role="button" tabindex="0" on="tap:AMP.setState({${pause_carousel_id}: !${pause_carousel_id} }), ${carousel_id}.toggleAutoplay()"></span>
                 <ol class="indicators">
                     ## Loop through each item - $phpIndex starts at 0
                     #if($dataPHP)[system-view:external]<?php $phpIndex = 0; ?>[/system-view:external]#end
