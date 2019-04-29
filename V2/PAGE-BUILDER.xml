@@ -6,7 +6,7 @@
         </text>
         <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Include raw CSS into page header" rows="3" cols="30"/>
         <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach raw CSS into page header"/>
-        <group identifier="SECTION" multiple="true">
+        <group identifier="SECTION" multiple="true" collapsed="true">
             <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='section'" size="30" help-text="Ex: class='section' data-end='12-31-1999'"/>
             <text identifier="BACKGROUND-COLOR" label="Background Color" size="30" help-text="#ffffff"/>
             <asset type="file" identifier="BACKGROUND-IMAGE" label="Background Image" help-text="CSS background image"/>
