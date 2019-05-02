@@ -14,7 +14,7 @@
             <group identifier="ROW" multiple="true">
                 <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='row'" size="30" help-text="Ex: class='row' data-end='12-31-1999'"/>
                 <group identifier="COLUMN" multiple="true">
-                    <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='col'" size="30" help-text="Ex: class='col-6' data-end='12-31-1999'"/>
+                    <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='col-12'" size="30" help-text="Ex: class='col-6' data-end='12-31-1999'"/>
                     <group identifier="CONTENT" multiple="true">
                         <text type="dropdown" identifier="TYPE" label="Content Type" default="h1" help-text="HTML Content type">
                             <dropdown-item value="h1" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TEXT"/>
