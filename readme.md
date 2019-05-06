@@ -1,5 +1,5 @@
 # Cascade CMS Page Builder
-The ***Cascade CMS Page Builder*** is useful for rapidly developing Google AMP websites within the [Hannon Hill's Cascade CMS](https://www.hannonhill.com/products/cascade-cms/index.html). The following scripts have been tested using [v7.12.4](https://www.hannonhill.com/cascadeserver/releases/7.12.4/index.html?utm_medium=rss). All features are developed to support WCAG 2.0 (AA) web standards.
+The ***Cascade CMS Page Builder*** is useful for rapidly developing Google AMP websites within the [Hannon Hill's Cascade CMS](https://www.hannonhill.com/products/cascade-cms/index.html). The following scripts have been tested using [v7.12.4](https://www.hannonhill.com/cascadeserver/releases/7.12.4/index.html?utm_medium=rss) and [v8.12](https://www.hannonhill.com/cascadecms/latest/releases/cascade-cms-8.12/index.html#notes). All features are developed to support WCAG 2.0 (AA) web standards.
 
 ------------
 
