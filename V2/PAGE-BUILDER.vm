@@ -175,7 +175,7 @@
                             #set($internalClass = "class='#if(${velocityIndex} == 0)active#end'")
                             #set($externalClass = "")
                         #end
-                        <li aria-label="slide index ${internalIndex}${externalIndex}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${externalIndex} || (${carousel_id} == null && ${internalIndex}${externalIndex} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${externalIndex}})" tabindex="0" controls=""></li>
+                        <li aria-label="slide index ${internalIndex}${externalIndex}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${externalIndex} || (${carousel_id} == null && ${internalIndex}${externalIndex} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${externalIndex}})" tabindex="0"></li>
                         #if($dataPHP)[system-view:external]<?php $phpIndex += ($active) ? 1 : 0; ?>[/system-view:external]#end
                         #setAttributes($item 'item nolink' 'after')
                     #end
