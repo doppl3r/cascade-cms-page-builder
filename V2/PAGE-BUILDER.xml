@@ -4,8 +4,8 @@
             <radio-item value="All" show-fields="PAGE/CSS-SNIPPET, PAGE/CSS-BLOCK, PAGE/SECTION/ATTRIBUTES, PAGE/SECTION/BACKGROUND-COLOR, PAGE/SECTION/BACKGROUND-IMAGE, PAGE/SECTION/PADDING, PAGE/SECTION/ROW/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ATTRIBUTES, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/ATTRIBUTES"/>
             <radio-item value="Less"/>
         </text>
-        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Include raw CSS into page header" rows="3" cols="30"/>
-        <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach raw CSS into page header"/>
+        <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Include raw CSS into page head" rows="3" cols="30"/>
+        <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach raw CSS into page head"/>
         <group identifier="SECTION" multiple="true" collapsed="true">
             <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='section'" size="30" help-text="Ex: class='section' data-end='12-31-1999'"/>
             <text identifier="BACKGROUND-COLOR" label="Background Color" size="30" help-text="#ffffff"/>
@@ -68,9 +68,9 @@
                             <text identifier="EXTERNAL-MEDIA" label="External Media" size="30" help-text="This will set or override internal media"/>
                             <text identifier="WIDTH" label="Width" default="640" size="30" help-text="Leave empty to inherit parent width. Do not include 'px' or other values"/>
                             <text identifier="HEIGHT" label="Height" default="640" size="30" help-text="Leave empty to inherit parent height. Do not include 'px' or other values"/>
-                            <text type="dropdown" identifier="LAYOUT" label="Layout" default="responsive" help-text="AMP element behavior">
-                                <dropdown-item value="responsive"/>
+                            <text type="dropdown" identifier="LAYOUT" label="Layout" default="intrinsic" help-text="AMP element behavior">
                                 <dropdown-item value="intrinsic"/>
+                                <dropdown-item value="responsive"/>
                                 <dropdown-item value="container"/>
                                 <dropdown-item value="fixed"/>
                                 <dropdown-item value="fixed-height"/>
