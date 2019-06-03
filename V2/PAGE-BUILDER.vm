@@ -75,8 +75,14 @@
         #setAttributeMap($attributes)
     #end
     #checkPHP()
-    #checkLink($name $order)
-    #checkDate($name $order)
+    ## Reverse closing tag order. Ex: <div><a></a></div>
+    #if($order == 'before')
+        #checkDate($name $order)
+        #checkLink($name $order)
+    #else
+        #checkLink($name $order)
+        #checkDate($name $order)
+    #end
 #end
 ## Output HTML by content type
 #macro(setContent $content)
@@ -320,8 +326,14 @@
                 ## Format data and include Velocity variables with PHP
                 #set($dataStart = $dataStart.replaceAll('-', '/'))
                 #set($dataEnd = $dataEnd.replaceAll('-', '/'))
-                #if($order == 'before')[system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $active = (($s <= $t) && ($t < $e)); if($active) : ?>[/system-view:external]#set($attributes = $attributes + '[system-view:internal]' + $dataFlag + '[/system-view:internal]')
-                #elseif($order == 'after')[system-view:external]<?php endif; ?>[/system-view:external]#end
+                ## Output PHP code functions
+                #if($order == 'before')
+                    [system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $active = (($s <= $t) && ($t < $e)); if($active) : ?>[/system-view:external]
+                    #set($attributes = $attributes + $dataFlag)
+                    #setAttributeMap($attributes)
+                #elseif($order == 'after')
+                    [system-view:external]<?php endif; ?>[/system-view:external]
+                #end
             #end
         #end
     #end
