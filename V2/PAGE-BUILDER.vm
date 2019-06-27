@@ -213,8 +213,30 @@
         <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item 'item' 'before')
-            #if($format == '')<div ${attributes}>${block}</div>
-            #else #import($format) #end
+            ##  if format field is empty, add the attached block
+            #if($format == "")<div ${attributes}>${block}</div>
+            #else
+                ## import script if it exists in site, root, or relative path
+                #set($formatPrefix = "site://")
+                #if($format.indexOf($formatPrefix) >= 0)
+                    ## if format path includes "site://" prefix, define relative path
+                    #set($formatSiteIndex = $format.indexOf($formatPrefix))
+                    #set($formatRelativePath = $format.substring($formatPrefix.length())) ## strip prefix
+                    #set($siteName = $formatRelativePath.substring(0, $formatRelativePath.indexOf("/"))) ## get sitename from format
+                    #set($formatRelativePath = $formatRelativePath.substring($formatRelativePath.indexOf("/"))) ## strip script name
+                #else
+                    ## if format path does NOT include "site://" prefix
+                    #set($siteName = $currentPageSiteName) ## get sitename from page
+                    #set($pagePath = $currentPage.path.substring(0, $currentPage.path.lastIndexOf("/")))
+                    #if($format.indexOf('/') == 0) #set($formatRelativePath = $format) ## use root path
+                    #else #set($formatRelativePath = "/" + $pagePath + "/" + $format) #end ## use relative path
+                    #set($format = $formatPrefix + $siteName + $formatRelativePath) ## reconstruct format path
+                #end
+                ## import format if it is not null
+                #set($formatLocate = $_.locate($formatRelativePath, $_FieldTool.in("com.hannonhill.cascade.model.dom.identifier.EntityTypes").TYPE_VELOCITY_FORMAT, $siteName))
+                #if (!$_PropertyTool.isNull($formatLocate)) #import($format)
+                #else Error: Format not found #end
+            #end
             #setAttributes($item 'item' 'after')
         #end
         </div>
