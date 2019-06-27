@@ -234,7 +234,7 @@
                 #end
                 ## import format if it is not null
                 #set($formatLocate = $_.locate($formatRelativePath, $_FieldTool.in("com.hannonhill.cascade.model.dom.identifier.EntityTypes").TYPE_VELOCITY_FORMAT, $siteName))
-                #if (!$_PropertyTool.isNull($formatLocate)) #import($format)
+                #if(!$_PropertyTool.isNull($formatLocate))#import($format)
                 #else Error: Format not found #end
             #end
             #setAttributes($item 'item' 'after')
