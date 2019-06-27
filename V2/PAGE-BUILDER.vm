@@ -227,7 +227,9 @@
                 #else
                     ## if format path does NOT include "site://" prefix
                     #set($siteName = $currentPageSiteName) ## get sitename from page
-                    #set($pagePath = $currentPage.path.substring(0, $currentPage.path.lastIndexOf("/")))
+                    #set($pagePathLength = $currentPage.path.lastIndexOf("/")) ## set substring size
+                    #if($pagePathLength == -1) #set($pagePathLength = $currentPage.path.length()) #end ## update substring size if no subfolders
+                    #set($pagePath = $currentPage.path.substring(0, $pagePathLength)) ## set page path
                     #if($format.indexOf('/') == 0) #set($formatRelativePath = $format) ## use root path
                     #else #set($formatRelativePath = "/" + $pagePath + "/" + $format) #end ## use relative path
                     #set($format = $formatPrefix + $siteName + $formatRelativePath) ## reconstruct format path
