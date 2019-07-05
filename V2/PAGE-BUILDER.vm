@@ -33,6 +33,7 @@
 #end
 ## Set attributes for elements with visible data definitions.
 #macro(setAttributes $elem $name $order)
+    #checkPHP()
     #if($order == 'before')
         #set($attributes = $elem.getChild('ATTRIBUTES').value)
         #setAttributeMap($attributes)
@@ -70,18 +71,13 @@
         #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
         #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
         #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
+        #checkDate($name $order)
+        #checkLink($name $order)
     #elseif($order == 'after')
         #set($attributes = '')
         #setAttributeMap($attributes)
-    #end
-    #checkPHP()
-    ## Reverse closing tag order. Ex: <div><a></a></div>
-    #if($order == 'before')
-        #checkDate($name $order)
-        #checkLink($name $order)
-    #else
-        #checkLink($name $order)
-        #checkDate($name $order)
+        #checkLink($name $order) ## close tag
+        #checkDate($name $order) ## close tag
     #end
 #end
 ## Output HTML by content type
