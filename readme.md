@@ -3,6 +3,10 @@ The ***Cascade CMS Page Builder*** is useful for rapidly developing Google AMP w
 
 ------------
 
+## Case Study
+
+Trusted by multimillion dollar franchising companies across the world including Baja Fresh, Pinkberry, SweetFrog, Grabbagreen, Mucho Burrito, Ginger Sushi, Maui Wowi and many more.
+
 ## Features (V2)
 
 ### Custom HTML/AMP Elements
