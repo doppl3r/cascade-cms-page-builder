@@ -71,6 +71,7 @@
         #if($autoplay == 'true') #set($autoplayAttr = 'autoplay=""') #else #set($autoplayAttr = '') #end
         #if($loop == 'true') #set($loopAttr = 'loop=""') #else #set($loopAttr = '') #end
         #if(!$contentId) #set($contentId = 0) #else #set($contentId = $contentId + 1) #end
+        #checkHost($name $order)
         #checkDate($name $order)
         #checkLink($name $order)
     #elseif($order == 'after')
@@ -78,6 +79,7 @@
         #setAttributeMap($attributes)
         #checkLink($name $order) ## close tag
         #checkDate($name $order) ## close tag
+        #checkHost($name $order) ## close tag
     #end
 #end
 ## Output HTML by content type
@@ -278,6 +280,38 @@
             #end
         #end
         #set($attributeMap = $newAttributeMap)
+    #end
+#end
+## Check if element should only appear on specific host.
+#macro(checkHost $name $order)
+    #if($dataPHP)
+        #set($dataHost = '')
+        #set($dataHost = $attributeMap['data-host'])
+        #set($dataFlag = ' data-flag="host"')
+        ## Set the $dataHost variable when order is 'before' or 'after'
+        #if($order == 'before')
+            #if($name.indexOf('section') >= 0)#set($sectionDataHost = '')#set($sectionDataHost = $dataHost)#end
+            #if($name.indexOf('row') >= 0)#set($rowDataHost = '')#set($rowDataHost = $dataHost)#end
+            #if($name.indexOf('column') >= 0)#set($columnDataHost = '')#set($columnDataHost = $dataHost)#end
+            #if($name.indexOf('content') >= 0)#set($contentDataHost = '')#set($contentDataHost = $dataHost)#end
+            #if($name.indexOf('item') >= 0)#set($itemDataHost = '')#set($itemDataHost = $dataHost)#end
+        #elseif($order == 'after')
+            #if($name.indexOf('section') >= 0)#set($dataHost = $sectionDataHost)#end
+            #if($name.indexOf('row') >= 0)#set($dataHost = $rowDataHost)#end
+            #if($name.indexOf('column') >= 0)#set($dataHost = $columnDataHost)#end
+            #if($name.indexOf('content') >= 0)#set($dataHost = $contentDataHost)#end
+            #if($name.indexOf('item') >= 0)#set($dataHost = $itemDataHost)#end
+        #end
+        ## Add PHP if any date attributes exist
+        #if($dataHost.length() > 0)
+            #if($order == 'before')
+                [system-view:external]<?php if (strpos($_SERVER['SERVER_NAME'], '${dataHost}') !== false) : ?>[/system-view:external]
+                #set($attributes = $attributes + $dataFlag)
+                #setAttributeMap($attributes)
+            #elseif($order == 'after')
+                [system-view:external]<?php endif; ?>[/system-view:external]
+            #end
+        #end
     #end
 #end
 ## Check if an href value exists
