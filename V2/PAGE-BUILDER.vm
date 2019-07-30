@@ -287,7 +287,7 @@
     #if($dataPHP)
         #set($dataHost = '')
         #set($dataHost = $attributeMap['data-host'])
-        #set($dataFlag = ' data-flag="host"')
+        #set($dataFlag = ' data-flag="host: ' + $dataHost + '"')
         ## Set the $dataHost variable when order is 'before' or 'after'
         #if($order == 'before')
             #if($name.indexOf('section') >= 0)#set($sectionDataHost = '')#set($sectionDataHost = $dataHost)#end

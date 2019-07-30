@@ -7,14 +7,14 @@
         <text multi-line="true" identifier="CSS-SNIPPET" label="CSS Snippet" help-text="Include raw CSS into page head" rows="3" cols="30"/>
         <asset type="block" identifier="CSS-BLOCK" label="CSS Block" multiple="true" render-content-depth="unlimited" help-text="Attach raw CSS into page head"/>
         <group identifier="SECTION" multiple="true">
-            <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='section'" size="30" help-text="Ex: class='section' data-end='12-31-1999'"/>
+            <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='section'" size="30" help-text="Ex: class='section' data-end='12-31-1999' data-host='stage'"/>
             <text identifier="BACKGROUND-COLOR" label="Background Color" size="30" help-text="#ffffff"/>
             <asset type="file" identifier="BACKGROUND-IMAGE" label="Background Image" help-text="CSS background image"/>
             <text identifier="PADDING" label="Padding" default="0px 0px 0px 0px" size="30" help-text="Ex: 64px 12px 64px 12px"/>
             <group identifier="ROW" multiple="true">
-                <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='row'" size="30" help-text="Ex: class='row' data-end='12-31-1999'"/>
+                <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='row'" size="30" help-text="Ex: class='row' data-end='12-31-1999' data-host='stage'"/>
                 <group identifier="COLUMN" multiple="true">
-                    <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='col-12'" size="30" help-text="Ex: class='col-6' data-end='12-31-1999'"/>
+                    <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='col-12'" size="30" help-text="Ex: class='col-6' data-end='12-31-1999' data-host='stage'"/>
                     <group identifier="CONTENT" multiple="true">
                         <text type="dropdown" identifier="TYPE" label="Content Type" default="h1" help-text="HTML Content type">
                             <dropdown-item value="h1" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/TEXT"/>
@@ -32,7 +32,7 @@
                             <dropdown-item value="block" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/BLOCK, PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/FORMAT"/>
                             <dropdown-item value="WYSIWYG" show-fields="PAGE/SECTION/ROW/COLUMN/CONTENT/ITEM/WYSIWYG"/>
                         </text>
-                        <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='content'" size="30" help-text="Ex: class='content' data-end='12-31-1999'"/>
+                        <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='content'" size="30" help-text="Ex: class='content' data-end='12-31-1999' data-host='stage'"/>
                         <text identifier="WIDTH" label="Width" default="640" size="30" help-text="AMP element width"/>
                         <text identifier="HEIGHT" label="Height" default="640" size="30" help-text="AMP element height"/>
                         <text type="dropdown" identifier="LAYOUT" label="Layout" default="responsive" help-text="AMP element behavior">
@@ -60,7 +60,7 @@
                         <text identifier="SANDBOX" label="Sandbox" default="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation" size="30" help-text="iframe sandbox rules"/>
                         <group identifier="ITEM" multiple="true">
                             <text multi-line="true" identifier="TEXT" label="Text" help-text="Basic HTML text" rows="3" cols="30"/>
-                            <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='item'" size="30" help-text="Ex: class='item' data-end='12-31-1999'"/>
+                            <text identifier="ATTRIBUTES" label="Attribute(s)" default="class='item'" size="30" help-text="Ex: class='item' data-end='12-31-1999' data-host='stage'"/>
                             <asset type="file" identifier="INTERNAL-MEDIA" label="Internal Media" help-text="Choose a file"/>
                             <asset type="file" identifier="VIDEO-POSTER" label="Video Poster" help-text="Default image while video loads"/>
                             <asset type="block" identifier="BLOCK" label="Block" render-content-depth="unlimited" help-text="Choose a block item from the CMS"/>
