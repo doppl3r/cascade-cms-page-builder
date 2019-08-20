@@ -164,8 +164,8 @@
                     ## Loop through each item - $phpIndex starts at 0
                     #if($dataPHP)[system-view:external]<?php $phpIndex = 0; ?>[/system-view:external]#end
                     #foreach($item in $items)
-                        ## PHP - set default value for $active to 'true' for $items without data start/end attributes
-                        #if($dataPHP)[system-view:external]<?php $active = true; ?>[/system-view:external]#end
+                        ## PHP - set default value for $is_active to 'true' for $items without data start/end attributes
+                        #if($dataPHP)[system-view:external]<?php $is_active = true; ?>[/system-view:external]#end
                         #setAttributes($item 'item nolink' 'before')
                         #set($velocityIndex = $velocityCount - 1)
                         #if($dataPHP)
@@ -180,7 +180,7 @@
                             #set($externalClass = "")
                         #end
                         <li aria-label="slide index ${internalIndex}${externalIndex}" role="button" ${internalClass} ${externalClass} [class]="${carousel_id} == ${internalIndex}${externalIndex} || (${carousel_id} == null && ${internalIndex}${externalIndex} == 0) ? 'active' : ''" on="tap:AMP.setState({${carousel_id}: ${internalIndex}${externalIndex}})" tabindex="0"></li>
-                        #if($dataPHP)[system-view:external]<?php $phpIndex += ($active) ? 1 : 0; ?>[/system-view:external]#end
+                        #if($dataPHP)[system-view:external]<?php $phpIndex += ($is_active) ? 1 : 0; ?>[/system-view:external]#end
                         #setAttributes($item 'item nolink' 'after')
                     #end
                 </ol>
@@ -382,7 +382,7 @@
                 #set($dataEnd = $dataEnd.replaceAll('-', '/'))
                 ## Output PHP code functions
                 #if($order == 'before')
-                    [system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $active = (($s <= $t) && ($t < $e)); if($active) : ?>[/system-view:external]
+                    [system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $is_active = (($s <= $t) && ($t < $e)); if($is_active) : ?>[/system-view:external]
                     #set($attributes = $attributes + $dataFlag)
                     #setAttributeMap($attributes)
                 #elseif($order == 'after')
