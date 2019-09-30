@@ -134,7 +134,7 @@
         <div ${attributes}>
         #foreach($item in $items)
             #setAttributes($item 'item' 'before')
-            <amp-video id="video_${contentId}" alt="${altText}" width="${width}" height="${height}" src="${src}" ${poster} layout="${layout}" ${autoplayAttr} ${loopAttr} on="tap:video_${contentId}.play" ${attributes}>
+            <amp-video id="video_${contentId}" alt="${altText}" width="${width}" height="${height}" src="${src}" ${poster} layout="${layout}" role="button" tabindex="0" ${autoplayAttr} ${loopAttr} on="tap:video_${contentId}.play" ${attributes}>
                 <div fallback=""><p>Your browser doesn't support HTML5 video.</p></div>
             </amp-video>
             #setAttributes($item 'item' 'after')
