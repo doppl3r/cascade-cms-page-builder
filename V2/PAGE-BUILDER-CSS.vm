@@ -11,6 +11,7 @@
     .row{display:flex;flex-wrap:wrap}.row>[class*="col-"]{box-sizing:border-box;padding:0 12px;flex-grow:0}.row>.col{box-sizing:border-box;-ms-flex-preferred-size:0;-ms-flex-positive:1;flex:1 0 0;padding:0 12px;width:100%}.row>.col-1-m{width:8.3334%}.row>.col-2-m{width:16.6667%}.row>.col-3-m{width:25%}.row>.col-4-m{width:33.3334%}.row>.col-5-m{width:41.6667%}.row>.col-6-m{width:50%}.row>.col-7-m{width:58.3334%}.row>.col-8-m{width:66.6667%}.row>.col-9-m{width:75%}.row>.col-10-m{width:83.3334%}.row>.col-11-m{width:91.6667%}.row>.col-12-m{width:100%}.row>.col-1{width:8.3334%}.row>.col-2{width:16.6667%}.row>.col-3{width:25%}.row>.col-4{width:33.3334%}.row>.col-5{width:41.6667%}.row>.col-6{width:50%}.row>.col-7{width:58.3334%}.row>.col-8{width:66.6667%}.row>.col-9{width:75%}.row>.col-10{width:83.3334%}.row>.col-11{width:91.6667%}.row>.col-12{width:100%}@media (max-width: 768px){.row>[class*="col-"].col-1-m{width:8.3334%}.row>[class*="col-"].col-2-m{width:16.6667%}.row>[class*="col-"].col-3-m{width:25%}.row>[class*="col-"].col-4-m{width:33.3334%}.row>[class*="col-"].col-5-m{width:41.6667%}.row>[class*="col-"].col-6-m{width:50%}.row>[class*="col-"].col-7-m{width:58.3334%}.row>[class*="col-"].col-8-m{width:66.6667%}.row>[class*="col-"].col-9-m{width:75%}.row>[class*="col-"].col-10-m{width:83.3334%}.row>[class*="col-"].col-11-m{width:91.6667%}.row>[class*="col-"].col-12-m{width:100%}.row>.col-1{width:100%}.row>.col-2{width:100%}.row>.col-3{width:100%}.row>.col-4{width:100%}.row>.col-5{width:100%}.row>.col-6{width:100%}.row>.col-7{width:100%}.row>.col-8{width:100%}.row>.col-9{width:100%}.row>.col-10{width:100%}.row>.col-11{width:100%}.row>.col-12{width:100%}}
     ## Default PAGE-BUILDER CSS
     .row > div { width: 100%; }
+    amp-script { opacity: 1; }
     section { background-size: cover; background-position: center center; }
     section, .row, [class*="col"], .content { position: relative; }
     .carousel-controls {  position: absolute; bottom: 12px; left: 0; right: 0; width: 100%; text-align: right; z-index: 1; box-sizing: border-box; padding: 0 12px; pointer-events: none; }
@@ -34,6 +35,8 @@
     [data-flag*="missing-dimensions"]:after { content: 'missing dimensions'; background-color: #ffff00; color: #000; }
     [data-flag*="host"]:after { content: attr(data-flag); background-color: #ffff00; color: #000; }
     [/system-view:internal]
+    ## AMP styling overrides
+    .i-amphtml-loader-background { background-color: transparent; }
     ## Load each section property class
     #set($page = $_XPathTool.selectNodes($contentRoot, '//system-data-structure/PAGE'))
     #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
