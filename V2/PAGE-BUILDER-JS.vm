@@ -1,0 +1,37 @@
+## Developed by Jacob DeBenedetto
+## Documentation: https://github.com/doppl3r/cascade-cms-page-builder
+## Render page content with custom attributes for each node
+#set($includes = {})
+
+## loop through all element types
+#macro(checkPage)
+    #set($page = $_XPathTool.selectSingleNode($contentRoot, '//system-data-structure/PAGE'))
+    #set($sections = $_XPathTool.selectNodes($page, 'SECTION'))
+    #foreach($section in $sections)
+        #set($rows = $_XPathTool.selectNodes($section, 'ROW'))
+        #foreach($row in $rows)
+            #set($columns = $_XPathTool.selectNodes($row, 'COLUMN'))
+            #foreach($column in $columns)
+                #set($contents = $_XPathTool.selectNodes($column, 'CONTENT'))
+                #foreach($content in $contents)
+                    #checkType($content)
+                #end
+            #end
+        #end
+    #end
+#end
+
+## update the include list by type
+#macro(checkType $elem)
+    #set($type = $elem.getChild('TYPE').value)
+    #set($includes[$type] = true)
+#end
+
+## initiate page check
+#checkPage
+
+## include libraries if they exist
+#if($includes['amp-video'])<script async="" custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>#end
+#if($includes['amp-youtube'])<script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>#end
+#if($includes['amp-carousel'])<script async="" custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>#end
+#if($includes['amp-iframe'])<script async="" custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>#end
