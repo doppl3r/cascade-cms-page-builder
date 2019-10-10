@@ -62,7 +62,7 @@ Custom attributes allow you to add an extra layer of functionality or styling to
 ### Velocity Script
   - PAGE-BUILDER.vm - Converts pages that utilize the PAGE-BUILDER.xml data definition into HTML. Attach to the template 'DEFAULT' system-region
   - PAGE-BUILDER-CSS.vm - Converts page properties that utilize the PAGE-BUILDER.xml data definition into CSS. Attach to the template 'CSS-BUILDER' system-region. Requres a page index block in template region.
-  - PAGE-BUILDER-JS.vm - Dynamically includes AMP libraries when page builder elements are used. Requres a page index block in template region.
+  - (optional) PAGE-BUILDER-JS.vm - Dynamically includes AMP libraries when page builder elements are used. Requres a page index block in template region.
 
 ### Page Template
   - TEMPLATE.xsl - Combines Cascade CMS blocks with velocity format scripts within an HTML template.
