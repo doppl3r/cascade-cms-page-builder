@@ -26,27 +26,9 @@
 
 ## render external scripts
 #macro(renderExternal)
-    <meta id="amp-library">
-        <?php // initialize DOMDocument
-            $doc = new DOMDocument();
-            $doc->loadHTMLFile("${currentPage.name}.php");
-            $elem = $doc->getElementById('amp-library');
-            $elem->parentNode->removeChild($elem);
-            $htmlFile = $doc->saveHTML();
-            $includes = [];
-            if (preg_match('(<amp-accordion)', $htmlFile) === 1) $includes['amp-accordion'] = true;
-            if (preg_match('(<amp-analytics)', $htmlFile) === 1) $includes['amp-analytics'] = true;
-            if (preg_match('([class]|[text]|[hidden]|[width]|[height]|[aria-hidden]|[aria-label])', $htmlFile) === 1) $includes['amp-bind'] = true;
-            if (preg_match('(<amp-carousel)', $htmlFile) === 1) $includes['amp-carousel'] = true;
-            if (preg_match('(<amp-iframe)', $htmlFile) === 1) $includes['amp-iframe'] = true;
-            if (preg_match('(<amp-lightbox)', $htmlFile) === 1) $includes['amp-lightbox'] = true;
-            if (preg_match('(<amp-list)', $htmlFile) === 1) $includes['amp-list'] = true;
-            if (preg_match('(<amp-selector)', $htmlFile) === 1) $includes['amp-selector'] = true;
-            if (preg_match('(<amp-video)', $htmlFile) === 1) $includes['amp-video'] = true;
-            if (preg_match('(<amp-youtube)', $htmlFile) === 1) $includes['amp-youtube'] = true;
-            if (preg_match('(<template)', $htmlFile) === 1) $includes['amp-mustache'] = true;
-        ?>
-    </meta>
+    #set($metaContent = "#renderMeta()")
+    #set($metaContent = $metaContent.replaceAll('    ', ''))
+    <!--#protect<meta id="amp-library" content="${metaContent}">#protect-->
     <?php // render script if applicable
         if ($includes['amp-accordion'] == true) echo '<script async="" custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>';
         if ($includes['amp-analytics'] == true) echo '<script async="" custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>';
@@ -59,5 +41,30 @@
         if ($includes['amp-video'] == true) echo '<script async="" custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>';
         if ($includes['amp-youtube'] == true) echo '<script async="" custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>';
         if ($includes['amp-mustache'] == true) echo '<script async="" custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>';
+    ?>
+#end
+
+## render external meta data (empty)
+#macro(renderMeta)
+    <?php
+        // initialize DOMDocument
+        $doc = new DOMDocument();
+        $doc->loadHTMLFile('${currentPage.name}.php');
+        $elem = $doc->getElementById('amp-library');
+        $elem->parentNode->removeChild($elem);
+        $htmlFile = $doc->saveHTML();
+        $includes = [];
+        // if (preg_match('\<', $htmlFile) === 1) {}
+        if (preg_match('(\<amp-accordion)', $htmlFile) === 1) $includes['amp-accordion'] = true;
+        if (preg_match('(\<amp-analytics)', $htmlFile) === 1) $includes['amp-analytics'] = true;
+        if (preg_match('([class]|[text]|[hidden]|[width]|[height]|[aria-hidden]|[aria-label])', $htmlFile) === 1) $includes['amp-bind'] = true;
+        if (preg_match('(\<amp-carousel)', $htmlFile) === 1) $includes['amp-carousel'] = true;
+        if (preg_match('(\<amp-iframe)', $htmlFile) === 1) $includes['amp-iframe'] = true;
+        if (preg_match('(\<amp-lightbox)', $htmlFile) === 1) $includes['amp-lightbox'] = true;
+        if (preg_match('(\<amp-list)', $htmlFile) === 1) $includes['amp-list'] = true;
+        if (preg_match('(\<amp-selector)', $htmlFile) === 1) $includes['amp-selector'] = true;
+        if (preg_match('(\<amp-video)', $htmlFile) === 1) $includes['amp-video'] = true;
+        if (preg_match('(\<amp-youtube)', $htmlFile) === 1) $includes['amp-youtube'] = true;
+        if (preg_match('(\<template)', $htmlFile) === 1) $includes['amp-mustache'] = true;
     ?>
 #end
