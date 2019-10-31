@@ -371,12 +371,15 @@
             #if($dataEnd.length() <= 0) #set($dataEnd = '01-01-9999') #end
             #if($order == 'before' || $order == 'after')
                 ## Add data-flag attribute for current scheduled status
-                #set($today = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.getDate())))
-                #set($startDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataStart))))
-                #set($endDate = $_MathTool.toInteger($_DateTool.format('yyyyMMdd', $_DateTool.toDate('MM-dd-yyyy', $dataEnd))))
+                #set($today = $_DateTool.toCalendar($_DateTool.toDate('yyyyMMdd', $_DateTool.getDate())).timeInMillis)
+                #set($startDate = $_DateTool.toCalendar($_DateTool.toDate('MM-dd-yyyy', $dataStart)).timeInMillis)
+                #set($endDate = $_DateTool.toCalendar($_DateTool.toDate('MM-dd-yyyy', $dataEnd)).timeInMillis)
+                #set($lastPublishedOn = $_DateTool.toCalendar($currentPage.lastPublishedOn).timeInMillis)
+                #set($lastModified = $_DateTool.toCalendar($currentPage.lastModified).timeInMillis)
                 #if($today < $startDate)#set($dataFlag = ' data-flag="pending"')
                 #elseif($today >= $startDate && $today < $endDate)#set($dataFlag = ' data-flag="live"')
                 #elseif($today >= $endDate)#set($dataFlag = ' data-flag="expired"')#end
+                #if($lastModified > $lastPublishedOn)#set($dataFlag = ' data-flag="publish required"')#end
                 ## Format data and include Velocity variables with PHP
                 #set($dataStart = $dataStart.replaceAll('-', '/'))
                 #set($dataEnd = $dataEnd.replaceAll('-', '/'))
