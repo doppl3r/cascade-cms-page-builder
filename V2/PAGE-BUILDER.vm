@@ -379,7 +379,7 @@
                 #if($today < $startDate)#set($dataFlag = ' data-flag="pending"')
                 #elseif($today >= $startDate && $today < $endDate)#set($dataFlag = ' data-flag="live"')
                 #elseif($today >= $endDate)#set($dataFlag = ' data-flag="expired"')#end
-                #if($lastModified > $lastPublishedOn)#set($dataFlag = ' data-flag="publish required"')#end
+                #if($lastModified > $lastPublishedOn)#set($dataFlag = ' data-flag="republish"')#end
                 ## Format data and include Velocity variables with PHP
                 #set($dataStart = $dataStart.replaceAll('-', '/'))
                 #set($dataEnd = $dataEnd.replaceAll('-', '/'))

@@ -34,7 +34,7 @@
     [data-flag*="expired"]:after { background-color: #ff0000; color: #fff; }
     [data-flag*="missing-dimensions"]:after { content: 'missing dimensions'; background-color: #ffff00; color: #000; }
     [data-flag*="host"]:after { content: attr(data-flag); background-color: #ffff00; color: #000; }
-    [data-flag*="publish required"]:after { content: attr(data-flag); background-color: #ffff00; color: #000; }
+    [data-flag*="republish"]:after { content: attr(data-flag); background-color: #ffff00; color: #000; }
     [/system-view:internal]
     ## Load each section property class
     #set($page = $_XPathTool.selectNodes($contentRoot, '//system-data-structure/PAGE'))
