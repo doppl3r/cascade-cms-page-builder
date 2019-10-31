@@ -38,6 +38,8 @@ Customize your page with common HTML tags or unique  ***Google AMP*** libraries.
 ### Custom Attributes
 Custom attributes allow you to add an extra layer of functionality or styling to any element. For example, to schedule content dynamically without a [Publish Sets](https://www.hannonhill.com/cascadecms/latest/content-authoring/publishing/publish-sets.html), simply specify a ***start*** and/or ***end*** date using the data format. Cascade CMS will warn you if an element is unpublished.
 
+To view future scheduled content, publish your page, and append the following parameters to your URL with your future date: `?date=month-day-year`. Ex: https://mywebsite.com?date=1-1-2020
+
   - data-host="stage" - Whitelist elements by host name ***(requires PHP)***
   - data-start="mm-dd-yyyy" - Schedule publish date ***(requires PHP)***
   - data-end="mm-dd-yyyy" - Schedule unpublish date ***(requires PHP)***

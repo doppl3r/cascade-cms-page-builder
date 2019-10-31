@@ -382,7 +382,17 @@
                 #set($dataEnd = $dataEnd.replaceAll('-', '/'))
                 ## Output PHP code functions
                 #if($order == 'before')
-                    [system-view:external]<?php $t = date('Y-m-d'); $t = date('Y-m-d', strtotime($t)); $s = date('Y-m-d', strtotime('${dataStart}')); $e = date('Y-m-d', strtotime('${dataEnd}')); $is_active = (($s <= $t) && ($t < $e)); if($is_active) : ?>[/system-view:external]
+                    [system-view:external]
+                    <?php 
+                        if(isset($_GET['date'])) { $t = str_replace("-", "/", $_GET['date']); }
+                        else { $t = date('Y-m-d'); }
+                        $t = date('Y-m-d', strtotime($t));
+                        $s = date('Y-m-d', strtotime('${dataStart}'));
+                        $e = date('Y-m-d', strtotime('${dataEnd}'));
+                        $is_active = (($s <= $t) && ($t < $e));
+                        if($is_active) :
+                    ?>
+                    [/system-view:external]
                     #set($attributes = $attributes + $dataFlag)
                     #setAttributeMap($attributes)
                 #elseif($order == 'after')
