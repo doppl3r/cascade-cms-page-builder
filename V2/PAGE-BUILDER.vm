@@ -367,8 +367,8 @@
         #end
         ## Add PHP if any date attributes exist
         #if($dataStart.length() > 0 || $dataEnd.length() > 0)
-            #if($dataStart.length() <= 0) #set($dataStart = '01-01-2000') #end
-            #if($dataEnd.length() <= 0) #set($dataEnd = '01-01-9999') #end
+            #if($dataStart.length() <= 0) #set($dataStart = '01-01-2000') #set($attributes = $attributes + ' data-start="' + $dataStart + '"') #end
+            #if($dataEnd.length() <= 0) #set($dataEnd = '01-01-9999') #set($attributes = $attributes + ' data-end="' + $dataEnd + '"') #end
             #if($order == 'before' || $order == 'after')
                 ## Add data-flag attribute for current scheduled status
                 #set($today = $_DateTool.toCalendar($_DateTool.toDate('yyyyMMdd', $_DateTool.getDate())).timeInMillis)
