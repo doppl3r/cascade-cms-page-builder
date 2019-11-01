@@ -28,10 +28,10 @@
     [data-flag]:before, [data-flag]:after { transition: all 0.1s ease-in-out; }
     [data-flag]:active:before, [data-flag]:active:after { opacity: 0; }
     [data-flag]:before { content: ''; background-color: rgba(0, 0, 0, 0.5); position: absolute; pointer-events: none; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; }
-    [data-flag]:after { content: attr(data-start) ' \27F6   ' attr(data-end); font-family: "Arial"; font-size: 14px; line-height: 24px; height: 24px; pointer-events: none; width: 240px; margin: -12px 0 0 -120px; font-weight: bold; left: 50%; top: 50%; padding: 0 4px; position: absolute; text-align: center; text-transform: uppercase; z-index: 1; }
-    [data-flag*="pending"]:after { background-color: rgba(0, 0, 0, 0.5); color: #fff; }
-    [data-flag*="live"]:after { background-color: rgba(0, 255, 0, 0.5); color: #fff; }
-    [data-flag*="expired"]:after { background-color: rgba(0, 0, 0, 0.5); color: #fff; }
+    [data-flag]:after { font-family: "Arial"; font-size: 12px; line-height: 24px; height: 24px; pointer-events: none; width: 240px; margin: -12px 0 0 -120px; font-weight: bold; left: 50%; top: 50%; padding: 0 4px; position: absolute; text-align: center; text-transform: uppercase; z-index: 1; }
+    [data-flag*="pending"]:after { content: 'pending: ' attr(data-start) ' \27F6   ' attr(data-end); background-color: rgba(0, 0, 0, 0.5); color: #fff; }
+    [data-flag*="live"]:after { content: 'live: ' attr(data-start) ' \27F6   ' attr(data-end); background-color: rgba(0, 255, 0, 0.5); color: #fff; }
+    [data-flag*="expired"]:after { content: 'expired: ' attr(data-start) ' \27F6   ' attr(data-end);background-color: rgba(0, 0, 0, 0.5); color: #fff; }
     [data-flag*="missing-dimensions"]:after { content: 'missing dimensions'; background-color: rgba(0, 0, 0, 0.5); color: #fff; }
     [data-flag*="host"]:after { content: attr(data-flag); background-color: rgba(0, 0, 0, 0.5); color: #fff; }
     [data-flag*="republish"]:after { content: attr(data-flag); background-color: rgba(255, 0, 0, 0.5); color: #fff; }
