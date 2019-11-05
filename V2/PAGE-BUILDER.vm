@@ -396,7 +396,7 @@
                         if($is_active) :
                     ?>
                     [/system-view:external]
-                    #set($attributes = $attributes + "[system-view:internal]" + $dataFlag + "[/system-view:internal]")
+                    #set($attributes = $attributes + $dataFlag)
                     #setAttributeMap($attributes)
                 #elseif($order == 'after')
                     [system-view:external]<?php endif; ?>[/system-view:external]
